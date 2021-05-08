@@ -1,6 +1,6 @@
 <svg width="1440" height="4000" viewBox="0 0 1440 4000" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0)">
-<rect width="1440" height="4000" fill="white"/>
+<rect width="1440" height="4000" fill="#444444"/>
 <circle cx="1270" cy="1059" r="113" fill="#F4C82A"/>
 <ellipse cx="42.6154" cy="198.269" rx="108.5" ry="112.5" transform="rotate(-28 42.6154 198.269)" fill="#F4C82A"/>
 <circle cx="541" cy="657" r="114" fill="#F4C82A"/>

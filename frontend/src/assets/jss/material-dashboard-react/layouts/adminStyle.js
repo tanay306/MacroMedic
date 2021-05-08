@@ -8,7 +8,9 @@ const appStyle = theme => ({
   wrapper: {
     position: "relative",
     top: "0",
-    height: "100vh"
+    height: "100vh",
+    backgroundColor: '#333',
+    color: '#f5f5f5',
   },
   mainPanel: {
     [theme.breakpoints.up("md")]: {

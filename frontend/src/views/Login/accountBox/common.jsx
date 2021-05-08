@@ -51,6 +51,7 @@ export const Input = styled.input`
   border-bottom: 1.4px solid transparent;
   transition: all 200ms ease-in-out;
   font-size: 12px;
+  background-color: #444;
 
   &::placeholder {
     color: rgba(200, 200, 200, 1);
