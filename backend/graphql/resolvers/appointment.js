@@ -21,7 +21,7 @@ const createAppointment = async (args, {req}) => {
                 status: 'Pending',
             });
             if(appointment) {
-                const from = 'CodeX Clinic';
+                const from = 'MacroMedic';
                 const to = process.env.PHONENO;
                 const text = 'Your appointment has been booked';
                 nexmo.message.sendSms(from, to, text, 
@@ -154,7 +154,7 @@ const cancelAppointment = async (args, {req}) => {
                 appointment.status = 'Canceled';
                 const updatedAppointment = await appointment.save();
                 if(updatedAppointment) {
-                    const from = 'CodeX Clinic';
+                    const from = 'MacroMedic';
                     const to = process.env.PHONENO;
                     const text = 'Your appointment has been canceled';
                     nexmo.message.sendSms(from, to, text, 
@@ -189,7 +189,7 @@ const changeStatus = async (args, {req}) => {
                 appointment.status = 'Visited';
                 const updatedAppointment = await appointment.save();
                 if(updatedAppointment) {
-                    const from = 'CodeX Clinic';
+                    const from = 'MacroMedic';
                     const to = process.env.PHONENO;
                     const text = 'You have visited your appointment';
                     nexmo.message.sendSms(from, to, text, 
