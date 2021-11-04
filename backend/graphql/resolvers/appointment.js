@@ -216,10 +216,33 @@ const changeStatus = async (args, {req}) => {
     }
 }
 
+const getStatistics_Appointment = async (args, {req}) => {
+    try {
+      let appoinments = await Appointment.find()
+      return appoinments.length;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+}
+
+const getStatistics_Successful_App = async (args, {req}) => {
+    try {
+      let appoinments = await Appointment.find({status: "Visited"})
+      return appoinments.length;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+}
+  
+
 module.exports = {
     createAppointment,
     viewAppointment,
     cancelAppointment,
     changeStatus,
-    getAllAppointments
+    getAllAppointments,
+    getStatistics_Appointment,
+    getStatistics_Successful_App
 }

@@ -264,6 +264,26 @@ const searchParticularDoctor = async (args, {req}) => {
   }
 }
 
+const getStatistics_Users = async (args, {req}) => {
+  try {
+    let users = await User.find();
+    return users.length;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+const getStatistics_Doctors = async (args, {req}) => {
+  try {
+    let doctors = await User.find({role: "doctor"});
+    return doctors.length;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports =  {
   authUser,
   registerUser,
@@ -276,5 +296,7 @@ module.exports =  {
   updateUser,
   searchDoctorByName,
   searchDoctorBySpecialization,
-  searchParticularDoctor
+  searchParticularDoctor,
+  getStatistics_Users,
+  getStatistics_Doctors
 };

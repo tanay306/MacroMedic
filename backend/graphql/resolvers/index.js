@@ -11,6 +11,8 @@ const  {
     searchDoctorByName,
     searchDoctorBySpecialization,
     searchParticularDoctor,
+    getStatistics_Users,
+    getStatistics_Doctors,
   } = require('./user.js');
 
 const {
@@ -19,6 +21,8 @@ const {
   cancelAppointment,
   changeStatus,
   getAllAppointments,
+  getStatistics_Appointment,
+  getStatistics_Successful_App,
 } = require('./appointment.js')
 
   module.exports = {
@@ -35,10 +39,14 @@ const {
     searchDoctorByName: searchDoctorByName,
     searchDoctorBySpecialization: searchDoctorBySpecialization,
     searchParticularDoctor: searchParticularDoctor,
+    getStatistics_Users: getStatistics_Users,
+    getStatistics_Doctors: getStatistics_Doctors,
     //appointment
     createAppointment: createAppointment,
     viewAppointment: viewAppointment,
     cancelAppointment: cancelAppointment,
     changeStatus: changeStatus,
-    getAllAppointments: getAllAppointments
+    getAllAppointments: getAllAppointments,
+    getStatistics_Appointment: getStatistics_Appointment,
+    getStatistics_Successful_App: getStatistics_Successful_App,
   };
