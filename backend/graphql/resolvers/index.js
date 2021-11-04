@@ -21,6 +21,7 @@ const {
   cancelAppointment,
   changeStatus,
   getAllAppointments,
+  getAllUpcomingAppointments,
   getStatistics_Appointment,
   getStatistics_Successful_App,
 } = require('./appointment.js')
@@ -47,6 +48,7 @@ const {
     cancelAppointment: cancelAppointment,
     changeStatus: changeStatus,
     getAllAppointments: getAllAppointments,
+    getAllUpcomingAppointments: getAllUpcomingAppointments,
     getStatistics_Appointment: getStatistics_Appointment,
     getStatistics_Successful_App: getStatistics_Successful_App,
   };
