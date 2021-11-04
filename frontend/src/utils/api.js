@@ -425,7 +425,7 @@ const api = {
       {
         query: `
           query {
-            getAllAppointments(user_id: "${ID}") {
+            getAllUpcomingAppointments(user_id: "${ID}") {
               doctorId {
                 name
                 image
@@ -444,7 +444,7 @@ const api = {
         },
       }
     );
-    return data.data.data.getAllAppointments;
+    return data.data.data.getAllUpcomingAppointments;
   },
   getStatsUser: async () => {
     const data = await axios.post(
