@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -28,22 +28,22 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import GroupIcon from '@material-ui/icons/Group';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import api from '../../utils/api';
+import GroupIcon from "@material-ui/icons/Group";
+import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
+import api from "../../utils/api";
 
 import { bugs, website, server } from "variables/general.js";
 
 import {
   dailySalesChart,
   emailsSubscriptionChart,
-  completedTasksChart
+  completedTasksChart,
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonIcon from '@material-ui/icons/Person';
-import globe from '../../assets/gifs/globe.gif';
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import PersonIcon from "@material-ui/icons/Person";
+import globe from "../../assets/gifs/globe.gif";
 
 const useStyles = makeStyles(styles);
 
@@ -52,27 +52,50 @@ export default function Dashboard() {
 
   const [pApp, setPpp] = useState([]);
 
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [successfulApps, setSuccessfulApps] = useState(0);
+  const [totalApps, setTotalApps] = useState(0);
+  const [totalDocs, setTotalDocs] = useState(0);
+
   useEffect(() => {
-    const mf = async() => {
+    const mf = async () => {
       const data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
       console.log(data);
-      let j=1,k=1;
-      let upp = [], ppp = [];
-      for(let i=0;i<data.length;i++) {
-        if(i<2 || i>3) {
+      let j = 1,
+        k = 1;
+      let upp = [],
+        ppp = [];
+      for (let i = 0; i < data.length; i++) {
+        if (i < 2 || i > 3) {
           upp.push([`${j}`, data[i].doctorId.name, Date(data[i].date)]);
           j++;
-        }
-        else {
-          ppp.push([`${j}`, data[i].doctorId.name, Date(data[i].date), data[i].status]);
+        } else {
+          ppp.push([
+            `${j}`,
+            data[i].doctorId.name,
+            Date(data[i].date),
+            data[i].status,
+          ]);
           k++;
         }
       }
       setUpp(upp);
       setPpp(ppp);
-    }
+    };
     mf();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const fetcher = async () => {
+      const statsUser = await api.getStatsUser();
+      setTotalUsers(statsUser);
+
+      const statsTotalDocs = await api.getStatsTotalDocs();
+      setTotalDocs(statsTotalDocs);
+    };
+
+    fetcher();
+  }, []);
 
   const classes = useStyles();
   return (
@@ -85,9 +108,7 @@ export default function Dashboard() {
                 <PersonIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Total Users</p>
-              <h3 className={classes.cardTitle}>
-                39
-              </h3>
+              <h3 className={classes.cardTitle}>{totalUsers}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -101,9 +122,9 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-              <PersonAddIcon />
+                <PersonAddIcon />
               </CardIcon>
-              <p className={classes.cardCategory}>Doctors Added</p>
+              <p className={classes.cardCategory}>Successful Appointments</p>
               <h3 className={classes.cardTitle}>7</h3>
             </CardHeader>
             <CardFooter stats>
@@ -118,7 +139,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="danger" stats icon>
               <CardIcon color="danger">
-              <FormatListNumberedIcon />
+                <FormatListNumberedIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Total Appointments</p>
               <h3 className={classes.cardTitle}>26</h3>
@@ -138,7 +159,7 @@ export default function Dashboard() {
                 <GroupIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Registered Doctors</p>
-              <h3 className={classes.cardTitle}>18</h3>
+              <h3 className={classes.cardTitle}>{totalDocs}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -150,11 +171,25 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={5} style={{marginLeft: '2vw'}}>
-        <GridItem xs={12} sm={12} md={12} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 40 }}>
-          <img src={globe} width={100} height={100}/>
-          <h4>Get connected with the World's<br/> best Doctors,<b> TODAY!</b></h4>
-        </GridItem>
+        <GridItem xs={12} sm={12} md={5} style={{ marginLeft: "2vw" }}>
+          <GridItem
+            xs={12}
+            sm={12}
+            md={12}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 40,
+            }}
+          >
+            <img src={globe} width={100} height={100} />
+            <h4>
+              Get connected with the World's
+              <br /> best Doctors,<b> TODAY!</b>
+            </h4>
+          </GridItem>
           <Card chart>
             <CardHeader color="info">
               <ChartistGraph
@@ -181,7 +216,12 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={6} style={{ marginTop: 55, marginLeft: '1vw' }}>
+        <GridItem
+          xs={12}
+          sm={12}
+          md={6}
+          style={{ marginTop: 55, marginLeft: "1vw" }}
+        >
           <Card>
             <CardHeader color="warning">
               <h4 className={classes.cardTitleWhite}>Upcoming Appointments</h4>
