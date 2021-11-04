@@ -17,11 +17,15 @@ const buildschema =  buildSchema(`
         searchDoctorByName(searchTerm: String!): [User!]
         searchDoctorBySpecialization(searchTerm: String!): [User!]
         searchParticularDoctor(userId: ID!): User!
+        getStatistics_Users: String!
+        getStatistics_Doctors: String!
 
         viewAppointment(user_id: ID!): [viewAppointment!]!
         cancelAppointment(appointment_id: ID!): Response!
         changeStatus(appointment_id: ID!): Response!
         getAllAppointments(user_id: ID!) : [viewAppointment!]!
+        getStatistics_Appointment: String!
+        getStatistics_Successful_App: String!
     }
 
     type rootMutation {

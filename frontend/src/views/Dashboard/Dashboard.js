@@ -126,7 +126,7 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <LocalOffer />
-                Tracked from CodeX
+                Tracked from MacroMedic
               </div>
             </CardFooter>
           </Card>

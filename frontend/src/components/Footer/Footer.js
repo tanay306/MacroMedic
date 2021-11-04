@@ -47,7 +47,7 @@ export default function Footer(props) {
               // target="_blank"
               className={classes.a}
             >
-              CodeX Clinic
+              MacroMedic
             </a>
             
           </span>
