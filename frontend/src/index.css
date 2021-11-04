@@ -13,17 +13,3 @@ circle {
 textarea {
   padding: auto 8px !important;
 }
-
-/* IPD Styles */
-.makeStyles-card-96, .makeStyles-card-91, .makeStyles-card-97{
-  background-color: #444 !important;
-  color: whitesmoke !important;
-}
-
-.makeStyles-cardBody-122, .makeStyles-tableResponsive-135, .makeStyles-table-132, .makeStyles-tableBodyRow-137, .makeStyles-tableCell-134, .makeStyles-tableCell-207, .makeStyles-tableCell-117, .makeStyles-tableCell-172, .makeStyles-tableCell-202{
-  color: whitesmoke !important;
-}
-
-.MuiIconButton-label{
-  color: whitesmoke !important;
-}

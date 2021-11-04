@@ -10,8 +10,7 @@ const userSchema = mongoose.Schema(
     },
     phoneNo: {
       type: String,
-      default: "phone",
-      unique: true,
+      default: "phone"
     },
     email: {
       type: String,
@@ -52,9 +51,6 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    rating: {
-      type: Number,
-    }
   },
   {
     timestamps: true,

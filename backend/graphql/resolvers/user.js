@@ -8,6 +8,7 @@ const fuzzy = require('mongoose-fuzzy-search');
 const authUser = async (args, { req, redis }) => {
   try {
     const user = await User.findOne({ email: args.email });
+    console.log(user);
     if (user && (await user.matchPassword(args.password))) {
       return {
         ...user._doc,
