@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -31,6 +31,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import GroupIcon from "@material-ui/icons/Group";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import api from "../../utils/api";
+import { GlobalContext } from "GlobalContext";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -57,17 +58,29 @@ export default function Dashboard() {
   const [totalApps, setTotalApps] = useState(0);
   const [totalDocs, setTotalDocs] = useState(0);
 
+  const { user } = useContext(GlobalContext);
+  const [userData, setUserData] = user;
+
   useEffect(() => {
     const mf = async () => {
-      const data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
-      console.log(data);
+      console.log("user: ", userData._id);
+      const data = await api.getAllAppointments(userData._id);
+      console.log("Abhi ka Data: ", data);
       let j = 1,
         k = 1;
       let upp = [],
         ppp = [];
       for (let i = 0; i < data.length; i++) {
+        let date = new Date(data[i].date);
+        let time = data[i].date.split("T")[1];
+        date = date.toLocaleDateString("pt-PT");
         if (i < 2 || i > 3) {
-          upp.push([`${j}`, data[i].doctorId.name, Date(data[i].date)]);
+          upp.push([
+            `${j}`,
+            data[i].doctorId.name,
+            // data[i].date.toLocaleString().split("T")[0],
+            date + "\t\t\t\t" + time,
+          ]);
           j++;
         } else {
           ppp.push([
@@ -83,7 +96,7 @@ export default function Dashboard() {
       setPpp(ppp);
     };
     mf();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const fetcher = async () => {
