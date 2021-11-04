@@ -130,12 +130,12 @@ const getAllAppointments = async (args, {req}) => {
         const user = await User.findById(args.user_id);
         console.log(user);
         if(user.role=='patient') {
-            const appointment = Appointment.find({patientId: args.user_id}).populate('doctorId');;
+            const appointment = Appointment.find({patientId: args.user_id}).populate('doctorId');
             if(appointment) {
                 return appointment;
             }
         } else {
-            const appointment = Appointment.find({doctorId: args.user_id});
+            const appointment = Appointment.find({doctorId: args.user_id}).populate('patientId');
             if(appointment) {
                 return appointment;
             }

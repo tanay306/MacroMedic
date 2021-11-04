@@ -482,6 +482,42 @@ const api = {
     );
     return data.data.data.getStatistics_Doctors;
   },
+  getAppointmentsStats: async () => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+          query{
+            getStatistics_Appointment
+          }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data.data.data.getStatistics_Appointment;
+  },
+  getSuccessStats: async () => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+        query{
+          getStatistics_Successful_App
+        }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data.data.data.getStatistics_Successful_App;
+  },
 };
 
 export default api;

@@ -92,6 +92,12 @@ export default function Dashboard() {
 
       const statsTotalDocs = await api.getStatsTotalDocs();
       setTotalDocs(statsTotalDocs);
+
+      const appointmentStats = await api.getAppointmentsStats();
+      setTotalApps(appointmentStats);
+
+      const getSucStats = await api.getSuccessStats();
+      setSuccessfulApps(getSucStats);
     };
 
     fetcher();
@@ -125,7 +131,7 @@ export default function Dashboard() {
                 <PersonAddIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Successful Appointments</p>
-              <h3 className={classes.cardTitle}>7</h3>
+              <h3 className={classes.cardTitle}>{successfulApps}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -142,7 +148,7 @@ export default function Dashboard() {
                 <FormatListNumberedIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Total Appointments</p>
-              <h3 className={classes.cardTitle}>26</h3>
+              <h3 className={classes.cardTitle}>{totalApps}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
