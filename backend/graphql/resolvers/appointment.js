@@ -146,6 +146,27 @@ const getAllAppointments = async (args, {req}) => {
     }
 }
 
+const getAllUpcomingAppointments = async (args, {req}) => {
+    try {
+        const user = await User.findById(args.user_id);
+        console.log(user);
+        if(user.role=='patient') {
+            const appointment = Appointment.find({patientId: args.user_id, status: "Pending"}).populate('doctorId');
+            if(appointment) {
+                return appointment;
+            }
+        } else {
+            const appointment = Appointment.find({doctorId: args.user_id, status: "Pending"}).populate('patientId');
+            if(appointment) {
+                return appointment;
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 const cancelAppointment = async (args, {req}) => {
     try {
         // if(loggedin(req)) {
@@ -244,5 +265,6 @@ module.exports = {
     changeStatus,
     getAllAppointments,
     getStatistics_Appointment,
-    getStatistics_Successful_App
+    getStatistics_Successful_App,
+    getAllUpcomingAppointments
 }

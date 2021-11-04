@@ -24,6 +24,7 @@ const buildschema =  buildSchema(`
         cancelAppointment(appointment_id: ID!): Response!
         changeStatus(appointment_id: ID!): Response!
         getAllAppointments(user_id: ID!) : [viewAppointment!]!
+        getAllUpcomingAppointments(user_id: ID!) : [viewAppointment!]!
         getStatistics_Appointment: String!
         getStatistics_Successful_App: String!
     }
