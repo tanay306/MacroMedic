@@ -13,7 +13,7 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import MyMap from "components/Map/map.js";
-import {GlobalContext} from '../../GlobalContext'
+import { GlobalContext } from "../../GlobalContext";
 import api from "../../utils/api";
 
 import avatar from "assets/img/faces/marc.jpg";
@@ -24,7 +24,7 @@ const styles = {
     margin: "0",
     fontSize: "14px",
     marginTop: "0",
-    marginBottom: "0"
+    marginBottom: "0",
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -33,8 +33,8 @@ const styles = {
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -45,23 +45,28 @@ export default function UserProfile() {
   const [userD, setUserD] = React.useState({});
 
   React.useEffect(() => {
-    const mf = async() => {
-      const data = await api.getUserById("6056c3a829eca020d81bbb53");
+    let data;
+    const mf = async () => {
+      try {
+        data = await api.getUserById(userData._id);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Page data");
       console.log(data);
       setUserD(data);
-    }
+    };
     mf();
-    
-  }, [])
+  }, [userData]);
 
-  const initials = {name:'',mobileNo:'',address:''};
+  const initials = userD;
   const [updated, setUpdate] = useState(initials);
 
-  const pickUpInit = {address:'', lat:0, lng:0};
-  const [pickUp,setPickUp] = useState(pickUpInit);
-  
-  const dropInit = {address:'', lat:0, lng:0};
-  const [drop,setDrop] = useState(dropInit);
+  const pickUpInit = { address: "", lat: 0, lng: 0 };
+  const [pickUp, setPickUp] = useState(pickUpInit);
+
+  const dropInit = { address: "", lat: 0, lng: 0 };
+  const [drop, setDrop] = useState(dropInit);
 
   const [mapInit, setMapInit] = useState(false);
 
@@ -72,18 +77,20 @@ export default function UserProfile() {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
+              <h4 className={classes.cardTitleWhite}>Your Profile</h4>
               <p className={classes.cardCategoryWhite}>Update your profile</p>
             </CardHeader>
             <CardBody>
-              <h5>This details will be used by the doctor for better analysis</h5>
+              <h5>
+                This details will be used by the doctor for better analysis
+              </h5>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
                     labelText="Name"
                     id="company-disabled"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                   />
                 </GridItem>
@@ -92,7 +99,7 @@ export default function UserProfile() {
                     labelText="Phone Number"
                     id="username"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                   />
                 </GridItem>
@@ -101,7 +108,7 @@ export default function UserProfile() {
                     labelText="Email address"
                     id="email-address"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                   />
                 </GridItem>
@@ -113,7 +120,7 @@ export default function UserProfile() {
                     labelText="Age"
                     id="city"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                   />
                 </GridItem>
@@ -122,7 +129,7 @@ export default function UserProfile() {
                     labelText="Sex"
                     id="country"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                   />
                 </GridItem>
@@ -143,11 +150,11 @@ export default function UserProfile() {
                     labelText="About me"
                     id="about-me"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                     inputProps={{
                       multiline: true,
-                      rows: 5
+                      rows: 5,
                     }}
                   />
                 </GridItem>
@@ -168,10 +175,8 @@ export default function UserProfile() {
             </CardAvatar>
             <CardBody profile>
               {/* <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6> */}
-              <h4 className={classes.cardTitle}>{userD? userD.name:''}</h4>
-              <p className={classes.description}>
-                {userD ? userD.about:''}
-              </p>
+              <h4 className={classes.cardTitle}>{userD ? userD.name : ""}</h4>
+              <p className={classes.description}>{userD ? userD.about : ""}</p>
               <Button color="primary" round>
                 Update Picture
               </Button>
@@ -180,20 +185,19 @@ export default function UserProfile() {
 
           <Card profile>
             {/* <CardBody profile> */}
-              <MyMap 
-                pU={pickUp}
-                sPU={setPickUp} 
-                d={drop} 
-                sD={setDrop} 
-                // iD={isDriver}
-                // sS={setStep} 
-                mI={mapInit}
-              />
+            <MyMap
+              pU={pickUp}
+              sPU={setPickUp}
+              d={drop}
+              sD={setDrop}
+              // iD={isDriver}
+              // sS={setStep}
+              mI={mapInit}
+            />
             {/* </CardBody> */}
           </Card>
         </GridItem>
       </GridContainer>
-      
     </div>
   );
 }
