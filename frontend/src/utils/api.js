@@ -446,6 +446,39 @@ const api = {
     );
     return data.data.data.getAllUpcomingAppointments;
   },
+  getAllPreviousAppointments: async (ID) => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+        query{
+          getAllPreviousAppointments(user_id: "${ID}") {
+            _id
+            patientId
+            doctorId {
+              name
+              phoneNo
+              password
+              age
+              sex
+              specialization
+              token
+              about
+              image
+            }
+            status
+          }
+        }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data.data.data.getAllPreviousAppointments;
+  },
   getStatsUser: async () => {
     const data = await axios.post(
       url,

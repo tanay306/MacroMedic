@@ -32,6 +32,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import api from "../../utils/api";
 import { GlobalContext } from "GlobalContext";
+import { useHistory } from "react-router-dom";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -67,6 +68,8 @@ export default function Dashboard() {
   //   setRole(userData.role);
   // }, [userData]);
 
+  const history = useHistory();
+
   useEffect(() => {
     const mf = async () => {
       console.log("user: ", userData._id);
@@ -85,7 +88,7 @@ export default function Dashboard() {
             `${j}`,
             data[i].doctorId.name,
             // data[i].date.toLocaleString().split("T")[0],
-            date + "\t\t\t\t" + time,
+            date + "\t\t@" + time,
           ]);
           j++;
         } else {
@@ -122,6 +125,15 @@ export default function Dashboard() {
     fetcher();
   }, []);
 
+  useEffect(() => {
+    const data = window.sessionStorage.getItem("LOC_user");
+    const jsonData = JSON.parse(data);
+
+    if (!jsonData || !userData.token) {
+      history.push("/");
+    }
+  }, [userData]);
+
   const classes = useStyles();
   return (
     <div>
@@ -149,7 +161,7 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <PersonAddIcon />
               </CardIcon>
-              <p className={classes.cardCategory}>Successful Appointments</p>
+              <p className={classes.cardCategory}>Appointments Today</p>
               <h3 className={classes.cardTitle}>{successfulApps}</h3>
             </CardHeader>
             <CardFooter stats>

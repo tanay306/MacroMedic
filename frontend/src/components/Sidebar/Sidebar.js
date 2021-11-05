@@ -66,6 +66,11 @@ export default function Sidebar(props) {
         var activePro = " ";
         var listItemClasses;
         var show = false;
+        // if (userData.role === "doctor") {
+        //   listItemClasses = classNames({
+        //     [" " + classes[color]]: "pink",
+        //   });
+        // }
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
           show = true;

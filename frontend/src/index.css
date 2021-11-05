@@ -13,3 +13,7 @@ circle {
 textarea {
   padding: auto 8px !important;
 }
+
+.hideNow {
+  display: none !important;
+}
