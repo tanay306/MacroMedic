@@ -58,8 +58,14 @@ export default function Dashboard() {
   const [totalApps, setTotalApps] = useState(0);
   const [totalDocs, setTotalDocs] = useState(0);
 
+  // const [ role, setRole ] = useState("Patient");
+
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
+
+  // useEffect(() => {
+  //   setRole(userData.role);
+  // }, [userData]);
 
   useEffect(() => {
     const mf = async () => {
@@ -251,7 +257,11 @@ export default function Dashboard() {
             <CardBody>
               <Table
                 tableHeaderColor="warning"
-                tableHead={["ID", "Doctor's Name", "When"]}
+                tableHead={[
+                  "ID",
+                  `${userData.role === "doctor" ? "Patient" : "Doctor"} Name`,
+                  "When",
+                ]}
                 tableData={uApp}
               />
             </CardBody>

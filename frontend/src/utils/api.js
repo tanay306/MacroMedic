@@ -34,15 +34,15 @@ const api = {
     return data.data.data.authUser;
   },
   registerUser: async (
-    name,
-    phoneNo,
-    email,
-    password,
-    isAdmin,
-    role,
-    sex,
-    age,
-    specialization
+    name = "MacroMedic",
+    // phoneNo = "1234567890",
+    email = "macro@gmail.com",
+    password = "1234"
+    // isAdmin = false,
+    // role = "Doctor",
+    // sex = "M",
+    // age = 18,
+    // specialization = "Gen Phy"
   ) => {
     const data = await axios.post(
       url,
@@ -52,12 +52,12 @@ const api = {
                   registerUser(userInput: {
                     name: "${name}",
                     password: "${password}",
-                    phoneNo: "${phoneNo}",
+                    phoneNo: "",
                     email: "${email}",
-                    role: "${role}",
-                    sex: "${age}",
-                    age: ${age},
-                    specialization: "${specialization}"
+                    role: "patient",
+                    sex: "",
+                    age: ${0},
+                    specialization: ""
                   }) {
                     _id
                   name
@@ -79,7 +79,7 @@ const api = {
         },
       }
     );
-    return data;
+    return data.data.data.registerUser;
   },
   getDoctors: async () => {
     const data = await axios.post(

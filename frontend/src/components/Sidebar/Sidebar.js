@@ -15,31 +15,31 @@ import Icon from "@material-ui/core/Icon";
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 import userAvatar from "../../assets/img/faces/marc.jpg";
-import usePayment from '../Payment/usePayment';
+import usePayment from "../Payment/usePayment";
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
-import { GlobalContext } from '../../GlobalContext';
-import Swal from 'sweetalert2';
+import { GlobalContext } from "../../GlobalContext";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
   const [paymentHandler, setMyColor] = usePayment();
   const { user } = useContext(GlobalContext);
-  const [ userData, setUserData ] = user;
+  const [userData, setUserData] = user;
 
   const handleGift = (e) => {
     e.preventDefault();
     Swal.mixin({
-      input: 'number',
-      confirmButtonText: 'Pay &rarr;',
+      input: "number",
+      confirmButtonText: "Pay &rarr;",
       allowOutsideClick: false,
       allowEscapeKey: false,
       // progressSteps: ['1']
     })
       .queue([
         {
-          title: 'Show your love',
-          text: 'Enter the amount',
+          title: "Show your love",
+          text: "Enter the amount",
         },
       ])
       .then(async (result) => {
@@ -60,7 +60,7 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        if(prop.path === '/bookAppointment/:docId'){
+        if (prop.path === "/bookAppointment/:docId") {
           return;
         }
         var activePro = " ";
@@ -70,15 +70,15 @@ export default function Sidebar(props) {
           activePro = classes.activePro + " ";
           show = true;
           listItemClasses = classNames({
-            [" " + classes[color]]: true
+            [" " + classes[color]]: true,
           });
         } else {
           listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+            [" " + classes[color]]: activeRoute(prop.layout + prop.path),
           });
         }
         const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path),
         });
         return (
           <NavLink
@@ -87,15 +87,17 @@ export default function Sidebar(props) {
             activeClassName="active"
             key={key}
           >
-            <ListItem button className={classes.itemLink + listItemClasses}
-            onClick={(e) => {
-              show? handleGift(e) : console.log('hide')
-            }}
+            <ListItem
+              button
+              className={classes.itemLink + listItemClasses}
+              onClick={(e) => {
+                show ? handleGift(e) : console.log("hide");
+              }}
             >
               {typeof prop.icon === "string" ? (
                 <Icon
                   className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
+                    [classes.itemIconRTL]: props.rtlActive,
                   })}
                 >
                   {prop.icon}
@@ -103,14 +105,14 @@ export default function Sidebar(props) {
               ) : (
                 <prop.icon
                   className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
+                    [classes.itemIconRTL]: props.rtlActive,
                   })}
                 />
               )}
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
-                  [classes.itemTextRTL]: props.rtlActive
+                  [classes.itemTextRTL]: props.rtlActive,
                 })}
                 disableTypography={true}
               />
@@ -125,13 +127,31 @@ export default function Sidebar(props) {
       <div
         // href="https://www.creative-tim.com?ref=mdr-sidebar"
         className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive
+          [classes.logoLinkRTL]: props.rtlActive,
         })}
         target="_blank"
       >
         <div className={classes.logoImage}>
-          <img src={userAvatar} alt="logo" className={classes.img} style={{ borderRadius: '50%' }}/>
-          <span style={{ width: "35px", top: "24px", left: "85px", position: "absolute", verticalAlign: "middle", border: "0" }}>{userData.name.split(" ")[0]}</span>
+          <img
+            src={userAvatar}
+            alt="logo"
+            className={classes.img}
+            style={{ borderRadius: "50%" }}
+          />
+          {userData && userData.name && (
+            <span
+              style={{
+                width: "35px",
+                top: "24px",
+                left: "85px",
+                position: "absolute",
+                verticalAlign: "middle",
+                border: "0",
+              }}
+            >
+              {userData.name.split(" ")[0]}
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -145,12 +165,12 @@ export default function Sidebar(props) {
           open={props.open}
           classes={{
             paper: classNames(classes.drawerPaper, {
-              [classes.drawerPaperRTL]: props.rtlActive
-            })
+              [classes.drawerPaperRTL]: props.rtlActive,
+            }),
           }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {brand}
@@ -173,8 +193,8 @@ export default function Sidebar(props) {
           open
           classes={{
             paper: classNames(classes.drawerPaper, {
-              [classes.drawerPaperRTL]: props.rtlActive
-            })
+              [classes.drawerPaperRTL]: props.rtlActive,
+            }),
           }}
         >
           {brand}
@@ -199,5 +219,5 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool
+  open: PropTypes.bool,
 };
