@@ -62,26 +62,46 @@ export default function TableList() {
       for (let i = 0; i < data.length; i++) {
         let date = new Date(data[i].date);
         let time = data[i].date.split("T")[1];
-        date = date.toLocaleDateString("pt-PT");
-        if (i < 2 || i > 3) {
-          upp.push([
-            `${j}`,
-            data[i].doctorId.name,
-            date + "\t\t@" + time,
-            "Pending",
-          ]);
-          j++;
-        } else {
-          ppp.push([
-            `${k}`,
-            data[i].doctorId.name,
-            date + "\t\t@" + time,
-            data[i].status,
-          ]);
-          k++;
-        }
+        // date = date.toLocaleDateString("pt-PT");
+        date = date.toDateString();
+        upp.push([
+          `${j}`,
+          data[i].doctorId.name,
+          date + "\t\t@" + time,
+          "Pending",
+        ]);
+        j++;
       }
       setUpp(upp);
+    };
+    mf();
+  }, [userData]);
+
+  useEffect(() => {
+    const mf = async () => {
+      const data = await api.getAllPreviousAppointments(userData._id);
+      console.log(data);
+      let j = 1,
+        k = 1;
+      let upp = [],
+        ppp = [];
+      for (let i = 0; i < data.length; i++) {
+        // let date = new Date(data[i].date);
+        let time =
+          new Date().toLocaleTimeString().split(":")[0] +
+          ":" +
+          new Date().toLocaleTimeString().split(":")[1];
+        // console.log(new Date().toLocaleTimeString());
+        // date = date.toLocaleDateString("pt-PT");
+        ppp.push([
+          `${k}`,
+          data[i].doctorId.name,
+          // date + "\t\t@" + time,
+          new Date().toDateString() + "\t\t@" + time,
+          data[i].status,
+        ]);
+        k++;
+      }
       setPpp(ppp);
     };
     mf();
