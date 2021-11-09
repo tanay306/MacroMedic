@@ -370,6 +370,8 @@ const api = {
         },
       }
     );
+    console.log("0000");
+    console.log(data.data.data.getUserById);
     return data.data.data.getUserById;
   },
   viewAppointment: async (ID) => {

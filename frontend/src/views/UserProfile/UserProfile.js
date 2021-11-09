@@ -42,7 +42,7 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
-  const [users, setUsers] = React.useState();
+  const [users, setUsers] = React.useState({});
 
   React.useEffect(() => {
     let data;
@@ -52,15 +52,15 @@ export default function UserProfile() {
       } catch (err) {
         console.log(err);
       }
-      console.log("Page data");
+
       setUsers(data);
-      console.log(1);
-      console.log(users);
-      console.log(2);
     };
     mf();
   }, [userData]);
 
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
   const initials = users;
   const [updated, setUpdate] = useState(initials);
 
@@ -83,87 +83,148 @@ export default function UserProfile() {
               <p className={classes.cardCategoryWhite}>Update your profile</p>
             </CardHeader>
             <CardBody>
-              <h5>
-                This details will be used by the doctor for better analysis
-              </h5>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Name"
-                    id="company-disabled"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    // value={userD.name}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Phone Number"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    value={userData.phoneNo}
-                  />
-                </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Email address"
-                    id="email-address"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    value={userData.email}
-                  />
+                  {users && (
+                    <CustomInput
+                      labelText="Name"
+                      id="company-disabled"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      defaultValue={users.name == "" ? "" : users.name}
+                      onChange={(e) =>
+                        setUsers({ ...users, name: e.target.value })
+                      }
+                    />
+                  )}
+                </GridItem>
+                <GridItem xs={12} sm={12} md={3}>
+                  {users && (
+                    <CustomInput
+                      labelText="Age"
+                      id="city"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      defaultValue={users.age == null ? "" : users.age}
+                      onChange={(e) =>
+                        setUsers({ ...users, age: e.target.value })
+                      }
+                    />
+                  )}
+                </GridItem>
+                <GridItem xs={12} sm={12} md={3}>
+                  {users && (
+                    <CustomInput
+                      labelText="Sex"
+                      id="country"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      defaultValue={users.sex == "" ? "" : users.sex}
+                      onChange={(e) =>
+                        setUsers({ ...users, sex: e.target.value })
+                      }
+                    />
+                  )}
                 </GridItem>
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Age"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    value={userData.age}
-                  />
+                <GridItem xs={12} sm={12} md={6}>
+                  {users && (
+                    <CustomInput
+                      labelText="Phone Number"
+                      id="username"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      defaultValue={users.phoneNo == null ? "" : users.phoneNo}
+                      onChange={(e) =>
+                        setUsers({ ...users, phoneNo: e.target.value })
+                      }
+                    />
+                  )}
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Sex"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    value={userData.sex}
-                  />
+                <GridItem xs={12} sm={12} md={6}>
+                  {users && (
+                    <CustomInput
+                      labelText="Email address"
+                      id="email-address"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      defaultValue={users.email == null ? "" : users.email}
+                      onChange={(e) =>
+                        setUsers({ ...users, email: e.target.value })
+                      }
+                    />
+                  )}
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Password"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
+                {users && users.role == "doctor" ? (
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Specialization"
+                      id="postal-code"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      defaultValue={
+                        users.specialization == null ? "" : users.specialization
+                      }
+                      onChange={(e) =>
+                        setUsers({ ...users, specialization: e.target.value })
+                      }
+                    />
+                  </GridItem>
+                ) : (
+                  ""
+                )}
+                {users && users.role == "doctor" ? (
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Consulting Charges"
+                      id="postal-code"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      defaultValue={users.charges == null ? "" : users.charges}
+                      onChange={(e) =>
+                        setUsers({ ...users, charges: e.target.value })
+                      }
+                    />
+                  </GridItem>
+                ) : (
+                  ""
+                )}
               </GridContainer>
               <br />
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="About me"
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5,
-                    }}
-                  />
+                  {users && (
+                    <CustomInput
+                      labelText="About me"
+                      id="about-me"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        multiline: true,
+                        rows: 5,
+                      }}
+                      // value={}
+                      defaultValue={users.about == "" ? "" : users.about}
+                      onChange={(e) =>
+                        setUsers({ ...users, about: e.target.value })
+                      }
+                    />
+                  )}
                 </GridItem>
               </GridContainer>
             </CardBody>

@@ -43,7 +43,7 @@ export default function Icons() {
     let data;
     const mf = async () => {
       try {
-        data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
+        data = await api.getAllAppointments(userData._id);
         console.log(data);
       } catch (error) {
         console.log(error);
