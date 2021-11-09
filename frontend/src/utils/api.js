@@ -426,14 +426,20 @@ const api = {
         query: `
           query {
             getAllUpcomingAppointments(user_id: "${ID}") {
+              _id
+              patientId{
+                name
+                _id
+              }
               doctorId {
                 name
                 image
                 specialization
+                _id
               }
               description
               date
-              status
+              status 
             }
           }
         `,
@@ -454,7 +460,10 @@ const api = {
         query{
           getAllPreviousAppointments(user_id: "${ID}") {
             _id
-            patientId
+            patientId{
+              _id
+              name
+            }
             doctorId {
               name
               phoneNo
@@ -465,6 +474,7 @@ const api = {
               token
               about
               image
+              _id
             }
             status
           }

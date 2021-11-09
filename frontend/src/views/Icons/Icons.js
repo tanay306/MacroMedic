@@ -40,10 +40,10 @@ export default function Icons() {
   const [userData, setUserData] = user;
 
   useEffect(() => {
-    let data;
+    let data = [];
     const mf = async () => {
       try {
-        data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
+        data = await api.getAllAppointments(userData._id);
         console.log(data);
       } catch (error) {
         console.log(error);
@@ -54,29 +54,24 @@ export default function Icons() {
       let upp = [],
         ppp = [];
       for (let i = 0; i < data.length; i++) {
-        if (i < 2 || i > 3) {
-          upp.push({
-            imgUrl: "../assets/doctor.jpeg",
-            name: data[i].doctorId.name,
-            Specialization: data[i].doctorId.specialization,
-            When: Date(data[i].date),
-          });
-          j++;
-        } else {
-          ppp.push([
-            `${j}`,
-            data[i].doctorId.name,
-            data[i].date,
-            data[i].status,
-          ]);
-          k++;
-        }
+        let date = new Date(data[i].date);
+        let time = data[i].date.split("T")[1];
+        // date = date.toLocaleDateString("pt-PT");
+        date = date.toDateString();
+        upp.push([
+          `${j}`,
+          data[i].doctorId,
+          data[i].patientId,
+          date + "\t\t@" + time,
+          "Pending",
+          data[i]._id,
+        ]);
+        j++;
       }
       setUpp(upp);
-      setPpp(ppp);
     };
     mf();
-  }, []);
+  }, [userData]);
 
   const classes = useStyles();
   const arr = [1, 2, 3, 4, 5];
@@ -91,56 +86,57 @@ export default function Icons() {
             </p>
           </CardHeader>
           <CardBody>
-            {uApp.map((elem) => (
-              <StyledDoctorDataContainer>
-                <Avatar src={doctor} className={classes.large} />
-                <StyledDoctorData>
-                  <StyledH6>{elem.name}</StyledH6>
-                  <StyledP style={{ color: "gray" }}>
-                    {elem.Specialization}
-                  </StyledP>
-                </StyledDoctorData>
-                <StyledDoctorData>
-                  <StyledH6>Appointment Summary</StyledH6>
-                  <StyledP>When:</StyledP>
-                  <StyledP>{elem.When}</StyledP>
-                </StyledDoctorData>
-                <StyledDoctorData>
-                  <CustomButton
-                    fullWidth
-                    color="success"
-                    onClick={() => {
-                      window.location.href =
-                        "http://localhost:5000/?room=Appointment_Session_1234";
-                    }}
-                  >
-                    <span>Join Meeting</span>{" "}
-                    <span style={{ float: "right" }}>
-                      <VideoCallIcon
+            {uApp.length != 0 &&
+              uApp.map((elem) => (
+                <StyledDoctorDataContainer>
+                  {console.log(elem)}
+                  <Avatar src={doctor} className={classes.large} />
+                  <StyledDoctorData>
+                    <StyledH6>{elem[1].name}</StyledH6>
+                    <StyledP style={{ color: "gray" }}>
+                      {elem[1].specialization}
+                    </StyledP>
+                  </StyledDoctorData>
+                  <StyledDoctorData>
+                    <StyledH6>Appointment Summary</StyledH6>
+                    <StyledP>When:</StyledP>
+                    <StyledP>{elem[3]}</StyledP>
+                  </StyledDoctorData>
+                  <StyledDoctorData>
+                    <CustomButton
+                      fullWidth
+                      color="success"
+                      onClick={() => {
+                        window.location.href = `http://localhost:5000/?room=${elem[5]}`;
+                      }}
+                    >
+                      <span>Join Meeting</span>{" "}
+                      <span style={{ float: "right" }}>
+                        <VideoCallIcon
+                          style={{ marginLeft: 8, verticalAlign: "middle" }}
+                        />
+                      </span>
+                    </CustomButton>
+                    <CustomButton
+                      fullWidth
+                      color="danger"
+                      onClick={async () => {
+                        try {
+                          const msg = await api.cancelAppointment(userData._id);
+                          console.log(msg);
+                        } catch (error) {
+                          console.log(error);
+                        }
+                      }}
+                    >
+                      Cancel Appointment{" "}
+                      <CloseIcon
                         style={{ marginLeft: 8, verticalAlign: "middle" }}
                       />
-                    </span>
-                  </CustomButton>
-                  <CustomButton
-                    fullWidth
-                    color="danger"
-                    onClick={async () => {
-                      try {
-                        const msg = await api.cancelAppointment(userData._id);
-                        console.log(msg);
-                      } catch (error) {
-                        console.log(error);
-                      }
-                    }}
-                  >
-                    Cancel Appointment{" "}
-                    <CloseIcon
-                      style={{ marginLeft: 8, verticalAlign: "middle" }}
-                    />
-                  </CustomButton>
-                </StyledDoctorData>
-              </StyledDoctorDataContainer>
-            ))}
+                    </CustomButton>
+                  </StyledDoctorData>
+                </StyledDoctorDataContainer>
+              ))}
           </CardBody>
         </Card>
       </GridItem>
