@@ -128,7 +128,7 @@ const viewAppointment = async (args, {req}) => {
 const getAllAppointments = async (args, {req}) => {
     try {
         const user = await User.findById(args.user_id);
-        console.log(user);
+        await updateAppointmentStatus();
         if(user.role=='patient') {
             const appointment = Appointment.find({patientId: args.user_id}).populate('doctorId');
             if(appointment) {
@@ -146,9 +146,27 @@ const getAllAppointments = async (args, {req}) => {
     }
 }
 
+const updateAppointmentStatus = async () => {
+    try {
+        let appointments = await Appointment.find({});
+        appointments.forEach( (appointment) => {
+            var app_date = new Date(appointment.date);
+            var date = new Date();
+            if (app_date < date && appointment.status == "Pending") {
+                appointment.status = "Not Visited"
+                appointment.save();
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 const getAllUpcomingAppointments = async (args, {req}) => {
     try {
         const user = await User.findById(args.user_id);
+        await updateAppointmentStatus();
         if(user.role=='patient') {
             const appointment = Appointment.find({patientId: args.user_id, status: "Pending"}).populate('doctorId patientId');
             if(appointment) {
@@ -169,6 +187,7 @@ const getAllUpcomingAppointments = async (args, {req}) => {
 const getAllPreviousAppointments = async (args, {req}) => {
     try {
         const user = await User.findById(args.user_id);
+        await updateAppointmentStatus();
         if(user.role=='patient') {
             const appointment = Appointment.find({patientId: args.user_id, status: {$ne: "Pending"}}).populate('doctorId');
             if(appointment) {
