@@ -51,6 +51,10 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    charge: {
+      type: Number,
+      default: 500,
+    }
   },
   {
     timestamps: true,

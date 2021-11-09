@@ -92,6 +92,7 @@ const updateUserProfile = async (args, { req, redis }) => {
         user.role = args.userInput.role || user.role;
         user.about = args.userInput.about || user.about;
         user.location = args.userInput.location || user.location;
+        user.charge = args.userInput.charge || user.charge;
         if (args.userInput.password) {
           user.password = args.userInput.password;
         }
