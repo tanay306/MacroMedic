@@ -40,9 +40,15 @@ export default function Icons() {
   const [userData, setUserData] = user;
 
   useEffect(() => {
+    let data;
     const mf = async () => {
-      const data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
-      console.log(data);
+      try {
+        data = await api.getAllAppointments("6056c3a829eca020d81bbb53");
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+
       let j = 1,
         k = 1;
       let upp = [],
@@ -119,8 +125,12 @@ export default function Icons() {
                     fullWidth
                     color="danger"
                     onClick={async () => {
-                      const msg = await api.cancelAppointment(userData._id);
-                      console.log(msg);
+                      try {
+                        const msg = await api.cancelAppointment(userData._id);
+                        console.log(msg);
+                      } catch (error) {
+                        console.log(error);
+                      }
                     }}
                   >
                     Cancel Appointment{" "}

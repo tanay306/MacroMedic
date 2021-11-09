@@ -71,10 +71,15 @@ export default function Dashboard() {
   const history = useHistory();
 
   useEffect(() => {
+    let data;
     const mf = async () => {
       console.log("user: ", userData._id);
-      const data = await api.getAllAppointments(userData._id);
-      console.log("Abhi ka Data: ", data);
+      try {
+        data = await api.getAllAppointments(userData._id);
+        console.log("Abhi ka Data: ", data);
+      } catch (error) {
+        console.log(error);
+      }
       let j = 1,
         k = 1;
       let upp = [],
@@ -109,17 +114,21 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetcher = async () => {
-      const statsUser = await api.getStatsUser();
-      setTotalUsers(statsUser);
+      try {
+        const statsUser = await api.getStatsUser();
+        setTotalUsers(statsUser);
 
-      const statsTotalDocs = await api.getStatsTotalDocs();
-      setTotalDocs(statsTotalDocs);
+        const statsTotalDocs = await api.getStatsTotalDocs();
+        setTotalDocs(statsTotalDocs);
 
-      const appointmentStats = await api.getAppointmentsStats();
-      setTotalApps(appointmentStats);
+        const appointmentStats = await api.getAppointmentsStats();
+        setTotalApps(appointmentStats);
 
-      const getSucStats = await api.getSuccessStats();
-      setSuccessfulApps(getSucStats);
+        const getSucStats = await api.getSuccessStats();
+        setSuccessfulApps(getSucStats);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetcher();

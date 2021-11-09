@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -14,29 +14,29 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import CustomButton from "components/CustomButtons/Button.js";
-import TextField from '@material-ui/core/TextField';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { Avatar } from '@material-ui/core';
-import userImg from '../../assets/img/faces/doctor.png';
+import TextField from "@material-ui/core/TextField";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { Avatar } from "@material-ui/core";
+import userImg from "../../assets/img/faces/doctor.png";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import {GlobalContext} from '../../GlobalContext';
-import { Input } from '@material-ui/core';
+import { GlobalContext } from "../../GlobalContext";
+import { Input } from "@material-ui/core";
 
-import styled from 'styled-components';
-import api from '../../utils/api';
+import styled from "styled-components";
+import api from "../../utils/api";
 
-import Notify from '../../notification/Notify';
+import Notify from "../../notification/Notify";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
   },
   backButton: {
     marginRight: theme.spacing(1),
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   typo: {
     paddingLeft: "25%",
     marginBottom: "40px",
-    position: "relative"
+    position: "relative",
   },
   note: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -61,14 +61,14 @@ const useStyles = makeStyles((theme) => ({
     left: "0",
     marginLeft: "20px",
     position: "absolute",
-    width: "260px"
+    width: "260px",
   },
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
     fontSize: "14px",
     marginTop: "0",
-    marginBottom: "0"
+    marginBottom: "0",
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -77,11 +77,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -89,12 +89,12 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    flexWrap: "wrap",
+
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -110,8 +110,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TypographyPage() {
   const { allDocs, user } = useContext(GlobalContext);
-  const [ userData, setUserData ] = user;
-  const [ allDoctors, setAllDoctors ] = allDocs;
+  const [userData, setUserData] = user;
+  const [allDoctors, setAllDoctors] = allDocs;
   const { docId } = useParams();
   const history = useHistory();
   console.log(docId);
@@ -121,7 +121,11 @@ export default function TypographyPage() {
 
   useEffect(() => {
     const fetchDoctorHandler = async () => {
-      setDoctor(await api.searchParticularDoctor(docId));
+      try {
+        setDoctor(await api.searchParticularDoctor(docId));
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchDoctorHandler();
   }, [docId]);
@@ -140,57 +144,79 @@ export default function TypographyPage() {
   }, [bookAppointment]);
 
   function getSteps() {
-    return ['Choose a Doctor', 'Choose Date and Time', 'Write a Description of your Illness', 'Upload Medical Record'];
+    return [
+      "Choose a Doctor",
+      "Choose Date and Time",
+      "Write a Description of your Illness",
+      "Upload Medical Record",
+    ];
   }
 
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <form className={classes.container} noValidate>
-          {/* <Avatar src={userImg} className={classes.avatar}/> */}
-          <h5 style={{ margin: 8 }}>You have chosen {doctor.name} to assist you. Kindly complete the remaining steps to confirm appointment</h5>
-        </form>;
+        return (
+          <form className={classes.container} noValidate>
+            {/* <Avatar src={userImg} className={classes.avatar}/> */}
+            <h5 style={{ margin: 8 }}>
+              You have chosen {doctor.name} to assist you. Kindly complete the
+              remaining steps to confirm appointment
+            </h5>
+          </form>
+        );
       case 1:
-        return (<form className={classes.container} noValidate>
-          <TextField
-            id="datetime-local"
-            label="Appointment Date and Time"
-            type="datetime-local"
-            defaultValue="2021-03-20T10:30"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => {
-              setBookAppointment({
-                ...bookAppointment,
-                dateTime: e.target.value,
-              });
-            }}
-          />
-        </form>);
+        return (
+          <form className={classes.container} noValidate>
+            <TextField
+              id="datetime-local"
+              label="Appointment Date and Time"
+              type="datetime-local"
+              defaultValue="2021-03-20T10:30"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => {
+                setBookAppointment({
+                  ...bookAppointment,
+                  dateTime: e.target.value,
+                });
+              }}
+            />
+          </form>
+        );
       case 2:
         return (
           <form className={classes.container}>
-            <StyledTextArea aria-label="minimum height" rowsMin={3} placeholder="Minimum 3 rows" onChange={(e) => {
-              setBookAppointment({
-                ...bookAppointment,
-                description: e.target.value,
-              });
-            }}/>
-        </form>
+            <StyledTextArea
+              aria-label="minimum height"
+              rowsMin={3}
+              placeholder="Minimum 3 rows"
+              onChange={(e) => {
+                setBookAppointment({
+                  ...bookAppointment,
+                  description: e.target.value,
+                });
+              }}
+            />
+          </form>
         );
       case 3:
         return (
           <StyledFileInputContainer className={classes.container}>
-            <StyledFileInput type="file" placeholder="Upload File" variant="outlined" onChange={(e) => {
-              setFile(e.target.files[0]);
-              console.log(e.target.files);
-            }}/>
-        </StyledFileInputContainer>
+            <StyledFileInput
+              type="file"
+              placeholder="Upload File"
+              variant="outlined"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                console.log(e.target.files);
+              }}
+            />
+          </StyledFileInputContainer>
         );
       default:
-        return 'Unknown stepIndex';
+        return "Unknown stepIndex";
     }
   }
 
@@ -199,9 +225,18 @@ export default function TypographyPage() {
 
   const handleNext = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if(activeStep === steps.length - 1){
-      const data = await api.createAppointment(bookAppointment.doctorId, bookAppointment.dateTime, bookAppointment.description, userData._id);
-      const fls = await api.uploadDoc(data._id, file);
+    if (activeStep === steps.length - 1) {
+      try {
+        const data = await api.createAppointment(
+          bookAppointment.doctorId,
+          bookAppointment.dateTime,
+          bookAppointment.description,
+          userData._id
+        );
+        const fls = await api.uploadDoc(data._id, file);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -220,98 +255,162 @@ export default function TypographyPage() {
 
   return (
     <>
-    <Card>
-      <CardHeader color="warning">
-        <h4 className={classes.cardTitleWhite}>Book an instant appointment</h4>
-        <p className={classes.cardCategoryWhite}>
-          Kindly fill the form to book an appointment
-        </p>
-      </CardHeader>
-      <CardBody>
-        <GridContainer>
-          <StyledGridItem className={classes.root} xs={12} sm={12} md={8}>
-            <Stepper activeStep={activeStep} alternativeLabel style={{ marginTop: 30 }}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <div style={{ marginTop: 30 }}>
-              {activeStep === steps.length ? (
-                <div>
-                  <Typography className={classes.instructions}>All steps completed</Typography>
-                  <Button onClick={handleReset}>Reset</Button>
-                </div>
-              ) : (
-                <div style={{ marginTop: 30, textAlign: 'center', margin: 'auto' }}>
-                  <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                  <div>
-                    <CustomButton
-                    //fullWidth
-                    color="warning"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.backButton}
-                    >
-                      Back
-                    </CustomButton>
-                    {activeStep !== steps.length - 1 ?
-                    <CustomButton variant="contained" color="warning" onClick={handleNext}>Next
-                      </CustomButton>:
-                      <div style={{display: "inline-block"}} onClick={handleNext}>
-                        <Notify msg={`Appointment scheduled with ${doctor.name}`} />
-                      </div>
-                    }
-                    
-                  </div>
-                </div>
-              )}
-            </div>
-          </StyledGridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <StyledRightComponent>
-              <Avatar src={userImg} className={classes.avatar}/>
-              <h3 style={{ margin: 0, marginLeft: 22 }}>{doctor.name}</h3>
-              <h6 style={{ margin: 0, marginLeft: 22 }}>{doctor.specialization === null ? "NOT SPECIFIED" : doctor.specialization}</h6>
-              <p style={{ margin: 0, marginLeft: 22 }}>{doctor.about}</p>
-            </StyledRightComponent>
-          </GridItem>
-        </GridContainer>
-      </CardBody>
-    </Card>
-    <h3 style={{ marginLeft: 6 }}>Other Doctors devoted to Health</h3>
-    <StyledDoctorContainer>
-    {allDoctors.map(elem => (
       <Card>
-      <CardHeader color="warning" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
-        <img src={userImg} width={25} height={25} style={{ borderRadius: '50%', marginRight: 8 }}/>
-        <span style={{ textTransform: 'capitalize' }}>{elem.name}</span>
-      </CardHeader>
-      <CardBody>
-        <StyledIndividualDoctorPanel>
-          <span style={{ textTransform: 'capitalize' }}>Specialization: {elem.specialization === null ? "Not Specified" : elem.specialization}</span>
-          <span style={{ textTransform: 'capitalize' }}>Gender: {elem.sex === null ? "NOT SPECIFIED" : elem.sex}</span>
-          <span>Age: {elem.age === null || elem.age === "" ? "Not Specified" : elem.age}</span>
-          <span style={{ borderTop: 'solid', borderColor: "#ccc", borderWidth: 1, padding: '4px auto', margin: '4px 0' }}>About: {elem.about === "" ? "Not Specified" : elem.about}</span>
-        </StyledIndividualDoctorPanel>
-        <StyledButton
-              fullWidth
+        <CardHeader color="warning">
+          <h4 className={classes.cardTitleWhite}>
+            Book an instant appointment
+          </h4>
+          <p className={classes.cardCategoryWhite}>
+            Kindly fill the form to book an appointment
+          </p>
+        </CardHeader>
+        <CardBody>
+          <GridContainer>
+            <StyledGridItem className={classes.root} xs={12} sm={12} md={8}>
+              <Stepper
+                activeStep={activeStep}
+                alternativeLabel
+                style={{ marginTop: 30 }}
+              >
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div style={{ marginTop: 30 }}>
+                {activeStep === steps.length ? (
+                  <div>
+                    <Typography className={classes.instructions}>
+                      All steps completed
+                    </Typography>
+                    <Button onClick={handleReset}>Reset</Button>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      marginTop: 30,
+                      textAlign: "center",
+                      margin: "auto",
+                    }}
+                  >
+                    <Typography className={classes.instructions}>
+                      {getStepContent(activeStep)}
+                    </Typography>
+                    <div>
+                      <CustomButton
+                        //fullWidth
+                        color="warning"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        className={classes.backButton}
+                      >
+                        Back
+                      </CustomButton>
+                      {activeStep !== steps.length - 1 ? (
+                        <CustomButton
+                          variant="contained"
+                          color="warning"
+                          onClick={handleNext}
+                        >
+                          Next
+                        </CustomButton>
+                      ) : (
+                        <div
+                          style={{ display: "inline-block" }}
+                          onClick={handleNext}
+                        >
+                          <Notify
+                            msg={`Appointment scheduled with ${doctor.name}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </StyledGridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <StyledRightComponent>
+                <Avatar src={userImg} className={classes.avatar} />
+                <h3 style={{ margin: 0, marginLeft: 22 }}>{doctor.name}</h3>
+                <h6 style={{ margin: 0, marginLeft: 22 }}>
+                  {doctor.specialization === null
+                    ? "NOT SPECIFIED"
+                    : doctor.specialization}
+                </h6>
+                <p style={{ margin: 0, marginLeft: 22 }}>{doctor.about}</p>
+              </StyledRightComponent>
+            </GridItem>
+          </GridContainer>
+        </CardBody>
+      </Card>
+      <h3 style={{ marginLeft: 6 }}>Other Doctors devoted to Health</h3>
+      <StyledDoctorContainer>
+        {allDoctors.map((elem) => (
+          <Card>
+            <CardHeader
               color="warning"
-              onClick={() => {
-                history.push(`/user/bookAppointment/${elem._id}`);
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
               }}
+            >
+              <img
+                src={userImg}
+                width={25}
+                height={25}
+                style={{ borderRadius: "50%", marginRight: 8 }}
+              />
+              <span style={{ textTransform: "capitalize" }}>{elem.name}</span>
+            </CardHeader>
+            <CardBody>
+              <StyledIndividualDoctorPanel>
+                <span style={{ textTransform: "capitalize" }}>
+                  Specialization:{" "}
+                  {elem.specialization === null
+                    ? "Not Specified"
+                    : elem.specialization}
+                </span>
+                <span style={{ textTransform: "capitalize" }}>
+                  Gender: {elem.sex === null ? "NOT SPECIFIED" : elem.sex}
+                </span>
+                <span>
+                  Age:{" "}
+                  {elem.age === null || elem.age === ""
+                    ? "Not Specified"
+                    : elem.age}
+                </span>
+                <span
+                  style={{
+                    borderTop: "solid",
+                    borderColor: "#ccc",
+                    borderWidth: 1,
+                    padding: "4px auto",
+                    margin: "4px 0",
+                  }}
+                >
+                  About: {elem.about === "" ? "Not Specified" : elem.about}
+                </span>
+              </StyledIndividualDoctorPanel>
+              <StyledButton
+                fullWidth
+                color="warning"
+                onClick={() => {
+                  history.push(`/user/bookAppointment/${elem._id}`);
+                }}
               >
                 Book an Appointment
                 {/* <Link to={`/bookAppointment/3`} style={{ color: '#fff' }}>
                   Book an Appointment
                 </Link> */}
               </StyledButton>
-      </CardBody>
-      </Card>
-    ))}
-  </StyledDoctorContainer>
-  </>
+            </CardBody>
+          </Card>
+        ))}
+      </StyledDoctorContainer>
+    </>
   );
 }
 

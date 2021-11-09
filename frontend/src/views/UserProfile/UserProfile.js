@@ -42,7 +42,7 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
-  const [userD, setUserD] = React.useState({});
+  const [users, setUsers] = React.useState();
 
   React.useEffect(() => {
     let data;
@@ -53,13 +53,15 @@ export default function UserProfile() {
         console.log(err);
       }
       console.log("Page data");
-      console.log(data);
-      setUserD(data);
+      setUsers(data);
+      console.log(1);
+      console.log(users);
+      console.log(2);
     };
     mf();
   }, [userData]);
 
-  const initials = userD;
+  const initials = users;
   const [updated, setUpdate] = useState(initials);
 
   const pickUpInit = { address: "", lat: 0, lng: 0 };
@@ -92,6 +94,7 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    // value={userD.name}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
@@ -101,6 +104,7 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    value={userData.phoneNo}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
@@ -110,6 +114,7 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    value={userData.email}
                   />
                 </GridItem>
               </GridContainer>
@@ -122,6 +127,7 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    value={userData.age}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -131,6 +137,7 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    value={userData.sex}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -175,8 +182,8 @@ export default function UserProfile() {
             </CardAvatar>
             <CardBody profile>
               {/* <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6> */}
-              <h4 className={classes.cardTitle}>{userD ? userD.name : ""}</h4>
-              <p className={classes.description}>{userD ? userD.about : ""}</p>
+              <h4 className={classes.cardTitle}>{users ? users.name : ""}</h4>
+              <p className={classes.description}>{users ? users.about : ""}</p>
               <Button color="primary" round>
                 Update Picture
               </Button>
