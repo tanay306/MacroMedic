@@ -73,6 +73,16 @@ export default function Icons() {
     mf();
   }, [userData]);
 
+  const canceler = async (id) => {
+    console.log(id);
+    try {
+      const msg = await api.cancelAppointment(id);
+      console.log(msg);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const classes = useStyles();
   const arr = [1, 2, 3, 4, 5];
   return (
@@ -120,14 +130,7 @@ export default function Icons() {
                     <CustomButton
                       fullWidth
                       color="danger"
-                      onClick={async () => {
-                        try {
-                          const msg = await api.cancelAppointment(userData._id);
-                          console.log(msg);
-                        } catch (error) {
-                          console.log(error);
-                        }
-                      }}
+                      onClick={() => canceler(id)}
                     >
                       Cancel Appointment{" "}
                       <CloseIcon
