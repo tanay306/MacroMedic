@@ -402,13 +402,15 @@ const api = {
     return data.data.data.viewAppointment;
   },
   cancelAppointment: async (ID) => {
+    console.log("ID: ", ID);
     const data = await axios.post(
       url,
       {
         query: `
-        query{
-          cancelAppointment(appointment_id: "${ID}"){
-            msg
+          query{
+            cancelAppointment(appointment_id: "6098e808f3a52d48588cd3ba") {
+              msg
+            }
           }
         }
       `,
@@ -419,7 +421,8 @@ const api = {
         },
       }
     );
-    return data.data.data.cancelAppointment;
+    console.log(data);
+    return data.data.data.cancelAppointment.msg;
   },
   getAllAppointments: async (ID) => {
     const data = await axios.post(
@@ -428,14 +431,20 @@ const api = {
         query: `
           query {
             getAllUpcomingAppointments(user_id: "${ID}") {
+              _id
+              patientId{
+                name
+                _id
+              }
               doctorId {
                 name
                 image
                 specialization
+                _id
               }
               description
               date
-              status
+              status 
             }
           }
         `,
@@ -456,7 +465,10 @@ const api = {
         query{
           getAllPreviousAppointments(user_id: "${ID}") {
             _id
-            patientId
+            patientId{
+              _id
+              name
+            }
             doctorId {
               name
               phoneNo
@@ -467,6 +479,7 @@ const api = {
               token
               about
               image
+              _id
             }
             status
           }

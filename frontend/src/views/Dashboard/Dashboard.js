@@ -71,7 +71,7 @@ export default function Dashboard() {
   const history = useHistory();
 
   useEffect(() => {
-    let data;
+    let data = [];
     const mf = async () => {
       console.log("user: ", userData._id);
       try {

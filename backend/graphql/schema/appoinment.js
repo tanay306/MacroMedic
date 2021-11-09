@@ -9,6 +9,15 @@ const AppointmentSchema = `
         status: String!
     }
 
+    type getSpecificAppointment {
+        _id: ID!
+        patientId: User!
+        doctorId: User!
+        description: String!
+        date: String!
+        status: String!
+    }
+
     type Appointment {
         _id: ID!
         patientId: ID!

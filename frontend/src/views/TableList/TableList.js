@@ -52,7 +52,7 @@ export default function TableList() {
   const [pApp, setPpp] = useState([]);
 
   useEffect(() => {
-    let data;
+    let data = [];
     const mf = async () => {
       try {
         data = await api.getAllAppointments(userData._id);
@@ -84,7 +84,7 @@ export default function TableList() {
   }, [userData]);
 
   useEffect(() => {
-    let data;
+    let data = [];
     const mf = async () => {
       try {
         data = await api.getAllPreviousAppointments(userData._id);
