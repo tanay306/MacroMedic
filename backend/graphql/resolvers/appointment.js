@@ -149,14 +149,13 @@ const getAllAppointments = async (args, {req}) => {
 const getAllUpcomingAppointments = async (args, {req}) => {
     try {
         const user = await User.findById(args.user_id);
-        console.log(user);
         if(user.role=='patient') {
-            const appointment = Appointment.find({patientId: args.user_id, status: "Pending"}).populate('doctorId');
+            const appointment = Appointment.find({patientId: args.user_id, status: "Pending"}).populate('doctorId patientId');
             if(appointment) {
                 return appointment;
             }
         } else {
-            const appointment = Appointment.find({doctorId: args.user_id, status: "Pending"}).populate('patientId');
+            const appointment = Appointment.find({doctorId: args.user_id, status: "Pending"}).populate('patientId doctorId');
             if(appointment) {
                 return appointment;
             }
