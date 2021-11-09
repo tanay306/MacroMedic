@@ -74,7 +74,7 @@ export default function Icons() {
   }, [userData]);
 
   const canceler = async (id) => {
-    console.log(id);
+    console.log("Id here:", id);
     try {
       const msg = await api.cancelAppointment(id);
       console.log(msg);
@@ -130,7 +130,7 @@ export default function Icons() {
                     <CustomButton
                       fullWidth
                       color="danger"
-                      onClick={() => canceler(id)}
+                      onClick={() => canceler(elem[5])}
                     >
                       Cancel Appointment{" "}
                       <CloseIcon

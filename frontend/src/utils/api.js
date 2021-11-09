@@ -408,10 +408,9 @@ const api = {
       {
         query: `
           query{
-            cancelAppointment(appointment_id: "6098e808f3a52d48588cd3ba") {
+            cancelAppointment(appointment_id: "${ID}") {
               msg
             }
-          }
         }
       `,
       },
