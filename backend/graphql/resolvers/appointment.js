@@ -346,7 +346,7 @@ const isValid = async (args, {req}) => {
     let req_date = new Date(args.IsValid.date);
     let today = new Date();
     if (req_date < today) {
-      return { msg: false }
+      return { msg: "false" }
     }
     appointments.forEach( (elem) => {
       let bef_date = new Date(elem.date);
@@ -357,7 +357,7 @@ const isValid = async (args, {req}) => {
         state = "false";
       }
     });
-    return { msg : state}
+    return { msg : state }
   } catch (err) {
     console.log(err);
     throw err;
