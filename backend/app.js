@@ -9,6 +9,7 @@ const connectDB = require('./config/db.js');
 const cors = require('cors');
 app.use(express.json());
 const paymentRouter = require('./routes/paymentRouter.js');
+const schedule = require('node-schedule');
 
 dotenv.config();
 
@@ -43,20 +44,40 @@ app.use(
   
   app.use( favicon( path.join( __dirname, 'favicon.ico' ) ) );
   app.use( '/assets', express.static( path.join( __dirname, 'assets' ) ) );
+
+  const attendedMeet = async (id) => {
+    try {
+      let appointment = await Appointment.findById(id);
+      if (appointment) {
+        appointment.status = "Visited";
+        await appointment.save();
+      } else {
+        console.log('n');
+      }
+    }  catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
   
   app.get( '/', ( req, res ) => {
+      let id = req.originalUrl.substring(7);
+      console.log(id);
+      let date = new Date();
+      date.setHours(date.getHours() + 1);
+      const job = schedule.scheduleJob(date, function(){
+        attendedMeet(id);
+      });
       res.sendFile( __dirname + '/index.html' );
   } );
   
   io.of( '/stream' ).on( 'connection', stream );
 
-
-
   const multer = require('multer');
   let DIR = './uploads/';
   const { uuid } = require('uuidv4');
   const User = require('./models/user.js');
-const Appointment = require('./models/appointment.js')
+  const Appointment = require('./models/appointment.js')
   
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -115,8 +136,6 @@ app.post('/uploadImage', upload.single('doc'), async (req, res) => {
     }
   }
 })
-
-
 
 const PORT = process.env.PORT || 5000;
 
