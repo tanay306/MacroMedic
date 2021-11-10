@@ -407,11 +407,11 @@ const api = {
       url,
       {
         query: `
-          query{
+          query {
             cancelAppointment(appointment_id: "${ID}") {
               msg
             }
-        }
+          }
       `,
       },
       {
