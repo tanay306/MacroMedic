@@ -349,7 +349,6 @@ const isValid = async (args, {req}) => {
       return { msg: false }
     }
     appointments.forEach( (elem) => {
-      console.log(elem.date);
       let bef_date = new Date(elem.date);
       let after_date = new Date(elem.date);
       bef_date.setMinutes(bef_date.getMinutes() - 30);
