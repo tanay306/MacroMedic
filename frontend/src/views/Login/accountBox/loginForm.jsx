@@ -12,6 +12,7 @@ import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import api from "../../../utils/api";
 import { GlobalContext } from "../../../GlobalContext";
+import Modal from "components/Modal/Modal";
 
 import "../login.css";
 import axios from "axios";
@@ -22,6 +23,11 @@ export function LoginForm(props) {
 
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
+  const [ visible, setVisible ] = useState(false);
+
+  useEffect(() => {
+    console.log(visible);
+  }, [visible]);
 
   return (
     <BoxContainer>
@@ -47,14 +53,17 @@ export function LoginForm(props) {
       <SubmitButton
         type="submit"
         onClick={async () => {
+          let data = {};
           try {
-            const data = await api.authUser(userData.email, userData.password);
+            data = await api.authUser(userData.email, userData.password);
             setUserData(data);
           } catch (error) {
             console.log(error);
+            // window.alert("Invalid Credentials");
+            setVisible(true);
           }
 
-          if (userData.email) {
+          if (userData.email && data.token) {
             history.push("/user/dashboard");
           }
         }}
@@ -68,6 +77,7 @@ export function LoginForm(props) {
           Signup
         </BoldLink>
       </MutedLink>
+      <Modal status={visible} setVisible={setVisible} title="Alert" text="Invalid Credentials, kindly enter valid credentials!" />
     </BoxContainer>
   );
 }
