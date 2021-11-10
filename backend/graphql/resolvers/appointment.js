@@ -341,35 +341,24 @@ const getStatistics_Successful_App = async (args, { req }) => {
 
 const isValid = async (args, {req}) => {
   try {
-    let state = true;
+    let state = "true";
     let appointments = await Appointment.find({doctorId: args.IsValid.doctorId, status: "Pending"});
     let req_date = new Date(args.IsValid.date);
     let today = new Date();
-    if (req_date > today) {
-      return {msg:true}
+    if (req_date < today) {
+      return { msg: false }
     }
-    console.log(req_date);
     appointments.forEach( (elem) => {
       console.log(elem.date);
       let bef_date = new Date(elem.date);
       let after_date = new Date(elem.date);
       bef_date.setMinutes(bef_date.getMinutes() - 30);
       after_date.setMinutes(after_date.getMinutes() + 30);
-
-      if (req_date > after_date) {
-        return {msg: true}
+      if (req_date > bef_date && req_date < after_date) {
+        state = "false";
       }
-
-      else if (req_date < bef_date) {
-        return {msg:true}
-      }
-
-      else {
-        return {msg:false}
-      }
-       
     });
-    return {msg: state}
+    return { msg : state}
   } catch (err) {
     console.log(err);
     throw err;
