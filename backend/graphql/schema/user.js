@@ -24,6 +24,7 @@ const UserSchema = `
         about: String
         location: Location
         image: String
+        charge: Float
     }
 
 
@@ -39,6 +40,7 @@ const UserSchema = `
         specialization: String
         about: String
         location: LocationInput
+        charge: Float
     }
     
     input UpdateUserInput {
@@ -53,6 +55,7 @@ const UserSchema = `
         specialization: String
         about: String
         location: LocationInput
+        charge: Float
     }
 `;
 
