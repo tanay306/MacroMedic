@@ -178,10 +178,11 @@ const getAllAppointments = async (args, { req }) => {
 
 const updateAppointmentStatus = async () => {
   try {
-    let appointments = await Appointment.find({});
+    let appointments = await Appointment.find({status: "Pending"});
     appointments.forEach((appointment) => {
       var app_date = new Date(appointment.date);
       var date = new Date();
+      date.setHours(date.getHours() + 1);
       if (app_date < date && appointment.status == "Pending") {
         appointment.status = "Not Visited";
         appointment.save();
