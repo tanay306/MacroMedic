@@ -17,6 +17,7 @@ import { GlobalContext } from "../../GlobalContext";
 import api from "../../utils/api";
 
 import avatar from "assets/img/faces/marc.jpg";
+import { useSprings } from "react-spring";
 
 const styles = {
   cardCategoryWhite: {
@@ -225,7 +226,18 @@ export default function UserProfile() {
             </CardBody>
             <br />
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button
+                onClick={async () => {
+                  try {
+                    await api.updateProfile_Patient(userData._id, users);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+                color="primary"
+              >
+                Update Profile
+              </Button>
             </CardFooter>
           </Card>
         </GridItem>

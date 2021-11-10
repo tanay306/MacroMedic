@@ -565,7 +565,8 @@ const api = {
     );
     return data.data.data.getStatistics_Successful_App;
   },
-  updateProfile: async (id) => {
+  updateProfile_Patient: async (id, user) => {
+    console.log("User", user);
     const data = await axios.post(
       url,
       {
@@ -573,10 +574,20 @@ const api = {
         mutation{
           updateUserProfile(userInput: {
             _id: "${id}"",
-            name: "Raj Sharmas"
+            name: "${user.name}"
+            age:"${user.age}"
+            sex:"${user.sex}"
+            phoneNo:"${user.phoneNo}"
+            
+            about:"${user.about}"
           }) {
             _id
             name
+            age
+            sex
+            phoneNo
+           
+            about
           }
         }
         `,
@@ -587,6 +598,9 @@ const api = {
         },
       }
     );
+    console.log("Updated data");
+    console.log(user);
+    return data.data.data.updateUserProfile;
   },
 };
 
