@@ -190,9 +190,9 @@ export default function UserProfile() {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      value={users.charges ? users.charges : ""}
+                      value={users.charge ? users.charge : ""}
                       onChange={(e) =>
-                        setUsers({ ...users, charges: e.target.value })
+                        setUsers({ ...users, charge: e.target.value })
                       }
                     />
                   </GridItem>

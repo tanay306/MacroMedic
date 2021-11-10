@@ -360,6 +360,8 @@ const api = {
                 latitude
                 longitude
               }
+              charge
+              specialization
             }
           }
         `,
@@ -601,6 +603,7 @@ const api = {
   },
 
   updateProfile_Doctor: async (id, user) => {
+    console.log("Id", user);
     const data = await axios.post(
       url,
       {
@@ -610,11 +613,11 @@ const api = {
             _id: "${id}",
             name: "${user.name}"
             age: ${user.age}
-            sex:"${user.sex}"
-            phoneNo:"${user.phoneNo}"
-            about:"${user.about}"
-            specialization:"${user.specialization}"
-            charge:${user.charges}
+            sex: "${user.sex}"
+            phoneNo: "${user.phoneNo}"
+            about: "${user.about}"
+            specialization: "${user.specialization}"
+            charge: ${user.charge}
           }) {
             _id
             name
