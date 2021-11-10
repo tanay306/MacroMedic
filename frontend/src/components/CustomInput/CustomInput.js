@@ -58,7 +58,7 @@ export default function CustomInput(props) {
       ) : null}
 
       <Input
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         classes={{
           root: marginTop,
           disabled: classes.disabled,

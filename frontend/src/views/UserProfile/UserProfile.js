@@ -45,20 +45,22 @@ export default function UserProfile() {
   const [users, setUsers] = React.useState({});
 
   React.useEffect(() => {
-    let data;
+    let data = {};
     const mf = async () => {
       try {
         data = await api.getUserById(userData._id);
       } catch (err) {
         console.log(err);
       }
-
+      console.log("Data");
+      console.log(data);
       setUsers(data);
     };
     mf();
   }, [userData]);
 
   useEffect(() => {
+    console.log("0000");
     console.log(users);
   }, [users]);
   const initials = users;
@@ -85,36 +87,31 @@ export default function UserProfile() {
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  {users && (
-                    <CustomInput
-                      labelText="Name"
-                      id="company-disabled"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      // value={}
-                      defaultValue={users.name == "" ? "" : users.name}
-                      onChange={(e) =>
-                        setUsers({ ...users, name: e.target.value })
-                      }
-                    />
-                  )}
+                  <CustomInput
+                    labelText="Name"
+                    id="company-disabled"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    value={users.name ? users.name : ""}
+                    // defaultValue={users && users.name}
+                    onChange={(e) =>
+                      setUsers({ ...users, name: e.target.value })
+                    }
+                  />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
-                  {users && (
-                    <CustomInput
-                      labelText="Age"
-                      id="city"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      // value={}
-                      defaultValue={users.age == null ? "" : users.age}
-                      onChange={(e) =>
-                        setUsers({ ...users, age: e.target.value })
-                      }
-                    />
-                  )}
+                  <CustomInput
+                    labelText="Age"
+                    id="city"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    value={users.age ? users.age : ""}
+                    onChange={(e) =>
+                      setUsers({ ...users, age: e.target.value })
+                    }
+                  />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   {users && (
@@ -125,7 +122,7 @@ export default function UserProfile() {
                         fullWidth: true,
                       }}
                       // value={}
-                      defaultValue={users.sex == "" ? "" : users.sex}
+                      value={users.sex ? users.sex : ""}
                       onChange={(e) =>
                         setUsers({ ...users, sex: e.target.value })
                       }
@@ -144,7 +141,7 @@ export default function UserProfile() {
                         fullWidth: true,
                       }}
                       // value={}
-                      defaultValue={users.phoneNo == null ? "" : users.phoneNo}
+                      value={users.phoneNo ? users.phoneNo : ""}
                       onChange={(e) =>
                         setUsers({ ...users, phoneNo: e.target.value })
                       }
@@ -160,7 +157,7 @@ export default function UserProfile() {
                         fullWidth: true,
                       }}
                       // value={}
-                      defaultValue={users.email == null ? "" : users.email}
+                      value={users.email ? users.email : ""}
                       onChange={(e) =>
                         setUsers({ ...users, email: e.target.value })
                       }
@@ -175,9 +172,7 @@ export default function UserProfile() {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      defaultValue={
-                        users.specialization == null ? "" : users.specialization
-                      }
+                      value={users.specialization ? users.specialization : ""}
                       onChange={(e) =>
                         setUsers({ ...users, specialization: e.target.value })
                       }
@@ -194,7 +189,7 @@ export default function UserProfile() {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      defaultValue={users.charges == null ? "" : users.charges}
+                      value={users.charges ? users.charges : ""}
                       onChange={(e) =>
                         setUsers({ ...users, charges: e.target.value })
                       }
@@ -219,7 +214,7 @@ export default function UserProfile() {
                         rows: 5,
                       }}
                       // value={}
-                      defaultValue={users.about == "" ? "" : users.about}
+                      value={users.about ? users.about : ""}
                       onChange={(e) =>
                         setUsers({ ...users, about: e.target.value })
                       }

@@ -77,6 +77,7 @@ export default function Icons() {
     console.log("Id here:", id);
     try {
       const msg = await api.cancelAppointment(id);
+
       console.log(msg);
     } catch (error) {
       console.error(error);

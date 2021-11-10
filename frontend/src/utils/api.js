@@ -565,6 +565,29 @@ const api = {
     );
     return data.data.data.getStatistics_Successful_App;
   },
+  updateProfile: async (id) => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+        mutation{
+          updateUserProfile(userInput: {
+            _id: "${id}"",
+            name: "Raj Sharmas"
+          }) {
+            _id
+            name
+          }
+        }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
 };
 
 export default api;
