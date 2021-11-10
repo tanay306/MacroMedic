@@ -586,7 +586,6 @@ const api = {
             age
             sex
             phoneNo
-           
             about
           }
         }
@@ -598,8 +597,43 @@ const api = {
         },
       }
     );
-    console.log("Updated data");
-    console.log(user);
+    return data.data.data.updateUserProfile;
+  },
+
+  updateProfile_Doctor: async (id, user) => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+        mutation{
+          updateUserProfile(userInput: {
+            _id: "${id}",
+            name: "${user.name}"
+            age: ${user.age}
+            sex:"${user.sex}"
+            phoneNo:"${user.phoneNo}"
+            about:"${user.about}"
+            specialization:"${user.specialization}"
+            charge:${user.charges}
+          }) {
+            _id
+            name
+            age
+            sex
+            phoneNo
+            about
+            specialization
+            charge
+          }
+        }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return data.data.data.updateUserProfile;
   },
 };

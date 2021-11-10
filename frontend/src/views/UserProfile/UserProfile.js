@@ -229,7 +229,9 @@ export default function UserProfile() {
               <Button
                 onClick={async () => {
                   try {
-                    await api.updateProfile_Patient(userData._id, users);
+                    users.role == "patient"
+                      ? await api.updateProfile_Patient(userData._id, users)
+                      : await api.updateProfile_Doctor(userData._id, users);
                   } catch (error) {
                     console.log(error);
                   }
