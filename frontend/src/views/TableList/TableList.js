@@ -72,7 +72,9 @@ export default function TableList() {
         date = date.toDateString();
         upp.push([
           `${j}`,
-          data[i].doctorId.name,
+          userData.role === "doctor"
+            ? data[i].patientId.name
+            : data[i].doctorId.name,
           date + "\t\t@" + time,
           "Pending",
         ]);
@@ -107,7 +109,9 @@ export default function TableList() {
         // date = date.toLocaleDateString("pt-PT");
         ppp.push([
           `${k}`,
-          data[i].doctorId.name,
+          userData.role === "doctor"
+            ? data[i].patientId.name
+            : data[i].doctorId.name,
           // date + "\t\t@" + time,
           new Date().toDateString() + "\t\t@" + time,
           data[i].status,

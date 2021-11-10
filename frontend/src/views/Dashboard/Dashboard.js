@@ -91,7 +91,9 @@ export default function Dashboard() {
         if (i < 2 || i > 3) {
           upp.push([
             `${j}`,
-            data[i].doctorId.name,
+            userData.role === "doctor"
+              ? data[i].patientId.name
+              : data[i].doctorId.name,
             // data[i].date.toLocaleString().split("T")[0],
             date + "\t\t@" + time,
           ]);
@@ -99,7 +101,9 @@ export default function Dashboard() {
         } else {
           ppp.push([
             `${j}`,
-            data[i].doctorId.name,
+            userData.role === "doctor"
+              ? data[i].patientId.name
+              : data[i].doctorId.name,
             Date(data[i].date),
             data[i].status,
           ]);

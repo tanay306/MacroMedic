@@ -188,11 +188,30 @@ function MapsNew() {
                 <span style={{ textTransform: "capitalize" }}>
                   Gender: {elem.sex === null ? "NOT SPECIFIED" : elem.sex}
                 </span>
-                <span>
-                  Age:{" "}
-                  {elem.age === null || elem.age === ""
-                    ? "Not Specified"
-                    : elem.age}
+                <span
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span>
+                    Age:{" "}
+                    {elem.age === null || elem.age === ""
+                      ? "Not Specified"
+                      : elem.age}
+                  </span>
+                  <span
+                    style={{
+                      color: "#9c27b0",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ₹{" "}
+                    {elem.age === null || elem.age === ""
+                      ? "Not Specified"
+                      : elem.charge}
+                  </span>
                 </span>
                 <span
                   style={{

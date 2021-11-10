@@ -99,6 +99,7 @@ const api = {
                 specialization
                 token
                 about
+                charge
                 location {
                   latitude
                   longitude
