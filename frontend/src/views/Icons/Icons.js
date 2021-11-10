@@ -19,6 +19,7 @@ import VideoCallIcon from "@material-ui/icons/VideoCall";
 import CloseIcon from "@material-ui/icons/Close";
 import api from "../../utils/api";
 import { GlobalContext } from "../../GlobalContext";
+import Notify from "notification/Notify";
 
 const useStyles = makeStyles({
   ...styles,
@@ -38,6 +39,8 @@ export default function Icons() {
 
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
+
+  const [recall, setRecall] = useState(false);
 
   useEffect(() => {
     let data = [];
@@ -71,13 +74,14 @@ export default function Icons() {
       setUpp(upp);
     };
     mf();
-  }, [userData]);
+  }, [userData, recall]);
 
   const canceler = async (id) => {
     console.log("Id here:", id);
     try {
       const msg = await api.cancelAppointment(id);
       console.log(msg);
+      setRecall(!recall);
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +134,11 @@ export default function Icons() {
                     <CustomButton
                       fullWidth
                       color="danger"
-                      onClick={() => canceler(elem[5])}
+                      onClick={() => {
+                        // console.log("Notif");
+                        // return <Notify msg={"MSSG"} />;
+                        canceler(elem[5]);
+                      }}
                     >
                       Cancel Appointment{" "}
                       <CloseIcon

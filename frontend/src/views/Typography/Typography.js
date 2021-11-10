@@ -399,6 +399,8 @@ export default function TypographyPage() {
                 color="warning"
                 onClick={() => {
                   history.push(`/user/bookAppointment/${elem._id}`);
+                  // window.location.reload();
+                  handleReset();
                 }}
               >
                 Book an Appointment
