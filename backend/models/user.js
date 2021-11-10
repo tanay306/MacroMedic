@@ -53,7 +53,7 @@ const userSchema = mongoose.Schema(
     },
     charge: {
       type: Number,
-      default: 500,
+      default: 0,
     }
   },
   {

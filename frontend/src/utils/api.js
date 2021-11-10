@@ -567,18 +567,18 @@ const api = {
   },
   updateProfile_Patient: async (id, user) => {
     console.log("User", user);
+    console.log("ID", id);
     const data = await axios.post(
       url,
       {
         query: `
         mutation{
           updateUserProfile(userInput: {
-            _id: "${id}"",
+            _id: "${id}",
             name: "${user.name}"
-            age:"${user.age}"
+            age: ${user.age}
             sex:"${user.sex}"
             phoneNo:"${user.phoneNo}"
-            
             about:"${user.about}"
           }) {
             _id
