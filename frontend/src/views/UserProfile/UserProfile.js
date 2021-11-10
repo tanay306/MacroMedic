@@ -15,6 +15,9 @@ import CardFooter from "components/Card/CardFooter.js";
 import MyMap from "components/Map/map.js";
 import { GlobalContext } from "../../GlobalContext";
 import api from "../../utils/api";
+import Modal from "@material-ui/core/Modal";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 import avatar from "assets/img/faces/marc.jpg";
 import { useSprings } from "react-spring";
@@ -38,12 +41,27 @@ const styles = {
   },
 };
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "0.5px  #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const { user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
   const [users, setUsers] = React.useState({});
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     let data = {};
@@ -235,11 +253,31 @@ export default function UserProfile() {
                   } catch (error) {
                     console.log(error);
                   }
+                  handleOpen();
                 }}
                 color="primary"
               >
                 Update Profile
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={modalStyle}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Success!
+                  </Typography>
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    Your profile has been updated successfully
+                  </Typography>
+                </Box>
+              </Modal>
             </CardFooter>
           </Card>
         </GridItem>
