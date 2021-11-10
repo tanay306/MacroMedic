@@ -38,6 +38,11 @@ const AppointmentSchema = `
         msg: String!
     }
 
+    input IsValid {
+        date: String!
+        doctorId: ID!
+    }
+
 `
 
 module.exports = {AppointmentSchema};

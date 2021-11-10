@@ -25,6 +25,7 @@ const {
   getAllPreviousAppointments,
   getStatistics_Appointment,
   getStatistics_Successful_App,
+  isValid,
 } = require('./appointment.js')
 
   module.exports = {
@@ -53,4 +54,5 @@ const {
     getAllPreviousAppointments: getAllPreviousAppointments,
     getStatistics_Appointment: getStatistics_Appointment,
     getStatistics_Successful_App: getStatistics_Successful_App,
+    isValid: isValid,
   };

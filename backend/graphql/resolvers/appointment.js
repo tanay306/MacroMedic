@@ -339,6 +339,34 @@ const getStatistics_Successful_App = async (args, { req }) => {
   }
 };
 
+const isValid = async (args, {req}) => {
+  try {
+    let state = true;
+    let appointments = await Appointment.find({doctorId: args.IsValid.doctorId, status: "Pending"});
+    let req_date = new Date(args.IsValid.date);
+    let today = new Date();
+    if (req_date < today) {
+      state = false;
+    }
+    console.log(req_date);
+    appointments.forEach( (elem) => {
+      console.log(elem.date);
+      let bef_date = new Date(elem.date);
+      let after_date = new Date(elem.date);
+      bef_date.setMinutes(bef_date.getMinutes() - 30);
+      after_date.setMinutes(after_date.getMinutes() + 30);
+      if (bef_date < req_date || after_date > req_date) {
+        console.log('1');
+        state = false;
+      }
+    });
+    return {msg: state}
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports = {
   createAppointment,
   viewAppointment,
@@ -349,4 +377,5 @@ module.exports = {
   getStatistics_Appointment,
   getStatistics_Successful_App,
   getAllUpcomingAppointments,
+  isValid,
 };

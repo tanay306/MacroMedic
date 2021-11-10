@@ -28,6 +28,7 @@ const buildschema =  buildSchema(`
         getAllPreviousAppointments(user_id: ID!) : [getSpecificAppointment!]!
         getStatistics_Appointment: String!
         getStatistics_Successful_App: String!
+        isValid(IsValid: IsValid!): Response!
     }
 
     type rootMutation {
