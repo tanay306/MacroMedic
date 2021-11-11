@@ -29,6 +29,7 @@ const buildschema =  buildSchema(`
         getStatistics_Appointment: String!
         getStatistics_Successful_App: String!
         isValid(IsValid: IsValid!): Response!
+        graph: Graph!
     }
 
     type rootMutation {

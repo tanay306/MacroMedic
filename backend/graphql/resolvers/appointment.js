@@ -364,6 +364,39 @@ const isValid = async (args, {req}) => {
   }
 }
 
+const graph = async (args, {req}) => {
+  try {
+    let curr = new Date();
+    let first = curr.getDate() - curr.getDay() + 1;
+    let a = new Array(7).fill(0);
+    let apps = await Appointment.find({})
+    for (let i = 0; i < 7; i++) {
+      let count = 0
+      new_day = first + i;
+      let day = new Date(curr.setDate(new_day)).toUTCString();
+      day = new Date(day);
+      apps.forEach( (app) => {
+        if (app.createdAt.getDate() === day.getDate() && app.createdAt.getMonth() === day.getMonth() && app.createdAt.getFullYear() === day.getFullYear()) {
+          count++;
+        }
+      });
+      a[i] = count;
+    }
+    return {
+      monday: a[0],
+      tuesday: a[1],
+      wednesday: a[2],
+      thursday: a[3],
+      friday: a[4],
+      saturday: a[5],
+      sunday: a[6],
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports = {
   createAppointment,
   viewAppointment,
@@ -375,4 +408,5 @@ module.exports = {
   getStatistics_Successful_App,
   getAllUpcomingAppointments,
   isValid,
+  graph,
 };

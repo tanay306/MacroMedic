@@ -26,6 +26,7 @@ const {
   getStatistics_Appointment,
   getStatistics_Successful_App,
   isValid,
+  graph,
 } = require('./appointment.js')
 
   module.exports = {
@@ -55,4 +56,5 @@ const {
     getStatistics_Appointment: getStatistics_Appointment,
     getStatistics_Successful_App: getStatistics_Successful_App,
     isValid: isValid,
+    graph,
   };
