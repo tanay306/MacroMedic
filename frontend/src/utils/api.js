@@ -640,6 +640,30 @@ const api = {
     );
     return data.data.data.updateUserProfile;
   },
+  isValid: async (date, docId) => {
+    console.log(date);
+    const data = axios.post(
+      url,
+      {
+        query: `
+          query{
+            isValid(IsValid: {
+              date: "${date}"
+              doctorId: "${docId}"
+            }) {
+              msg
+            }
+          }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  },
 };
 
 export default api;

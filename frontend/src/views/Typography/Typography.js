@@ -28,6 +28,7 @@ import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import { GlobalContext } from "../../GlobalContext";
 import { Input } from "@material-ui/core";
+import Modal from "components/Modal/Modal";
 
 import styled from "styled-components";
 import api from "../../utils/api";
@@ -112,6 +113,7 @@ export default function TypographyPage() {
   const { allDocs, user } = useContext(GlobalContext);
   const [userData, setUserData] = user;
   const [allDoctors, setAllDoctors] = allDocs;
+  const [visible, setVisible] = useState(false);
   const { docId } = useParams();
   const history = useHistory();
   console.log(docId);
@@ -171,16 +173,26 @@ export default function TypographyPage() {
               id="datetime-local"
               label="Appointment Date and Time"
               type="datetime-local"
-              defaultValue="2021-03-20T10:30"
+              defaultValue={new Date()}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
               }}
-              onChange={(e) => {
+              onChange={async (e) => {
                 setBookAppointment({
                   ...bookAppointment,
                   dateTime: e.target.value,
                 });
+
+                let data = await api.isValid(e.target.value, docId);
+                data = data.data.data.isValid.msg;
+                console.log(data);
+                if (data === "true") {
+                } else {
+                  // setActiveStep(1);
+                  console.log("Invalid");
+                  setVisible(true);
+                }
               }}
             />
           </form>
@@ -430,6 +442,12 @@ export default function TypographyPage() {
             </CardBody>
           </Card>
         ))}
+        <Modal
+          status={visible}
+          setVisible={setVisible}
+          title="Alert"
+          text="Invalid Date selected, kindly enter valid date option only!"
+        />
       </StyledDoctorContainer>
     </>
   );
