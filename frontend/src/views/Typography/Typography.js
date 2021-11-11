@@ -151,6 +151,7 @@ export default function TypographyPage() {
       "Choose Date and Time",
       "Write a Description of your Illness",
       "Upload Medical Record",
+      "Payment",
     ];
   }
 
@@ -227,6 +228,8 @@ export default function TypographyPage() {
             />
           </StyledFileInputContainer>
         );
+      case 4:
+        return <h1>Payment</h1>;
       default:
         return "Unknown stepIndex";
     }
