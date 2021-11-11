@@ -60,6 +60,16 @@ export default function UserProfile() {
   const [userData, setUserData] = user;
   const [users, setUsers] = React.useState({});
   const [open, setOpen] = useState(false);
+  const [pickUp, setPickUp] = useState({
+    address: "",
+    lat: "",
+    lng: "",
+  });
+  const [cords, setCords] = useState({
+    address: "",
+    lat: "",
+    lng: "",
+  });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -77,16 +87,31 @@ export default function UserProfile() {
     };
     mf();
   }, [userData]);
-
+  const [bool, setBool] = useState(false);
   useEffect(() => {
     console.log("0000");
     console.log(users);
+    console.log(users.location ? users.location.longitude : "");
+    setPickUp({
+      address: "",
+      lat: users.location ? users.location.latitude : "",
+      lng: users.location ? users.location.longitude : "",
+    });
+    setCords({
+      address: "",
+      lat: users.location ? users.location.latitude : "",
+      lng: users.location ? users.location.longitude : "",
+    });
+    setBool(!bool);
   }, [users]);
   const initials = users;
   const [updated, setUpdate] = useState(initials);
 
-  const pickUpInit = { address: "", lat: 0, lng: 0 };
-  const [pickUp, setPickUp] = useState(pickUpInit);
+  useEffect(() => {
+    console.log("pickup", pickUp);
+
+    console.log("Cords", cords);
+  }, [bool]);
 
   const dropInit = { address: "", lat: 0, lng: 0 };
   const [drop, setDrop] = useState(dropInit);
@@ -94,6 +119,7 @@ export default function UserProfile() {
   const [mapInit, setMapInit] = useState(false);
 
   const classes = useStyles();
+
   return (
     <div>
       <GridContainer>
@@ -183,6 +209,44 @@ export default function UserProfile() {
                     />
                   )}
                 </GridItem>
+                {/* <GridItem xs={12} sm={12} md={6}>
+                  {users && (
+                    <CustomInput
+                      labelText="Latitude"
+                      id="email-address"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      value={users.location ? users.location.latitude : ""}
+                      onChange={(e) =>
+                        setUsers({
+                          ...users,
+                          location: {
+                            ...users.location,
+                            latitude: e.target.value,
+                          },
+                        })
+                      }
+                    />
+                  )}
+                </GridItem> */}
+                {/* <GridItem xs={12} sm={12} md={6}>
+                  {users && (
+                    <CustomInput
+                      labelText="Longitude"
+                      id="email-address"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      // value={}
+                      value={users.email ? users.email : ""}
+                      onChange={(e) =>
+                        setUsers({ ...users, email: e.target.value })
+                      }
+                    />
+                  )}
+                </GridItem> */}
                 {users && users.role == "doctor" ? (
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
@@ -308,6 +372,7 @@ export default function UserProfile() {
               // iD={isDriver}
               // sS={setStep}
               mI={mapInit}
+              coords={cords}
             />
             {/* </CardBody> */}
           </Card>
