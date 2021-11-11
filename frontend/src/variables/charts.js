@@ -3,6 +3,8 @@
 // #############################
 var Chartist = require("chartist");
 
+
+
 // ##############################
 // // // variables used to create animation on charts
 // #############################
@@ -186,5 +188,14 @@ const completedTasksChart = {
 module.exports = {
   dailySalesChart,
   emailsSubscriptionChart,
-  completedTasksChart
+  completedTasksChart,
 };
+
+// const getData = async () => {
+//   try {
+//     const data = await api.dashboardChart();
+//     console.log("Abhi ka Data: ", data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

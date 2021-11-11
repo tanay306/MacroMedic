@@ -33,6 +33,7 @@ import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import api from "../../utils/api";
 import { GlobalContext } from "GlobalContext";
 import { useHistory } from "react-router-dom";
+import LineChart from '../../variables/reactchart';
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -242,28 +243,14 @@ export default function Dashboard() {
           </GridItem>
           <Card chart>
             <CardHeader color="info">
-              <ChartistGraph
-                className="ct-chart"
-                data={dailySalesChart.data}
-                type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
-              />
+              <h4 className={classes.cardTitleWhite}>Weekly Appointments</h4>
+              <p className={classes.cardCategoryWhite}>
+                Total Appointments with doctors on our platform
+              </p>
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Weekly Appointment Status</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 18%
-                </span>{" "}
-                Appointments per day
-              </p>
+              <LineChart />
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> Updated a day ago
-              </div>
-            </CardFooter>
           </Card>
         </GridItem>
         <GridItem

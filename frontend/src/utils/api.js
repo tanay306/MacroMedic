@@ -640,6 +640,32 @@ const api = {
     );
     return data.data.data.updateUserProfile;
   },
+  dashboardChart: async () => {
+    const data = await axios.post(
+      url,
+      {
+        query: `
+        query {
+          graph {
+            monday
+            tuesday
+            wednesday
+            thursday
+            friday
+            saturday
+            sunday
+          }
+        }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data.data.data.graph;
+  },
   isValid: async (date, docId) => {
     console.log(date);
     const data = axios.post(
