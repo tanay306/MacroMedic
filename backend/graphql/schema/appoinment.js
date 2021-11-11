@@ -43,6 +43,16 @@ const AppointmentSchema = `
         doctorId: ID!
     }
 
+    type Graph {
+        monday: Int
+        tuesday: Int
+        wednesday: Int
+        thursday: Int
+        friday: Int
+        saturday: Int
+        sunday: Int
+    }
+
 `
 
 module.exports = {AppointmentSchema};
