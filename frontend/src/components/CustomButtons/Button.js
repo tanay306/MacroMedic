@@ -27,6 +27,7 @@ export default function RegularButton(props) {
     className,
     muiClasses,
     onClick,
+    type,
     ...rest
   } = props;
   const btnClasses = classNames({
@@ -47,6 +48,7 @@ export default function RegularButton(props) {
       {...rest}
       classes={muiClasses}
       className={btnClasses}
+      type={type}
     >
       {children}
     </Button>

@@ -691,6 +691,19 @@ const api = {
     );
     return data;
   },
+  uploadImage: async (id, img) => {
+    console.log(img);
+    const postData = new FormData();
+    postData.append("id", id);
+    postData.append("doc", img);
+    const data = await axios.post(
+      "http://localhost:5000/uploadImage",
+      postData
+    );
+    console.log(data);
+    console.log("File uploded");
+    return data;
+  },
 };
 
 export default api;

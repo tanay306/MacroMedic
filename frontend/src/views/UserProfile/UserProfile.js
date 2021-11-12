@@ -12,7 +12,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import MyMap from "components/Map/map.js";
+import MyMap from "components/Map/map2.js";
 import { GlobalContext } from "../../GlobalContext";
 import api from "../../utils/api";
 import Modal from "@material-ui/core/Modal";
@@ -65,6 +65,7 @@ export default function UserProfile() {
     lat: "",
     lng: "",
   });
+  const [image, setImage] = useState();
   // const [cords, setCords] = useState({
   //   address: "",
   //   lat: "",
@@ -349,9 +350,15 @@ export default function UserProfile() {
               {/* <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6> */}
               <h4 className={classes.cardTitle}>{users ? users.name : ""}</h4>
               <p className={classes.description}>{users ? users.about : ""}</p>
-              <Button color="primary" round>
-                Update Picture
-              </Button>
+              <input
+                placeholder="Update Image"
+                type="file"
+                onChange={async (e) => {
+                  // setImage(e.target.files[0]);
+                  // console.log(image);
+                  await api.uploadImage(userData._id, e.target.files[0].name);
+                }}
+              />
             </CardBody>
           </Card>
 
