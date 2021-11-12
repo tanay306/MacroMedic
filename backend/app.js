@@ -97,7 +97,7 @@ let upload = multer({
   },
 });
 function checkFileType(file, cb) {
-  const filetypes = /pdf|jpg|jpeg/;
+  const filetypes = /pdf|jpg|png|jpeg/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (mimetype && extname) {
@@ -128,12 +128,13 @@ app.post("/uploadImage", upload.single("doc"), async (req, res) => {
   console.log(id);
   const user = await User.findById(id);
   if (user) {
+    console.log(req.file);
     user.image = `/${req.file.path}`;
     const resp = await user.save();
     if (resp) {
-      res.send("Successfully uploaded image");
+      console.log("Successfully uploaded image");
     } else {
-      res.send("Some err has occured!!");
+      console.log("Some err has occured!!");
     }
   }
 });
