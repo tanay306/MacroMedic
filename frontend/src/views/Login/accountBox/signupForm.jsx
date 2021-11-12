@@ -12,6 +12,7 @@ import { AccountContext } from "./accountContext";
 import { GlobalContext } from "../../../GlobalContext";
 import api from "utils/api";
 import { useHistory } from "react-router-dom";
+import Modal from "components/Modal/Modal";
 
 import "../login.css";
 
@@ -22,6 +23,7 @@ export function SignupForm(props) {
   const [userData, setUserData] = user;
 
   const history = useHistory();
+  const [ visible, setVisible ] = useState(false);
 
   return (
     <BoxContainer>
@@ -54,8 +56,9 @@ export function SignupForm(props) {
       <SubmitButton
         type="submit"
         onClick={async () => {
+          let data = {};
           try {
-            const data = await api.registerUser(
+            data = await api.registerUser(
               userData.name,
               userData.email,
               userData.password
@@ -65,8 +68,10 @@ export function SignupForm(props) {
             console.log(error);
           }
 
-          if (userData.email) {
+          if (userData.email && data.token) {
             history.push("/user/dashboard");
+          } else {
+            setVisible(true)
           }
         }}
       >
@@ -79,6 +84,7 @@ export function SignupForm(props) {
           Signin
         </BoldLink>
       </MutedLink>
+      <Modal status={visible} setVisible={setVisible} title="Alert" text="Account already exits, kindly enter another Email ID!" />
     </BoxContainer>
   );
 }

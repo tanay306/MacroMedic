@@ -33,7 +33,7 @@ import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import api from "../../utils/api";
 import { GlobalContext } from "GlobalContext";
 import { useHistory } from "react-router-dom";
-import LineChart from '../../variables/reactchart';
+import LineChart from "../../variables/reactchart";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -89,27 +89,27 @@ export default function Dashboard() {
         let date = new Date(data[i].date);
         let time = data[i].date.split("T")[1];
         date = date.toLocaleDateString("pt-PT");
-        if (i < 2 || i > 3) {
-          upp.push([
-            `${j}`,
-            userData.role === "doctor"
-              ? data[i].patientId.name
-              : data[i].doctorId.name,
-            // data[i].date.toLocaleString().split("T")[0],
-            date + "\t\t@" + time,
-          ]);
-          j++;
-        } else {
-          ppp.push([
-            `${j}`,
-            userData.role === "doctor"
-              ? data[i].patientId.name
-              : data[i].doctorId.name,
-            Date(data[i].date),
-            data[i].status,
-          ]);
-          k++;
-        }
+        // if (i < 2 || i > 3) {
+        upp.push([
+          `${j}`,
+          userData.role === "doctor"
+            ? data[i].patientId.name
+            : data[i].doctorId.name,
+          // data[i].date.toLocaleString().split("T")[0],
+          date + "\t\t@" + time,
+        ]);
+        j++;
+        // } else {
+        ppp.push([
+          `${j}`,
+          userData.role === "doctor"
+            ? data[i].patientId.name
+            : data[i].doctorId.name,
+          Date(data[i].date),
+          data[i].status,
+        ]);
+        k++;
+        // }
       }
       setUpp(upp);
       setPpp(ppp);
