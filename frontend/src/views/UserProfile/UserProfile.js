@@ -102,9 +102,10 @@ export default function UserProfile() {
   }, [users]);
   const initials = users;
   const [updated, setUpdate] = useState(initials);
-
+  let imageUrl = `backend/uploads\\54fe80f7-a422-4511-a119-609dc78e844a-screenshot-2021-11-04-at-3.23.54-pm.png`;
   useEffect(() => {
     console.log("pickup", pickUp);
+    console.log(imageUrl);
   }, [bool]);
 
   const dropInit = { address: "", lat: 0, lng: 0 };
@@ -343,7 +344,10 @@ export default function UserProfile() {
           <Card profile>
             <CardAvatar profile>
               <div>
-                <img src={avatar} alt="..." />
+                <img
+                  src="../../../../backend/uploads/0fc14df6-2e93-47c4-82d2-c210bdcdfab4-doc.jpg"
+                  alt="..."
+                />
               </div>
             </CardAvatar>
             <CardBody profile>
