@@ -666,6 +666,26 @@ const api = {
     );
     return data.data.data.graph;
   },
+  forgotPassword: async (email) => {
+    const data = axios.post(
+      url,
+      {
+        query: `
+          query{
+            forgotPassword(email: "${email}") {
+              msg
+            }
+          }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  },
   isValid: async (date, docId) => {
     console.log(date);
     const data = axios.post(
