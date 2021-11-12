@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(cors({ credentials: true }));
 app.use(cors());
 
@@ -96,7 +97,7 @@ let upload = multer({
   },
 });
 function checkFileType(file, cb) {
-  const filetypes = /pdf|jpg|png|jpeg/;
+  const filetypes = /pdf|jpg|jpeg/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (mimetype && extname) {
