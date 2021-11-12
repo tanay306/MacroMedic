@@ -35,6 +35,9 @@ import api from "../../utils/api";
 
 import Notify from "../../notification/Notify";
 
+import usePayment from "../../components/Payment/usePayment";
+import Swal from "sweetalert2";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -145,6 +148,42 @@ export default function TypographyPage() {
     console.log(bookAppointment);
   }, [bookAppointment]);
 
+  const [paymentHandler, setMyColor] = usePayment();
+
+  const handleGift = () => {
+    let charge = 0;
+    // e.preventDefault();
+    allDoctors.find((elem) => {
+      console.log(elem._id);
+      if (elem._id === docId) {
+        console.log(elem.charge);
+        charge = elem.charge;
+        return elem.charge;
+      }
+    });
+    Swal.mixin({
+      input: "number",
+      confirmButtonText: "Pay &rarr;",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      inputValue: charge,
+      // progressSteps: ['1']
+    })
+      .queue([
+        {
+          title: "Payments Portal",
+          text: "Amount to be paid",
+        },
+      ])
+      .then(async (result) => {
+        if (result.value) {
+          const answers = result.value;
+          console.log(answers[0]);
+          paymentHandler(answers[0]);
+        }
+      });
+  };
+
   function getSteps() {
     return [
       "Choose a Doctor",
@@ -229,7 +268,13 @@ export default function TypographyPage() {
           </StyledFileInputContainer>
         );
       case 4:
-        return <h1>Payment</h1>;
+        // history.push("/upgrade-to-pro");
+        handleGift();
+        return (
+          <h3>
+            Please pay the doctor fees in order to confirm your appointment.
+          </h3>
+        );
       default:
         return "Unknown stepIndex";
     }
