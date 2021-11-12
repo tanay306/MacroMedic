@@ -89,7 +89,6 @@ export function LoginForm(props) {
             data = await api.forgotPassword(email);
           } catch (error) {
             console.log(error);
-            // window.alert("Invalid Credentials");
             handleOpen();
           }
         }}
