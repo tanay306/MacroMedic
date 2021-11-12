@@ -288,7 +288,7 @@ const getStatistics_Doctors = async (args, {req}) => {
 
 function generatePassword() {
   var length = 10,
-      charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
       retVal = "";
   for (var i = 0, n = charset.length; i < length; ++i) {
       retVal += charset.charAt(Math.floor(Math.random() * n));
@@ -302,7 +302,9 @@ const forgotPassword = async(args, {req}) => {
     acc = acc[0]
     if (acc) {
       let pass = generatePassword();
-      sendMail(args.email, pass)
+      sendMail(args.email, pass);
+      acc.password = pass;
+      acc.save();
       return {msg: "Success"}
     } else {
       return {msg: "No such Email found!"}

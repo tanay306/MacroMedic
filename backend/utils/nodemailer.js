@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');;
 
-const sendMail = (email, password, {res}) => {
-    console.log(process.env.NODEMAILER_PASSWORD);
+const sendMail = (email, password) => {
 	const mailer = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
@@ -20,7 +19,6 @@ const sendMail = (email, password, {res}) => {
 	mailer.sendMail(mailOptions, (error, response) => {
 		if (error) {
 			console.log(error);
-			res.status(400);
 			throw new Error('Email Invalid');
 		}
 	});
