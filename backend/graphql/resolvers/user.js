@@ -2,6 +2,7 @@ const User = require('../../models/user.js');
 const {loggedin, admin} = require('../../utils/verifyUser');
 const generateToken = require('../../utils/generateToken.js');   
 const fuzzy = require('mongoose-fuzzy-search');
+const {sendMail} = require('../../utils/nodemailer')
 
 //Auth user & get token
 // Public
@@ -285,6 +286,33 @@ const getStatistics_Doctors = async (args, {req}) => {
   }
 }
 
+function generatePassword() {
+  var length = 10,
+      charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      retVal = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+      retVal += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return retVal;
+}
+
+const forgotPassword = async(args, {req}) => {
+  try {
+    let acc = await User.find({email: args.email});
+    acc = acc[0]
+    if (acc) {
+      let pass = generatePassword();
+      sendMail(args.email, pass)
+      return {msg: "Success"}
+    } else {
+      return {msg: "No such Email found!"}
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports =  {
   authUser,
   registerUser,
@@ -299,5 +327,6 @@ module.exports =  {
   searchDoctorBySpecialization,
   searchParticularDoctor,
   getStatistics_Users,
-  getStatistics_Doctors
+  getStatistics_Doctors,
+  forgotPassword,
 };

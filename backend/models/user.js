@@ -41,10 +41,10 @@ const userSchema = mongoose.Schema(
     },
     location: {
       latitude : {
-        type: Number,
+        type: String,
       },
       longitude: {
-        type: Number,
+        type: String,
       },
     },
     image: {

@@ -13,6 +13,7 @@ const  {
     searchParticularDoctor,
     getStatistics_Users,
     getStatistics_Doctors,
+    forgotPassword,
   } = require('./user.js');
 
 const {
@@ -45,6 +46,7 @@ const {
     searchParticularDoctor: searchParticularDoctor,
     getStatistics_Users: getStatistics_Users,
     getStatistics_Doctors: getStatistics_Doctors,
+    forgotPassword: forgotPassword,
     //appointment
     createAppointment: createAppointment,
     viewAppointment: viewAppointment,
@@ -56,5 +58,5 @@ const {
     getStatistics_Appointment: getStatistics_Appointment,
     getStatistics_Successful_App: getStatistics_Successful_App,
     isValid: isValid,
-    graph,
+    graph: graph,
   };

@@ -1,13 +1,13 @@
 const UserSchema = `
 
     type Location {
-        latitude: Float
-        longitude: Float
+        latitude: String
+        longitude: String
     }
 
     input LocationInput {
-        latitude: Float
-        longitude: Float
+        latitude: String
+        longitude: String
     }
 
     type User {
