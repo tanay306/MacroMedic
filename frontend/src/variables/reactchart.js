@@ -8,6 +8,7 @@ export default function LineChart() {
     labels: ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
+        label: '# of Weekly Total Appointments',
         data: [0, 0, 0, 0, 0, 0, 0],
         fill: false,
         backgroundColor: "rgb(255, 99, 132)",
@@ -28,10 +29,11 @@ export default function LineChart() {
           labels: graphData.labels,
           datasets: [
             {
+              label: '# of Weekly Total Appointments',
               data: arr,
               fill: false,
-              backgroundColor: "rgb(255, 99, 132)",
-              borderColor: "rgba(255, 99, 132, 0.2)",
+              backgroundColor: "rgb(0, 172, 193)",
+              borderColor: "rgba(0, 172, 193, 0.2)",
             },
           ],
         });
