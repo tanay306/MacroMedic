@@ -79,6 +79,7 @@ const api = {
         },
       }
     );
+    console.log(data);
     return data.data.data.registerUser;
   },
   getDoctors: async () => {

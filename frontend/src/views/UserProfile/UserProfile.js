@@ -65,11 +65,11 @@ export default function UserProfile() {
     lat: "",
     lng: "",
   });
-  const [cords, setCords] = useState({
-    address: "",
-    lat: "",
-    lng: "",
-  });
+  // const [cords, setCords] = useState({
+  //   address: "",
+  //   lat: "",
+  //   lng: "",
+  // });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -91,13 +91,8 @@ export default function UserProfile() {
   useEffect(() => {
     console.log("0000");
     console.log(users);
-    console.log(users.location ? users.location.longitude : "");
+    // console.log(users.location ? users.location.longitude : "");
     setPickUp({
-      address: "",
-      lat: users.location ? users.location.latitude : "",
-      lng: users.location ? users.location.longitude : "",
-    });
-    setCords({
       address: "",
       lat: users.location ? users.location.latitude : "",
       lng: users.location ? users.location.longitude : "",
@@ -109,8 +104,6 @@ export default function UserProfile() {
 
   useEffect(() => {
     console.log("pickup", pickUp);
-
-    console.log("Cords", cords);
   }, [bool]);
 
   const dropInit = { address: "", lat: 0, lng: 0 };
@@ -366,13 +359,13 @@ export default function UserProfile() {
             {/* <CardBody profile> */}
             <MyMap
               pU={pickUp}
-              sPU={setPickUp}
-              d={drop}
-              sD={setDrop}
-              // iD={isDriver}
-              // sS={setStep}
-              mI={mapInit}
-              coords={cords}
+              // sPU={setPickUp}
+              // d={drop}
+              // sD={setDrop}
+              // // iD={isDriver}
+              // // sS={setStep}
+              // mI={mapInit}
+              // coords={cords}
             />
             {/* </CardBody> */}
           </Card>

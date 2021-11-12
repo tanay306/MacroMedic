@@ -19,6 +19,7 @@ const buildschema =  buildSchema(`
         searchParticularDoctor(userId: ID!): User!
         getStatistics_Users: String!
         getStatistics_Doctors: String!
+        forgotPassword(email: String!): Response!
 
         viewAppointment(user_id: ID!): [viewAppointment!]!
         cancelAppointment(appointment_id: ID!): Response!
