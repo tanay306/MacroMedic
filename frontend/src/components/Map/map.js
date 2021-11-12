@@ -12,6 +12,7 @@ import ReactLeafletSearch from "react-leaflet-search";
 import Routing from "./RoutingMachine";
 import "./map.css";
 import "leaflet/dist/leaflet.css";
+import { GlobalContext } from "../../GlobalContext";
 
 const DEFAULT_LATITUDE = 19.076;
 const DEFUALT_LONGITUDE = 72.8777;
