@@ -356,7 +356,7 @@ export default function UserProfile() {
                 onChange={async (e) => {
                   // setImage(e.target.files[0]);
                   // console.log(image);
-                  await api.uploadImage(userData._id, e.target.files[0].name);
+                  await api.uploadImage(userData._id, e.target.files[0]);
                 }}
               />
             </CardBody>
