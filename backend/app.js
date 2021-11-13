@@ -45,6 +45,7 @@ let favicon = require("serve-favicon");
 
 app.use(favicon(path.join(__dirname, "favicon.ico")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const attendedMeet = async (id) => {
   try {
