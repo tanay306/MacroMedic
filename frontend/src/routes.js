@@ -26,7 +26,7 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/profile",
@@ -34,7 +34,7 @@ const dashboardRoutes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/appointments",
@@ -42,7 +42,7 @@ const dashboardRoutes = [
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/bookAppointment/:docId",
@@ -50,7 +50,7 @@ const dashboardRoutes = [
     rtlName: "طباعة",
     icon: "book_online",
     component: Typography,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/scheduled",
@@ -58,7 +58,7 @@ const dashboardRoutes = [
     rtlName: "الرموز",
     icon: "video_camera_front",
     component: Icons,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/doctors",
@@ -66,7 +66,7 @@ const dashboardRoutes = [
     rtlName: "خرائط",
     icon: "person_search",
     component: MapsNew,
-    layout: "/user"
+    layout: "/user",
   },
   // {
   //   path: "/notifications",
@@ -84,14 +84,14 @@ const dashboardRoutes = [
   //   component: RTLPage,
   //   layout: "/rtl"
   // },
-  {
-    path: "/upgrade-to-pro",
-    name: "Donate for Good",
-    rtlName: "التطور للاحترافية",
-    icon: "support",
-    component: UpgradeToPro,
-    layout: "/user"
-  }
+  // {
+  //   path: "/upgrade-to-pro",
+  //   name: "Donate for Good",
+  //   rtlName: "التطور للاحترافية",
+  //   icon: "support",
+  //   component: UpgradeToPro,
+  //   layout: "/user"
+  // }
 ];
 
 export default dashboardRoutes;

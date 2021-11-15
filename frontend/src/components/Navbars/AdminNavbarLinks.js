@@ -19,10 +19,10 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -31,7 +31,7 @@ export default function AdminNavbarLinks() {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
-  const handleClickNotification = event => {
+  const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
     } else {
@@ -41,7 +41,7 @@ export default function AdminNavbarLinks() {
   const handleCloseNotification = () => {
     setOpenNotification(null);
   };
-  const handleClickProfile = event => {
+  const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
     } else {
@@ -50,7 +50,7 @@ export default function AdminNavbarLinks() {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
-    history.push(`/login`); 
+    history.push(`/login`);
   };
   return (
     <div>
@@ -224,10 +224,13 @@ export default function AdminNavbarLinks() {
           )}
         </Poppers>
       </div> */}
-      <IconButton style={{margin: '25px'}} onClick={() => {
-        history.push('/');
-        window.sessionStorage.removeItem('LOC_user');
-        }} >
+      <IconButton
+        style={{ margin: "25px" }}
+        onClick={() => {
+          history.push("/");
+          window.sessionStorage.removeItem("LOC_user");
+        }}
+      >
         <PowerSettingsNewIcon />
       </IconButton>
     </div>
