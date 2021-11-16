@@ -230,6 +230,7 @@ function MapsNew() {
                 color="primary"
                 onClick={() => {
                   history.push(`/user/bookAppointment/${elem._id}`);
+                  window.location.reload();
                 }}
               >
                 Book an Appointment

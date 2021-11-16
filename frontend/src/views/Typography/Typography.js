@@ -156,6 +156,17 @@ export default function TypographyPage() {
     return data;
   };
 
+  useEffect(() => {
+    const getDoctorData = async () => {
+      try {
+        setAllDoctors(await api.getDoctors());
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDoctorData();
+  }, []);
+
   const handleGift = () => {
     let charge = 0;
     // e.preventDefault();
