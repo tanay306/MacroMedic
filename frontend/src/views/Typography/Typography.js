@@ -148,7 +148,7 @@ export default function TypographyPage() {
     console.log(bookAppointment);
   }, [bookAppointment]);
 
-  const [paymentHandler, setMyColor] = usePayment();
+  const [paymentHandler, setMyColor, success] = usePayment();
 
   const handleGift = () => {
     let charge = 0;
@@ -161,25 +161,28 @@ export default function TypographyPage() {
         return elem.charge;
       }
     });
-    Swal.mixin({
-      input: "number",
+    Swal.fire({
+      // input: "number",
       confirmButtonText: "Pay &rarr;",
       allowOutsideClick: false,
       allowEscapeKey: false,
       inputValue: charge,
+      title: "Payments Portal",
+      text: `Amount to be paid: ${charge}`,
       // progressSteps: ['1']
     })
-      .queue([
-        {
-          title: "Payments Portal",
-          text: "Amount to be paid",
-        },
-      ])
+      // .queue([
+      //   {
+      //     title: "Payments Portal",
+      //     text: "Amount to be paid",
+      //   },
+      // ])
       .then(async (result) => {
+        console.log(result);
         if (result.value) {
           const answers = result.value;
           console.log(answers[0]);
-          paymentHandler(answers[0]);
+          paymentHandler(charge);
         }
       });
   };
@@ -284,8 +287,13 @@ export default function TypographyPage() {
   const steps = getSteps();
 
   const handleNext = async () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (activeStep === steps.length - 1) {
+    if (activeStep === steps.length - 1 && !success) {
+      Swal.fire("Kindly make the payment to confirm appointment.");
+      handleGift();
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+    if (activeStep === steps.length - 1 && success) {
       try {
         const data = await api.createAppointment(
           bookAppointment.doctorId,
@@ -294,6 +302,7 @@ export default function TypographyPage() {
           userData._id
         );
         const fls = await api.uploadDoc(data._id, file);
+        return <Notify msg={`Appointment scheduled with ${doctor.name}`} />;
       } catch (error) {
         console.log(error);
       }
@@ -376,14 +385,15 @@ export default function TypographyPage() {
                           Next
                         </CustomButton>
                       ) : (
-                        <div
+                        <CustomButton
                           style={{ display: "inline-block" }}
+                          variant="contained"
+                          color="warning"
                           onClick={handleNext}
+                          id="name-kya-hai"
                         >
-                          <Notify
-                            msg={`Appointment scheduled with ${doctor.name}`}
-                          />
-                        </div>
+                          Submit
+                        </CustomButton>
                       )}
                     </div>
                   </div>
