@@ -139,7 +139,7 @@ export default function TypographyPage() {
 
   const [bookAppointment, setBookAppointment] = useState({
     doctorId: docId,
-    dateTime: "2021-03-20T10:30",
+    dateTime: "2020-03-20T10:30",
     description: "",
   });
   const [file, setFile] = useState();
@@ -149,6 +149,12 @@ export default function TypographyPage() {
   }, [bookAppointment]);
 
   const [paymentHandler, setMyColor, success] = usePayment();
+
+  const isValidChecker = async (val) => {
+    let data = await api.isValid(val, docId);
+    data = data.data.data.isValid.msg;
+    return data;
+  };
 
   const handleGift = () => {
     let charge = 0;
@@ -197,6 +203,22 @@ export default function TypographyPage() {
     ];
   }
 
+  // useEffect(() => {
+  //   let date = new Date();
+  //   let yr = date.getFullYear() - 1;
+  //   let mos = date.getMonth();
+  //   let day = date.getDay();
+  //   let hr = date.getHours();
+  //   let min = date.getMinutes();
+  //   let fDate = yr + "-" + mos + "-" + day + "T" + hr + ":" + min;
+  //   console.log(fDate);
+  //   setBookAppointment({
+  //     ...bookAppointment,
+  //     dateTime: fDate,
+  //   });
+  //   console.log("Ajeeb: ", new Date());
+  // }, []);
+
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -226,16 +248,6 @@ export default function TypographyPage() {
                   ...bookAppointment,
                   dateTime: e.target.value,
                 });
-
-                let data = await api.isValid(e.target.value, docId);
-                data = data.data.data.isValid.msg;
-                console.log(data);
-                if (data === "true") {
-                } else {
-                  // setActiveStep(1);
-                  console.log("Invalid");
-                  setVisible(true);
-                }
               }}
             />
           </form>
@@ -290,6 +302,21 @@ export default function TypographyPage() {
     if (activeStep === steps.length - 1 && !success) {
       Swal.fire("Kindly make the payment to confirm appointment.");
       handleGift();
+    } else if (activeStep === 1) {
+      let data = await isValidChecker(bookAppointment.dateTime);
+      console.log(data);
+      if (data == "false") {
+        console.log("Invalid");
+        setVisible(true);
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } else if (activeStep === 2) {
+      if (bookAppointment.description.length === 0) {
+        Swal.fire("Kindly provide a description.");
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
