@@ -24,6 +24,7 @@ export function ForgotPasswordForm(props) {
 
   return (
     <BoxContainer>
+      <Marginer direction="vertical" margin="1em" />
       <FormContainer>
         <Input
           type="email"
@@ -31,7 +32,7 @@ export function ForgotPasswordForm(props) {
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormContainer>
-      <Marginer direction="vertical" margin={10} />
+      <Marginer direction="vertical" margin="2em" />
       <SubmitButton
         type="submit"
         onClick={async () => {
@@ -51,7 +52,7 @@ export function ForgotPasswordForm(props) {
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         <BoldLink href="#" onClick={switchToSignin}>
-            Signin
+            Back To Sign In
         </BoldLink>
       </MutedLink>
     </BoxContainer>

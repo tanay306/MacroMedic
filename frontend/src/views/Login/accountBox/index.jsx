@@ -209,6 +209,7 @@ export function AccountBox(props) {
               <HeaderContainer>
                 <HeaderText>Trouble with logging in?</HeaderText>
                 <SmallText>Enter your email address and we'll send you a link to get back into your account.</SmallText>
+                <SmallText>Don't forget to check your spam as well!</SmallText>
               </HeaderContainer>
             )}
           </TopContainer>
