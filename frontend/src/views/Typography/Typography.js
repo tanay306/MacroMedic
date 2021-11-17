@@ -148,7 +148,7 @@ export default function TypographyPage() {
     console.log(bookAppointment);
   }, [bookAppointment]);
 
-  const [paymentHandler, setMyColor, success] = usePayment();
+  const [paymentHandler, setMyColor, success, setSuccess] = usePayment();
 
   const isValidChecker = async (val) => {
     let data = await api.isValid(val, docId);
@@ -312,7 +312,8 @@ export default function TypographyPage() {
   const handleNext = async () => {
     if (activeStep === steps.length - 1 && !success) {
       Swal.fire("Kindly make the payment to confirm appointment.");
-      handleGift();
+      // handleGift();
+      setSuccess(true);
     } else if (activeStep === 1) {
       let data = await isValidChecker(bookAppointment.dateTime);
       console.log(data);

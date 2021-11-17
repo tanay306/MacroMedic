@@ -47,7 +47,7 @@ function usePayment() {
     rzp1.open();
   };
 
-  return [paymentHandler, setMyColor, success];
+  return [paymentHandler, setMyColor, success, setSuccess];
 }
 
 export default usePayment;
