@@ -340,7 +340,7 @@ export default function TypographyPage() {
           bookAppointment.description,
           userData._id
         );
-        const fls = await api.uploadDoc(data._id, file);
+        await api.uploadDoc(data._id, file);
         return <Notify msg={`Appointment scheduled with ${doctor.name}`} />;
       } catch (error) {
         console.log(error);

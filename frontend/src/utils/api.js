@@ -186,7 +186,7 @@ const api = {
     console.log(files);
     const postData = new FormData();
     postData.append("id", id);
-    postData.append("file", files);
+    postData.append("doc", files);
     const data = await axios.post("http://localhost:5000/uploadDoc", postData);
     console.log(data);
     return data;

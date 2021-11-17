@@ -109,17 +109,15 @@ function checkFileType(file, cb) {
 }
 
 app.post("/uploadDoc", upload.single("doc"), async (req, res) => {
-  const url = req.protocol + "://" + req.get("host");
   const { id } = req.body;
   const appointment = await Appointment.findById(id);
   if (appointment) {
     appointment.report = `/${req.file.path}`;
     const resp = await appointment.save();
     if (resp) {
-      res.send("Successfully uploaded pdf");
       console.log("success");
     } else {
-      res.send("Some err has occured!!");
+      console.log("err");
     }
   }
 });
