@@ -310,11 +310,12 @@ export default function TypographyPage() {
   const steps = getSteps();
 
   const handleNext = async () => {
-    if (activeStep === steps.length - 1 && !success) {
-      Swal.fire("Kindly make the payment to confirm appointment.");
-      // handleGift();
-      setSuccess(true);
-    } else if (activeStep === 1) {
+    // if (activeStep === steps.length - 1 && !success) {
+    //   Swal.fire("Kindly make the payment to confirm appointment.");
+    //   // handleGift();
+    //   setSuccess(true);
+    // } else
+    if (activeStep === 1) {
       let data = await isValidChecker(bookAppointment.dateTime);
       console.log(data);
       if (data == "false") {

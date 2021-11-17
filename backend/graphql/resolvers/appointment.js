@@ -32,6 +32,7 @@ const createAppointment = async (args, { req }) => {
       //     console.log(text);
       //   }
       // });
+      console.log(appointment);
       return {
         ...appointment._doc,
       };
@@ -178,7 +179,7 @@ const getAllAppointments = async (args, { req }) => {
 
 const updateAppointmentStatus = async () => {
   try {
-    let appointments = await Appointment.find({status: "Pending"});
+    let appointments = await Appointment.find({ status: "Pending" });
     appointments.forEach((appointment) => {
       var app_date = new Date(appointment.date);
       var date = new Date();
@@ -339,16 +340,19 @@ const getStatistics_Successful_App = async (args, { req }) => {
   }
 };
 
-const isValid = async (args, {req}) => {
+const isValid = async (args, { req }) => {
   try {
     let state = "true";
-    let appointments = await Appointment.find({doctorId: args.IsValid.doctorId, status: "Pending"});
+    let appointments = await Appointment.find({
+      doctorId: args.IsValid.doctorId,
+      status: "Pending",
+    });
     let req_date = new Date(args.IsValid.date);
     let today = new Date();
     if (req_date < today) {
-      return { msg: "false" }
+      return { msg: "false" };
     }
-    appointments.forEach( (elem) => {
+    appointments.forEach((elem) => {
       let bef_date = new Date(elem.date);
       let after_date = new Date(elem.date);
       bef_date.setMinutes(bef_date.getMinutes() - 30);
@@ -357,26 +361,30 @@ const isValid = async (args, {req}) => {
         state = "false";
       }
     });
-    return { msg : state }
+    return { msg: state };
   } catch (err) {
     console.log(err);
     throw err;
   }
-}
+};
 
-const graph = async (args, {req}) => {
+const graph = async (args, { req }) => {
   try {
     let curr = new Date();
     let first = curr.getDate() - curr.getDay() + 1;
     let a = new Array(7).fill(0);
-    let apps = await Appointment.find({})
+    let apps = await Appointment.find({});
     for (let i = 0; i < 7; i++) {
-      let count = 0
+      let count = 0;
       new_day = first + i;
       let day = new Date(curr.setDate(new_day)).toUTCString();
       day = new Date(day);
-      apps.forEach( (app) => {
-        if (app.createdAt.getDate() === day.getDate() && app.createdAt.getMonth() === day.getMonth() && app.createdAt.getFullYear() === day.getFullYear()) {
+      apps.forEach((app) => {
+        if (
+          app.createdAt.getDate() === day.getDate() &&
+          app.createdAt.getMonth() === day.getMonth() &&
+          app.createdAt.getFullYear() === day.getFullYear()
+        ) {
           count++;
         }
       });
@@ -390,12 +398,12 @@ const graph = async (args, {req}) => {
       friday: a[4],
       saturday: a[5],
       sunday: a[6],
-    }
+    };
   } catch (err) {
     console.log(err);
     throw err;
   }
-}
+};
 
 module.exports = {
   createAppointment,
