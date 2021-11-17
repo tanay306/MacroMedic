@@ -3,7 +3,6 @@ import { Line } from "react-chartjs-2";
 import api from "../utils/api";
 
 export default function LineChart() {
-  const [weekly, setWeekly] = useState([]);
   const [graphData, setGraphData] = useState({
     labels: ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
