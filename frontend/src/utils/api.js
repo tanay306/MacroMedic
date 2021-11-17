@@ -207,6 +207,7 @@ const api = {
                 age
                 sex
                 specialization
+                charge
                 token
                 about
                 location {
@@ -241,6 +242,7 @@ const api = {
                 age
                 sex
                 specialization
+                charge
                 token
                 about
                 location {

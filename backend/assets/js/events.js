@@ -84,7 +84,7 @@ window.addEventListener( 'load', () => {
     document.getElementById( 'enter-room' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();
 
-        let name = 'Patient'
+        let name = 'User'
 
         if ( name ) {
             //remove error message, if any
