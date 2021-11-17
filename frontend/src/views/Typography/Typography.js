@@ -333,7 +333,23 @@ export default function TypographyPage() {
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
-    if (activeStep === steps.length - 1 && success) {
+    // if (activeStep === steps.length - 1 && success) {
+    //   try {
+    //     const data = await api.createAppointment(
+    //       bookAppointment.doctorId,
+    //       bookAppointment.dateTime,
+    //       bookAppointment.description,
+    //       userData._id
+    //     );
+    //     if (file) {
+    //       await api.uploadDoc(data._id, file);
+    //     }
+    //     return <Notify msg={`Appointment scheduled with ${doctor.name}`} />;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+    if (activeStep === steps.length - 1) {
       try {
         const data = await api.createAppointment(
           bookAppointment.doctorId,
@@ -341,7 +357,9 @@ export default function TypographyPage() {
           bookAppointment.description,
           userData._id
         );
-        await api.uploadDoc(data._id, file);
+        if (file) {
+          await api.uploadDoc(data._id, file);
+        }
         return <Notify msg={`Appointment scheduled with ${doctor.name}`} />;
       } catch (error) {
         console.log(error);
