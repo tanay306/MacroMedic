@@ -393,6 +393,7 @@ const api = {
               description
               date
               status
+              description
             }
           }
         `,
@@ -485,6 +486,7 @@ const api = {
               _id
             }
             status
+            description
           }
         }
         `,

@@ -76,6 +76,7 @@ export default function TableList() {
             ? data[i].patientId.name
             : data[i].doctorId.name,
           date + "\t\t@" + time,
+          data[i].description,
           "Pending",
         ]);
         j++;
@@ -114,6 +115,7 @@ export default function TableList() {
             : data[i].doctorId.name,
           // date + "\t\t@" + time,
           new Date().toDateString() + "\t\t@" + time,
+          data[i].description,
           data[i].status,
         ]);
         k++;
@@ -142,6 +144,7 @@ export default function TableList() {
                 `${userData.role === "doctor" ? "Patient" : "Doctor"} Name`,
                 ,
                 "Date/Time",
+                "Description",
                 "Status",
               ]}
               tableData={uApp}
@@ -165,6 +168,7 @@ export default function TableList() {
                 `${userData.role === "doctor" ? "Patient" : "Doctor"} Name`,
                 ,
                 "Date/Time",
+                "Description",
                 "Status",
               ]}
               tableData={pApp}
