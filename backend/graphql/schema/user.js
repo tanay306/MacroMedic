@@ -10,6 +10,20 @@ const UserSchema = `
         longitude: String
     }
 
+    type Review {
+        comment: String
+        rating: Float
+        patient: ID
+        date: String
+    }
+
+    input ReviewInput {
+        comment: String
+        rating: Float
+        patient: ID
+        date: String
+    }
+
     type User {
         _id: ID!
         name: String
@@ -20,13 +34,14 @@ const UserSchema = `
         age: Int
         sex: String
         specialization: String
+        averageRating: Float!
+        reviews: [Review!]
         token: String
         about: String
         location: Location
         image: String
         charge: Int
     }
-
 
     input UserInput {
         _id: ID

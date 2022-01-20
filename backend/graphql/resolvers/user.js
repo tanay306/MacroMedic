@@ -233,12 +233,19 @@ const searchDoctorByName = async (args, {req}) => {
 const searchDoctorBySpecialization = async (args, {req}) => {
   try{
     // if(loggedin(req)) {
-      const doctors = await User.find({role: "doctor", specialization: args.searchTerm});
-      if(doctors) {
+      let doctors;
+      console.log('aa');
+      if (args.status && args.status == true) {
+        doctors = await User.find({role: "doctor", specialization: args.searchTerm}).sort({averageRating: 'desc'});
+      } else {
+        doctors = await User.find({role: "doctor", specialization: args.searchTerm});
+      }
+      if (doctors) {
+        console.log(doctors);
         return doctors;
       } else {
-        console.log('Doctor not found!!');
-      }  
+        throw new Error('Doctor not found');
+      }
     // } else {
     //   throw new Error('User not found');
     // // }
@@ -256,7 +263,7 @@ const searchParticularDoctor = async (args, {req}) => {
         return doctor;
       } else {
         console.log('Doctor not found!!');
-      }
+      } 
     // } else {
     //   throw new Error('User not found');
     // }
@@ -315,6 +322,40 @@ const forgotPassword = async(args, {req}) => {
   }
 }
 
+//Review
+
+// Add review
+const addReview = async(args, {req}) => {
+  try {
+    const doctor = await User.findById(args.doctorId);
+    if (doctor && doctor.role == 'doctor') {
+      let numReviews = doctor.reviews.length;
+      let doctReview = doctor.reviews;
+      let newAvg = (((doctor.averageRating * numReviews) + args.reviewInput.rating ) / (numReviews + 1)).toFixed(2);
+      let review = {
+        comment: args.reviewInput.comment,
+        rating: args.reviewInput.rating,
+        patient: args.reviewInput.patient,
+        date: args.reviewInput.date,
+      }
+      doctReview.push(review);
+      let updatedDoctor = {
+        reviews: doctReview,
+        averageRating: newAvg
+      };
+      await User.findByIdAndUpdate(args.doctorId, { $set: updatedDoctor, });
+      // let updates = await User.findById(args.doctorId);
+      // console.log(updates);
+      return {msg: "Success"}
+    } else {
+      return {msg: "Some Err Occured"}
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports =  {
   authUser,
   registerUser,
@@ -331,4 +372,5 @@ module.exports =  {
   getStatistics_Users,
   getStatistics_Doctors,
   forgotPassword,
+  addReview,
 };
