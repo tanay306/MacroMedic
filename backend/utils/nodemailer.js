@@ -18,6 +18,7 @@ const sendMail = (email, password) => {
 
 	mailer.sendMail(mailOptions, (error, response) => {
 		console.log("Sent Mail");
+		console.log(response);
 		if (error) {
 			console.log(error);
 			throw new Error('Email Invalid');
