@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import api from 'utils/api';
 import Button from "components/CustomButtons/Button.js";
 
 const Symptoms = () => {
@@ -135,8 +136,10 @@ const Symptoms = () => {
         setSymptomArray([...symptomArr, key]);
     };
 
-    const updater = () => {
+    const sumbitHandler = async () => {
         // API LOGIC
+        const apiData = await api.symptomsToML(symptoms);
+        console.log(apiData);
     };
     
     return (
@@ -153,7 +156,7 @@ const Symptoms = () => {
             )}
             </div>
             <div>
-                <Button color="warning" onClick={updater} style={{ margin: 8, marginTop: 32 }} fullWidth>
+                <Button color="warning" style={{ margin: 8, marginTop: 32 }} fullWidth onClick={sumbitHandler}>
                     Submit
                 </Button>
             </div>

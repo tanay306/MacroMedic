@@ -728,6 +728,32 @@ const api = {
     console.log("File uploded");
     return data;
   },
+  symptomsToML: async (symptomsDict) => {
+    const data = JSON.stringify(symptomsDict);
+
+    var config = {
+      method: 'get',
+      url: 'http://127.0.0.1:5000/ml/predict/',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Cookie': 'csrftoken=F6L97M9DobQPv9Zzg8y9Kz07XDrGiNTgrCefIVzqhXOpGC0vVbL3CNFgX1KWExOj'
+      },
+      data : data
+    };
+
+    let receivedData;
+    axios(config)
+    .then(function (response) {
+      receivedData = JSON.stringify(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+    console.log(receivedData);
+    console.log("ML receivedData");
+    return data;
+  },
 };
 
 export default api;
