@@ -15,7 +15,7 @@ const buildschema =  buildSchema(`
         getUserById(userId: ID!): User!
         getDoctors: [User!]!
         searchDoctorByName(searchTerm: String!): [User!]
-        searchDoctorBySpecialization(searchTerm: String!): [User!]
+        searchDoctorBySpecialization(searchTerm: String!, status: Boolean): [User!]
         searchParticularDoctor(userId: ID!): User!
         getStatistics_Users: String!
         getStatistics_Doctors: String!
@@ -38,6 +38,7 @@ const buildschema =  buildSchema(`
         updateUserProfile(userInput: UpdateUserInput!): User!
         updateUser(userId: ID!, userInput: UpdateUserInput!): User!
         deleteUser(userId: ID!): User!
+        addReview(doctorId: ID!, reviewInput: ReviewInput!): Response!
 
         createAppointment(appointmentInput: AppointmentInput!): Appointment!
     }

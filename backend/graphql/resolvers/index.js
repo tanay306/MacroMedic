@@ -14,6 +14,7 @@ const  {
     getStatistics_Users,
     getStatistics_Doctors,
     forgotPassword,
+    addReview,
   } = require('./user.js');
 
 const {
@@ -47,6 +48,7 @@ const {
     getStatistics_Users: getStatistics_Users,
     getStatistics_Doctors: getStatistics_Doctors,
     forgotPassword: forgotPassword,
+    addReview: addReview,
     //appointment
     createAppointment: createAppointment,
     viewAppointment: viewAppointment,

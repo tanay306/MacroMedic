@@ -18,6 +18,8 @@ import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
+import Symptoms from "views/Symptoms/Symptoms";
+import Reviews from "views/Reviews/Reviews";
 
 const dashboardRoutes = [
   {
@@ -66,6 +68,22 @@ const dashboardRoutes = [
     rtlName: "خرائط",
     icon: "person_search",
     component: MapsNew,
+    layout: "/user",
+  },
+  {
+    path: "/symptoms",
+    name: "Symptoms",
+    rtlName: "خرائط",
+    icon: "person_search",
+    component: Symptoms,
+    layout: "/user",
+  },
+  {
+    path: "/reviews",
+    name: "Reviews",
+    rtlName: "خرائط",
+    icon: "person_search",
+    component: Reviews,
     layout: "/user",
   },
   // {

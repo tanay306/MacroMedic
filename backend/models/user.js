@@ -2,6 +2,30 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const fuzzy = require('mongoose-fuzzy-searching');
 
+const reviewSchema = mongoose.Schema(
+  {
+    comment: {
+        type: String,
+        required: true,
+    },
+    rating: {
+        type: Number,
+        required: true,
+    },
+    patient: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+    },
+    date: { 
+      type: String,
+    },
+  },  
+  {
+    timestamps: true,
+  }
+);
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -56,7 +80,12 @@ const userSchema = mongoose.Schema(
     charge: {
       type: Number,
       default: 0,
-    }
+    },
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+    reviews: [reviewSchema],
   },
   {
     timestamps: true,

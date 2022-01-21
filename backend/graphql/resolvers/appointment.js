@@ -185,7 +185,6 @@ const updateAppointmentStatus = async () => {
       var date = new Date();
       app_date.setHours(app_date.getHours() + 1);
       if (app_date < date && appointment.status == "Pending") {
-        console.log("maara");
         appointment.status = "Not Visited";
         appointment.save();
       }
