@@ -8,10 +8,7 @@ import json
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"": {"origins": "*"}})
-app.config['CORS_HEADERS'] = 'Content-Type'
-
-app = Flask(__name__)
+CORS(app)
 
 filename = '../machinelearning/pickle_model.pkl'
 model = pickle.load(open(filename, 'rb'))
