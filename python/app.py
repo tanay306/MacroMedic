@@ -3,6 +3,13 @@ import pandas as pd
 import os
 import pickle
 from flask import Flask, jsonify, request, json, session
+from functools import wraps
+import json
+from flask_cors import CORS, cross_origin
+
+app = Flask(__name__)
+cors = CORS(app, resources={r"": {"origins": "http://127.0.0.1:5000"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 app = Flask(__name__)
 
