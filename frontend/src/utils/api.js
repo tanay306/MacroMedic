@@ -736,6 +736,7 @@ const api = {
       url: 'http://127.0.0.1:5000/ml/predict/',
       headers: { 
         'Content-Type': 'application/json', 
+        'Access-Control-Allow-Origin': '*',
         'Cookie': 'csrftoken=F6L97M9DobQPv9Zzg8y9Kz07XDrGiNTgrCefIVzqhXOpGC0vVbL3CNFgX1KWExOj'
       },
       data : data
