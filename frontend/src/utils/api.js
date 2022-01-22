@@ -760,6 +760,34 @@ const api = {
     // console.log("ML receivedData");
     return receivedData;
   },
+  addReview: async (doctorId, comment, rating, patientId) => {
+    const date = new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getUTCFullYear()
+    const data = await axios.post(
+      url,
+      {
+        query: `
+          mutation {
+            addReview(doctorId: "${doctorId}", reviewInput:{
+              comment:"${comment}",
+              rating: ${rating},
+              patient: "${patientId}",
+              date: "${date}"
+            }){
+              msg
+            }
+          }
+        `,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(data);
+    console.log("File uploded");
+    return data;
+  },
 };
 
 export default api;

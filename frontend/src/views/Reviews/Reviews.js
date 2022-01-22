@@ -6,8 +6,12 @@ import styled from "styled-components";
 import { Star, StarOutlined, StarBorder } from '@material-ui/icons';
 import StarRatings from 'react-star-ratings';
 // import Rating from 'react-simple-star-rating';
+import api from 'utils/api';
+import { useHistory } from 'react-router-dom';
 
 const Reviews = () => {
+    const history = useHistory();
+
     const [ review, setReview ] = useState("");
     const [ star, setStar ] = useState(0);
 
@@ -20,7 +24,14 @@ const Reviews = () => {
     }, [star]);
 
     const _id = JSON.parse(localStorage.getItem("review_docID"));
-    console.log(_id);
+    const _id_patient = JSON.parse(localStorage.getItem("review_patientID"));
+    console.log(_id, _id_patient);
+
+    const onSubmitHandler = async () => {
+        const data = await api.addReview(_id, review, star, _id_patient);
+        console.log(data);
+        history.push('/user/dashboard');
+    };
 
     return(
         <StyledCenterDiv>
@@ -42,6 +53,9 @@ const Reviews = () => {
                         // onChange={(e) =>
                         //   setUsers({ ...users, name: e.target.value })
                         // }
+                        onChange={(e) => {
+                            setReview(e.target.value);
+                        }}
                     />
                 </StyledInputContainer>
                 <StarRatingContainer>
@@ -55,7 +69,7 @@ const Reviews = () => {
                         name='rating'
                         />
                 </StarRatingContainer>
-                <Button color="info">Submit</Button>
+                <Button color="info" onClick={onSubmitHandler}>Submit</Button>
             </div>
         </StyledCenterDiv>
     );

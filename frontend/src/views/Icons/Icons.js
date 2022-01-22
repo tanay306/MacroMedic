@@ -123,6 +123,7 @@ export default function Icons() {
                       color="success"
                       onClick={() => {
                         localStorage.setItem("review_docID", JSON.stringify(elem[1]._id));
+                        localStorage.setItem("review_patientID", JSON.stringify(elem[2]._id));
                         window.location.href = `http://localhost:5000/?room=${elem[5]}`;
                       }}
                     >
