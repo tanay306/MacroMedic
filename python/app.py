@@ -6,12 +6,17 @@ from flask import Flask, jsonify, request, json, session
 from functools import wraps
 import json
 from flask_cors import CORS, cross_origin
+import tensorflow as tf
+from transformers import DistilBertTokenizerFast
+from transformers import TFDistilBertForSequenceClassification
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"": {"origins": "*"}})
 
 filename = '../machinelearning/pickle_model.pkl'
 model = pickle.load(open(filename, 'rb'))
+nlp = TFDistilBertForSequenceClassification.from_pretrained("../nlp/oversampling")
+tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
 mappings = {
     "Arthritis": "Rheumatologist",
@@ -73,6 +78,27 @@ def predictDisease():
     specialist = mappings[prediction[0]]
     print(prediction[0],specialist)
     return jsonify({"disease" : prediction[0], "specialist": specialist})
+
+@app.route('/nlp/ratings/',methods=['POST'])
+@cross_origin()
+def getRatings():
+    # Response:   {
+    #                 "disease": "Allergy",
+    #                 "specialist": "General Physician"
+    #             }
+    data=json.loads(request.data)
+    final_features = data.get('string')
+    predict_input = tokenizer.encode(final_features,
+                                 truncation=True,
+                                 padding=True,
+                                 return_tensors="tf")
+    tf_output = nlp.predict(predict_input)[0]
+    tf_prediction = tf.nn.softmax(tf_output, axis=1)
+    labels = [0,1,2,3,4,5]
+    label = tf.argmax(tf_prediction, axis=1)
+    label = label.numpy()
+    print(labels[label[0]])
+    return jsonify({"rating" : labels[label[0]]})
     
 if __name__ == "__main__":
     app.run(debug=True,port=8000)
