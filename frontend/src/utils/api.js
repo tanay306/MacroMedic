@@ -729,15 +729,15 @@ const api = {
     return data;
   },
   symptomsToML: async (symptomsDict) => {
-    const data = JSON.stringify(symptomsDict);
+    const data = symptomsDict;
 
     var config = {
-      method: 'get',
-      url: 'http://127.0.0.1:5000/ml/predict/',
+      method: 'post',
+      url: 'http://127.0.0.1:8000/ml/predict/',
       headers: { 
         'Content-Type': 'application/json', 
         'Access-Control-Allow-Origin': '*',
-        'Cookie': 'csrftoken=F6L97M9DobQPv9Zzg8y9Kz07XDrGiNTgrCefIVzqhXOpGC0vVbL3CNFgX1KWExOj'
+        // 'Cookie': 'csrftoken=F6L97M9DobQPv9Zzg8y9Kz07XDrGiNTgrCefIVzqhXOpGC0vVbL3CNFgX1KWExOj'
       },
       data : data
     };
@@ -746,6 +746,7 @@ const api = {
     axios(config)
     .then(function (response) {
       receivedData = JSON.stringify(response.data);
+      console.log(response.data)
     })
     .catch(function (error) {
       console.log(error);

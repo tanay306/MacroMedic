@@ -8,7 +8,7 @@ import json
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"": {"origins": "*"}})
 
 filename = '../machinelearning/pickle_model.pkl'
 model = pickle.load(open(filename, 'rb'))
@@ -30,7 +30,7 @@ mappings = {
     "Migraine": "Neurologist",
     "Hypertension": "General Physician",
     "hepatitis A": "Gastrologist",
-    "Diabetes": "Diabetologist",
+    "Diabetes ": "Diabetologist",
     "Peptic ulcer diseae": "Gastrologist",
     "Gastroenteritis": "Gastrologist",
     "Chronic cholestasis": "Gastrologist",
@@ -58,17 +58,21 @@ mappings = {
 #     column.remove('prognosis') 
 #     return jsonify({"symptoms" : column})
 
-@app.route('/ml/predict/',methods=['GET'])
+@app.route('/ml/predict/',methods=['POST'])
+@cross_origin()
 def predictDisease():
     # Response:   {
     #                 "disease": "Allergy",
     #                 "specialist": "General Physician"
     #             }
+    print(0)
     data=json.loads(request.data)
+    print(1)
     final_features = [np.array(list(data.values()))]
     prediction = model.predict(final_features)
     specialist = mappings[prediction[0]]
+    print(prediction[0],specialist)
     return jsonify({"disease" : prediction[0], "specialist": specialist})
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=8000)
