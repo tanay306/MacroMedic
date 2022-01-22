@@ -226,13 +226,13 @@ const api = {
     );
     return data.data.data.searchDoctorByName;
   },
-  searchDoctorBySpecialization: async (searchTerm) => {
+  searchDoctorBySpecialization: async (searchTerm, status) => {
     const data = await axios.post(
       url,
       {
         query: `
             query{
-              searchDoctorBySpecialization(searchTerm: "${searchTerm}"){
+              searchDoctorBySpecialization(searchTerm: "${searchTerm}", status: ${status}){
                 _id
                 name
                 phoneNo
@@ -742,19 +742,23 @@ const api = {
       data : data
     };
 
-    let receivedData;
-    axios(config)
+    let receivedData = {};
+    receivedData = axios(config)
     .then(function (response) {
-      receivedData = JSON.stringify(response.data);
-      console.log(response.data)
+      receivedData = response.data;
+      // console.log(response.data)
+      return receivedData;
     })
     .catch(function (error) {
       console.log(error);
     });
+
+    // const xData = await axios.post(config);
+    // console.log(xData);
     
-    console.log(receivedData);
-    console.log("ML receivedData");
-    return data;
+    // console.log(receivedData);
+    // console.log("ML receivedData");
+    return receivedData;
   },
 };
 

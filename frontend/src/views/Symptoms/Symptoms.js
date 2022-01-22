@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
+import MapNew from 'views/Maps/MapsNew';
 import api from 'utils/api';
 import Button from "components/CustomButtons/Button.js";
 
 const Symptoms = () => {
+    const history = useHistory();
+
     const [symptoms, setSymptoms] = useState({
         "itching": 0,
         "skin_rash": 0,
@@ -139,7 +143,15 @@ const Symptoms = () => {
     const sumbitHandler = async () => {
         // API LOGIC
         const apiData = await api.symptomsToML(symptoms);
-        console.log(apiData);
+        console.log("API DATA: ", apiData);
+        const xData = await api.searchDoctorBySpecialization(apiData.specialist, true);
+        console.log(xData);
+        history.push({
+            pathname: '/user/doctors',
+            search: `?query=${apiData.specialist}`,
+        });
+        // return <MapNew />
+
     };
     
     return (

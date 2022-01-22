@@ -51,6 +51,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function MapsNew() {
+  const searchQuery = window.location.href.split('query=')[1];
   const { allDocs } = useContext(GlobalContext);
   const [allDoctors, setAllDoctors] = allDocs;
   const history = useHistory();
@@ -62,6 +63,11 @@ function MapsNew() {
   const [drop, setDrop] = useState(dropInit);
 
   const [mapInit, setMapInit] = useState(false);
+  const prefetchDocs = async (search) => {
+    const xData = await api.searchDoctorBySpecialization(search, true);
+    console.log("xData: ", xData);
+    setAllDoctors(xData);
+  };
 
   useEffect(() => {
     console.log(pickUp);
@@ -75,8 +81,17 @@ function MapsNew() {
         console.log(error);
       }
     };
-    getDoctorData();
+    if(searchQuery){
+      console.log(searchQuery);
+      prefetchDocs(searchQuery);
+    }
+    else{
+      getDoctorData();
+    }
   }, []);
+
+  // useEffect(() => {
+  // }, [searchQuery]);
 
   return (
     <React.Fragment>
