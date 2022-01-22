@@ -122,6 +122,7 @@ export default function Icons() {
                       fullWidth
                       color="success"
                       onClick={() => {
+                        localStorage.setItem("review_docID", JSON.stringify(elem[1]._id));
                         window.location.href = `http://localhost:5000/?room=${elem[5]}`;
                       }}
                     >

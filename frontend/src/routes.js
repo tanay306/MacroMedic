@@ -80,9 +80,9 @@ const dashboardRoutes = [
   },
   {
     path: "/reviews",
-    name: "Reviews",
+    name: "",
     rtlName: "خرائط",
-    icon: "person_search",
+    icon: "",
     component: Reviews,
     layout: "/user",
   },

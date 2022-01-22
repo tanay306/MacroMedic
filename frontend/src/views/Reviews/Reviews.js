@@ -19,8 +19,14 @@ const Reviews = () => {
         console.log(star);
     }, [star]);
 
+    const _id = JSON.parse(localStorage.getItem("review_docID"));
+    console.log(_id);
+
     return(
         <StyledCenterDiv>
+            {_id && (<div style={{ textAlign: 'left', marginLeft: '18px' }}>
+                <p>Doctor ID: {_id}</p>
+            </div>)}
             <div>
                 <h4>Your opinion matters to us.</h4>
             </div>
