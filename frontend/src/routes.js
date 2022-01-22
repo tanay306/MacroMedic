@@ -20,6 +20,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 import Symptoms from "views/Symptoms/Symptoms";
 import Reviews from "views/Reviews/Reviews";
+import DoctorProfile from "views/DoctorProfile/DoctorProfile";
 
 const dashboardRoutes = [
   {
@@ -84,6 +85,14 @@ const dashboardRoutes = [
     rtlName: "خرائط",
     icon: "",
     component: Reviews,
+    layout: "/user",
+  },
+  {
+    path: "/doctor-profile/:id",
+    name: "",
+    rtlName: "خرائط",
+    icon: "",
+    component: DoctorProfile,
     layout: "/user",
   },
   // {

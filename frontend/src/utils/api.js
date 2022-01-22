@@ -366,6 +366,13 @@ const api = {
               }
               charge
               specialization
+              averageRating
+              reviews {
+                comment
+                rating
+                patient
+                date
+              }
             }
           }
         `,
