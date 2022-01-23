@@ -13,9 +13,10 @@ from transformers import TFDistilBertForSequenceClassification
 app = Flask(__name__)
 cors = CORS(app, resources={r"": {"origins": "*"}})
 
-filename = '../machinelearning/pickle_model.pkl'
+filename = '../disease-prediction/pickle_model.pkl'
 model = pickle.load(open(filename, 'rb'))
-nlp = TFDistilBertForSequenceClassification.from_pretrained("../nlp/oversampling")
+nlp = TFDistilBertForSequenceClassification.from_pretrained(
+    "../nlp/oversampling")
 tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
 mappings = {
@@ -47,7 +48,7 @@ mappings = {
     "Hepatitis C": "Gastrologist",
     "Paralysis (brain hemorrhage)": "Neurologist",
     "Impetigo": "Dermatologist",
-    "Dengue": "General Physician",   
+    "Dengue": "General Physician",
 }
 
 # @app.route('/ml/',methods=['GET'])
@@ -60,10 +61,11 @@ mappings = {
 #     for i in columns_delete:
 #         del data[i]
 #     column = data.columns.values.tolist()
-#     column.remove('prognosis') 
+#     column.remove('prognosis')
 #     return jsonify({"symptoms" : column})
 
-@app.route('/ml/predict/',methods=['POST'])
+
+@app.route('/ml/predict/', methods=['POST'])
 @cross_origin()
 def predictDisease():
     # Response:   {
@@ -71,34 +73,36 @@ def predictDisease():
     #                 "specialist": "General Physician"
     #             }
     print(0)
-    data=json.loads(request.data)
+    data = json.loads(request.data)
     print(1)
     final_features = [np.array(list(data.values()))]
     prediction = model.predict(final_features)
     specialist = mappings[prediction[0]]
-    print(prediction[0],specialist)
-    return jsonify({"disease" : prediction[0], "specialist": specialist})
+    print(prediction[0], specialist)
+    return jsonify({"disease": prediction[0], "specialist": specialist})
 
-@app.route('/nlp/ratings/',methods=['POST'])
+
+@app.route('/nlp/ratings/', methods=['POST'])
 @cross_origin()
 def getRatings():
     # Response:   {
     #                 "disease": "Allergy",
     #                 "specialist": "General Physician"
     #             }
-    data=json.loads(request.data)
+    data = json.loads(request.data)
     final_features = data.get('string')
     predict_input = tokenizer.encode(final_features,
-                                 truncation=True,
-                                 padding=True,
-                                 return_tensors="tf")
+                                     truncation=True,
+                                     padding=True,
+                                     return_tensors="tf")
     tf_output = nlp.predict(predict_input)[0]
     tf_prediction = tf.nn.softmax(tf_output, axis=1)
-    labels = [0,1,2,3,4,5]
+    labels = [0, 1, 2, 3, 4, 5]
     label = tf.argmax(tf_prediction, axis=1)
     label = label.numpy()
     print(labels[label[0]])
-    return jsonify({"rating" : labels[label[0]]})
-    
+    return jsonify({"rating": labels[label[0]]})
+
+
 if __name__ == "__main__":
-    app.run(debug=True,port=8000)
+    app.run(debug=True, port=8000)
