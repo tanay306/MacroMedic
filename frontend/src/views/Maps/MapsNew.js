@@ -253,6 +253,19 @@ function MapsNew() {
                       Book an Appointment
                     </Link> */}
               </StyledButton>
+              <StyledButton
+                style={{ marginTop: -12 }}
+                fullWidth
+                color="primary"
+                onClick={() => {
+                  history.push(`/user/doctor-profile/${elem._id}`);
+                }}
+              >
+                View Profile
+                {/* <Link to={`/bookAppointment/3`} style={{ color: '#fff' }}>
+                      Book an Appointment
+                    </Link> */}
+              </StyledButton>
             </CardBody>
           </Card>
         ))}

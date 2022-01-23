@@ -59,7 +59,7 @@ const DoctorProfile = () => {
                         <h3 style={marginSetter}>{docData.specialization}</h3>
                     </div>
                     <StyledRightContainer>
-                        <img src={`http://localhost:5000${docData.image}`} alt="..."  width={300}/>
+                        <img src={`http://localhost:5000${docData.image}`} alt="..."  width={150}/>
                         <h6 style={marginSetter}>{docData.about}</h6>
                         <Button color="primary" onClick={() => {
                             hist.push(`/user/bookAppointment/${id}`);
