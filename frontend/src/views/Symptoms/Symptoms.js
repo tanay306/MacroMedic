@@ -23,6 +23,7 @@ const modalStyle = {
 const Symptoms = () => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [specialDoc, setSpecialDoc] = useState("");
   const [symptoms, setSymptoms] = useState({
     itching: 0,
     skin_rash: 0,
@@ -160,21 +161,19 @@ const Symptoms = () => {
     // API LOGIC
     setOpen(true);
     const apiData = await api.symptomsToML(symptoms);
-    console.log("API DATA: ", apiData);
-    specDoc = apiData.specialist;
+    setSpecialDoc(apiData.specialist);
     const xData = await api.searchDoctorBySpecialization(
       apiData.specialist,
       true
     );
     console.log(xData);
-
     // return <MapNew />
   };
 
   const handleClose = () => {
     history.push({
       pathname: "/user/doctors",
-      search: `?query=${specDoc}`,
+      search: `?query=${specialDoc}`,
     });
   };
 
@@ -226,7 +225,7 @@ const Symptoms = () => {
         >
           <Box sx={modalStyle}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Considering your symptoms, you should cosult a ${specDoc}
+              Considering your symptoms, you should cosult a <span>{specialDoc}</span>
             </Typography>
             <Button
               onClick={() => {
