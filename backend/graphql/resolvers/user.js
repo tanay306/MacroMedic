@@ -39,6 +39,7 @@ const registerUser = async (args, { req, redis }) => {
       email: args.userInput.email,
       password: args.userInput.password,
       role: args.userInput.role,
+      image: "/uploads/2c89809c-e831-48e6-b19f-cc9d68cd9740-imga.png",
     });
 
     if (user) {
