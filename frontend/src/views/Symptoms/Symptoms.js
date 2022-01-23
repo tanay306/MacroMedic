@@ -23,6 +23,7 @@ const modalStyle = {
 const Symptoms = () => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [specialDoc, setSpecialDoc] = useState("");
   const [symptoms, setSymptoms] = useState({
     itching: 0,
     skin_rash: 0,
@@ -160,23 +161,25 @@ const Symptoms = () => {
     // API LOGIC
     setOpen(true);
     const apiData = await api.symptomsToML(symptoms);
-    console.log("API DATA: ", apiData);
-    specDoc = apiData.specialist;
+    setSpecialDoc(apiData.specialist);
     const xData = await api.searchDoctorBySpecialization(
       apiData.specialist,
       true
     );
     console.log(xData);
-
     // return <MapNew />
   };
 
   const handleClose = () => {
     history.push({
       pathname: "/user/doctors",
-      search: `?query=${specDoc}`,
+      search: `?query=${specialDoc}`,
     });
   };
+
+  const cancelModal = () => {
+    setOpen(false);
+  }
 
   //   const classes = useStyles();
 
@@ -226,14 +229,30 @@ const Symptoms = () => {
         >
           <Box sx={modalStyle}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Considering your symptoms, you should cosult a ${specDoc}
+              Considering your symptoms, you should cosult a <span>{specialDoc}</span>
             </Typography>
             <Button
+              color="warning"
               onClick={() => {
                 handleClose();
               }}
+              style={{
+                marginRight: "10%",
+                marginTop: "10px"
+              }}
             >
-              Okay
+              View All Doctors
+            </Button>
+            <Button
+              color="warning"
+              onClick={() => {
+                cancelModal();
+              }}
+              style={{
+                marginTop: "10px"
+              }}
+            >
+              Cancel
             </Button>
             {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Your profile has been updated successfully
