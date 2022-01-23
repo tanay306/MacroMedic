@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import api from 'utils/api';
 import { useParams } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import Button from 'components/CustomButtons/Button';
+import { useHistory } from 'react-router-dom';
 
 const ReviewCmp = ({ comment, date, star }) => {
+    
     return (
         <StyledCommentContainer>
             <StyledFlexRow>
@@ -22,6 +25,7 @@ const ReviewCmp = ({ comment, date, star }) => {
                             // starHoverColor="#ffcd3c"
                             numberOfStars={5}
                             name='rating'
+                            starDimension="25"
                         />
                     </div>
                     {/* <div>{star}</div> */}
@@ -34,6 +38,7 @@ const ReviewCmp = ({ comment, date, star }) => {
 const DoctorProfile = () => {
     const { id } = useParams();
     const [ docData, setDocData ] = useState();
+    const hist = useHistory();
 
     const fetchDocData = async () => {
         const data = await api.getUserById(id);
@@ -53,9 +58,14 @@ const DoctorProfile = () => {
                         <h1 style={marginSetter}>{docData.name}</h1>
                         <h3 style={marginSetter}>{docData.specialization}</h3>
                     </div>
-                    <div>
+                    <StyledRightContainer>
                         <img src={`http://localhost:5000${docData.image}`} alt="..."  width={300}/>
-                    </div>
+                        <h6 style={marginSetter}>{docData.about}</h6>
+                        <Button color="primary" onClick={() => {
+                            hist.push(`/user/bookAppointment/${id}`);
+                            window.location.reload();
+                        }}>Book an Appointment @{docData.charge}</Button>
+                    </StyledRightContainer>
                 </StyledFlexRow>
                 {docData.reviews.map(elem => (
                     <div>
@@ -85,4 +95,8 @@ const StyledCommentContainer = styled.div`
     border-bottom: 2px solid #ddd;
     padding: 12px;
     /* padding-bottom: 12px; */
+`;
+
+const StyledRightContainer = styled.div`
+    text-align: right;
 `;
