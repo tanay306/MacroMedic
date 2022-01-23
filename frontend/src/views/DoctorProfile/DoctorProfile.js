@@ -2,20 +2,32 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import api from 'utils/api';
 import { useParams } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 
 const ReviewCmp = ({ comment, date, star }) => {
     return (
-        <div>
+        <StyledCommentContainer>
             <StyledFlexRow>
                 <div>
                     {comment}
                 </div>
                 <div>
-                    <div>{date}</div>
-                    <div>{star}</div>
+                    {/* <div>{date}</div> */}
+                    <div>
+                        <StarRatings
+                            rating={star}
+                            starRatedColor="#ffcd3c"
+                            // changeRating={setStar}
+                            starEmptyColor="#ddd"
+                            // starHoverColor="#ffcd3c"
+                            numberOfStars={5}
+                            name='rating'
+                        />
+                    </div>
+                    {/* <div>{star}</div> */}
                 </div>
             </StyledFlexRow>
-        </div>
+        </StyledCommentContainer>
     );
 };
 
@@ -38,8 +50,8 @@ const DoctorProfile = () => {
             {docData && (<div>
                 <StyledFlexRow>
                     <div>
-                        <h1>{docData.name}</h1>
-                        <h3>{docData.specialization}</h3>
+                        <h1 style={marginSetter}>{docData.name}</h1>
+                        <h3 style={marginSetter}>{docData.specialization}</h3>
                     </div>
                     <div>
                         <img src={`http://localhost:5000${docData.image}`} alt="..."  width={300}/>
@@ -63,4 +75,14 @@ const StyledFlexRow = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: auto 24px;
+`;
+
+const marginSetter = {
+    margin: "12px auto",
+};
+
+const StyledCommentContainer = styled.div`
+    border-bottom: 2px solid #ddd;
+    padding: 12px;
+    /* padding-bottom: 12px; */
 `;
