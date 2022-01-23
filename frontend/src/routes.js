@@ -73,7 +73,7 @@ const dashboardRoutes = [
   },
   {
     path: "/symptoms",
-    name: "Symptoms",
+    name: "Pro Feature",
     rtlName: "خرائط",
     icon: "person_search",
     component: Symptoms,

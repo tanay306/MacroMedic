@@ -157,6 +157,9 @@ const Symptoms = () => {
     return (
         <div>
             <div>
+            <div style={{margin:8}}>
+                <p>Predict doctor specialists with just some clicks!</p>
+            </div>
             {symptoms && Object.keys(symptoms).map(key => 
             (<Button 
                 color={symptoms[key] == 0 ? "primary" : "success"}
