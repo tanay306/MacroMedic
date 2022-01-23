@@ -177,6 +177,10 @@ const Symptoms = () => {
     });
   };
 
+  const cancelModal = () => {
+    setOpen(false);
+  }
+
   //   const classes = useStyles();
 
   return (
@@ -228,11 +232,27 @@ const Symptoms = () => {
               Considering your symptoms, you should cosult a <span>{specialDoc}</span>
             </Typography>
             <Button
+              color="warning"
               onClick={() => {
                 handleClose();
               }}
+              style={{
+                marginRight: "10%",
+                marginTop: "10px"
+              }}
             >
-              Okay
+              View All Doctors
+            </Button>
+            <Button
+              color="warning"
+              onClick={() => {
+                cancelModal();
+              }}
+              style={{
+                marginTop: "10px"
+              }}
+            >
+              Cancel
             </Button>
             {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Your profile has been updated successfully
