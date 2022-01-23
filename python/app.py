@@ -13,7 +13,7 @@ from transformers import TFDistilBertForSequenceClassification
 app = Flask(__name__)
 cors = CORS(app, resources={r"": {"origins": "*"}})
 
-filename = '../disease-prediction/pickle_model.pkl'
+filename = '../machinelearning/pickle_model.pkl'
 model = pickle.load(open(filename, 'rb'))
 nlp = TFDistilBertForSequenceClassification.from_pretrained(
     "../nlp/oversampling")
