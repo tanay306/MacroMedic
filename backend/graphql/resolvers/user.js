@@ -9,7 +9,6 @@ const {sendMail} = require('../../utils/nodemailer')
 const authUser = async (args, { req, redis }) => {
   try {
     const user = await User.findOne({ email: args.email });
-    console.log(user);
     if (user && (await user.matchPassword(args.password))) {
       return {
         ...user._doc,
@@ -19,7 +18,6 @@ const authUser = async (args, { req, redis }) => {
       throw new Error('Invalid email or password');
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -51,7 +49,6 @@ const registerUser = async (args, { req, redis }) => {
       throw new Error('Invalid user data');
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -72,7 +69,6 @@ const getUserProfile = async (args, { req, redis }) => {
       }
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -109,7 +105,6 @@ const updateUserProfile = async (args, { req, redis }) => {
       }
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -123,7 +118,6 @@ const getUsers = async (args, { req, redis }) => {
       return users;
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -138,7 +132,6 @@ const getDoctors = async (args, {req, redis}) => {
         console.log("No doctors");
     };
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -158,7 +151,6 @@ const deleteUser = async (args, { req, redis }) => {
       }
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -177,7 +169,6 @@ const getUserById = async (args, { req, redis }) => {
       }
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -206,7 +197,6 @@ const updateUser = async (args, { req, redis }) => {
       }
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -226,7 +216,6 @@ const searchDoctorByName = async (args, {req}) => {
     //   throw new Error('User not found');
     // }  
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -235,14 +224,12 @@ const searchDoctorBySpecialization = async (args, {req}) => {
   try{
     // if(loggedin(req)) {
       let doctors;
-      console.log('aa');
       if (args.status && args.status == true) {
         doctors = await User.find({role: "doctor", specialization: args.searchTerm}).sort({averageRating: 'desc'});
       } else {
         doctors = await User.find({role: "doctor", specialization: args.searchTerm});
       }
       if (doctors) {
-        console.log(doctors);
         return doctors;
       } else {
         throw new Error('Doctor not found');
@@ -251,7 +238,6 @@ const searchDoctorBySpecialization = async (args, {req}) => {
     //   throw new Error('User not found');
     // // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -269,7 +255,6 @@ const searchParticularDoctor = async (args, {req}) => {
     //   throw new Error('User not found');
     // }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -279,7 +264,6 @@ const getStatistics_Users = async (args, {req}) => {
     let users = await User.find();
     return users.length;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -289,7 +273,6 @@ const getStatistics_Doctors = async (args, {req}) => {
     let doctors = await User.find({role: "doctor"});
     return doctors.length;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -308,20 +291,17 @@ const forgotPassword = async(args, {req}) => {
   try {
     let acc = await User.find({email: args.email});
     acc = acc[0]
-    console.log(acc);
     if (acc) {
       // let pass = generatePassword();
       pass = "123456"
       // sendMail(args.email, pass);
       acc.password = pass;
-      console.log(acc)
       acc.save();
       return {msg: "Success"}
     } else {
       return {msg: "No such Email found!"}
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -348,14 +328,11 @@ const addReview = async(args, {req}) => {
         averageRating: newAvg
       };
       await User.findByIdAndUpdate(args.doctorId, { $set: updatedDoctor, });
-      // let updates = await User.findById(args.doctorId);
-      // console.log(updates);
       return {msg: "Success"}
     } else {
       return {msg: "Some Err Occured"}
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
