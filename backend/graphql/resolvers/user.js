@@ -308,10 +308,13 @@ const forgotPassword = async(args, {req}) => {
   try {
     let acc = await User.find({email: args.email});
     acc = acc[0]
+    console.log(acc);
     if (acc) {
-      let pass = generatePassword();
-      sendMail(args.email, pass);
+      // let pass = generatePassword();
+      pass = "123456"
+      // sendMail(args.email, pass);
       acc.password = pass;
+      console.log(acc)
       acc.save();
       return {msg: "Success"}
     } else {
