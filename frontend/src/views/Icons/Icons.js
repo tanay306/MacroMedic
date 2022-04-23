@@ -105,12 +105,14 @@ export default function Icons() {
               uApp.map((elem) => (
                 <StyledDoctorDataContainer>
                   {console.log(elem)}
+                  {console.log("elem", userData.role)}
                   <Avatar src={doctor} className={classes.large} />
                   <StyledDoctorData>
-                    <StyledH6>{elem[1].name}</StyledH6>
+                    <StyledH6>{userData.role == "doctor" ? elem[2].name : elem[1].name}</StyledH6>
+                    {userData.role == "doctor" ? "" : 
                     <StyledP style={{ color: "gray" }}>
                       {elem[1].specialization}
-                    </StyledP>
+                    </StyledP>}
                   </StyledDoctorData>
                   <StyledDoctorData>
                     <StyledH6>Appointment Summary</StyledH6>
