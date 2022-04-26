@@ -63,6 +63,9 @@ export default function Sidebar(props) {
         if (prop.path === "/bookAppointment/:docId") {
           return;
         }
+        if(userData.role === 'doctor' && (prop.path === '/doctors' || prop.path === '/symptoms')){
+          return;
+        }
         var activePro = " ";
         var listItemClasses;
         var show = false;

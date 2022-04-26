@@ -7,6 +7,7 @@ const AppointmentSchema = `
         description: String!
         date: String!
         status: String!
+        report: String
     }
 
     type getSpecificAppointment {
@@ -16,6 +17,7 @@ const AppointmentSchema = `
         description: String!
         date: String!
         status: String!
+        report: String
     }
 
     type Appointment {
@@ -25,6 +27,7 @@ const AppointmentSchema = `
         description: String!
         date: String!
         status: String!
+        report: String
     }
 
     input AppointmentInput {

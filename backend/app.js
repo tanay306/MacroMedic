@@ -122,6 +122,17 @@ app.post("/uploadDoc", upload.single("doc"), async (req, res) => {
   }
 });
 
+app.post("/downloadDoc", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const appointment = await Appointment.findById(id);
+    const doc_path = appointment.report;
+    res.download(path.join(__dirname + doc_path));
+  } catch (err) {
+    throw err;
+  }
+})
+
 app.post("/uploadImage", upload.single("doc"), async (req, res) => {
   const { id } = req.body;
   console.log(id);
