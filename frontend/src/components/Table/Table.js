@@ -44,10 +44,12 @@ export default function CustomTable(props) {
               <TableRow key={key} className={classes.tableBodyRow}>
                 {prop.map((prop, key) => {
                   if (key == 5) {
-                    let reqpath = __dirname + prop;
-                    console.log("QWERTY");
-                    console.log(__dirname);
-                    return <a download>Download report</a>;
+                    let reqpath = "http://localhost:5000" + prop;
+                    return (
+                      <a href={reqpath} target="_blank" download>
+                        Download report
+                      </a>
+                    );
                   } else if (key == 6) {
                     return;
                   } else {
