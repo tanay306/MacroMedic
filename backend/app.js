@@ -122,28 +122,6 @@ app.post("/uploadDoc", upload.single("doc"), async (req, res) => {
   }
 });
 
-app.post("/downloadDoc", async (req, res) => {
-  try {
-    const { id } = req.body;
-    console.log('upload', id);
-    const appointment = await Appointment.findById(id);
-    if (appointment && appointment.report != null) {
-      const doc_path = appointment.report;
-      res.download(path.join(__dirname + doc_path), (err) => {
-        if (err) {
-          res.status(500).send({
-            message: "File can not be downloaded: " + err,
-          });
-        }
-      });
-    } else {
-      console.log("No report");
-    }
-  } catch (err) {
-    throw err;
-  }
-})
-
 app.post("/uploadImage", upload.single("doc"), async (req, res) => {
   const { id } = req.body;
   console.log(id);
