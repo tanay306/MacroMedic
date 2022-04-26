@@ -153,6 +153,7 @@ export default function TableList() {
                 "Date/Time",
                 "Description",
                 "Status",
+                "Download",
               ]}
               tableData={uApp}
             />
