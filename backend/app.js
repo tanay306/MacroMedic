@@ -129,7 +129,13 @@ app.post("/downloadDoc", async (req, res) => {
     const appointment = await Appointment.findById(id);
     if (appointment && appointment.report != null) {
       const doc_path = appointment.report;
-      res.download(path.join(__dirname + doc_path));
+      res.download(path.join(__dirname + doc_path), (err) => {
+        if (err) {
+          res.status(500).send({
+            message: "File can not be downloaded: " + err,
+          });
+        }
+      });
     } else {
       console.log("No report");
     }
