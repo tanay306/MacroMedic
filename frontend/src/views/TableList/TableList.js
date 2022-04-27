@@ -56,6 +56,7 @@ export default function TableList() {
     const mf = async () => {
       try {
         data = await api.getAllAppointments(userData._id);
+        console.log("Upcominggggggg");
         console.log(data);
       } catch (error) {
         console.log(error);
@@ -78,6 +79,8 @@ export default function TableList() {
           date + "\t\t@" + time,
           data[i].description,
           "Pending",
+          data[i].report,
+          data[i]._id,
         ]);
         j++;
       }
@@ -117,6 +120,8 @@ export default function TableList() {
           new Date().toDateString() + "\t\t@" + time,
           data[i].description,
           data[i].status,
+          data[i].report,
+          data[i]._id,
         ]);
         k++;
       }
@@ -124,6 +129,8 @@ export default function TableList() {
     };
     mf();
   }, [userData]);
+  console.log("KBKJBK");
+  console.log(uApp);
 
   const classes = useStyles();
   return (
@@ -146,6 +153,7 @@ export default function TableList() {
                 "Date/Time",
                 "Description",
                 "Status",
+                "Download",
               ]}
               tableData={uApp}
             />

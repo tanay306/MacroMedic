@@ -22,6 +22,7 @@ import Symptoms from "views/Symptoms/Symptoms";
 import Reviews from "views/Reviews/Reviews";
 import DoctorProfile from "views/DoctorProfile/DoctorProfile";
 
+
 const dashboardRoutes = [
   {
     path: "/dashboard",

@@ -104,7 +104,7 @@ const Symptoms = () => {
     weakness_of_one_body_side: 0,
     loss_of_smell: 0,
     bladder_discomfort: 0,
-    "foul_smell_of urine": 0,
+    foul_smell_of_urine: 0,
     continuous_feel_of_urine: 0,
     passage_of_gases: 0,
     internal_itching: 0,
@@ -144,16 +144,37 @@ const Symptoms = () => {
     });
   };
 
+  const unupdateSymptom = (symptom = "") => {
+    console.log(symptom);
+    setSymptoms({
+      ...symptoms,
+      [symptom]: 0,
+    });
+  };
+
   const [symptomArr, setSymptomArray] = useState([]);
 
   useEffect(() => {
     console.log(symptoms);
   }, [symptoms]);
 
+  useEffect(() => {
+    console.log(symptomArr);
+  }, [symptomArr]);
+
   const onClickHandler = (key) => {
-    updateSymptom(key);
-    console.log(key);
-    setSymptomArray([...symptomArr, key]);
+    if(symptomArr.includes(key)){
+      unupdateSymptom(key);
+      console.log(key);
+      setSymptomArray(symptomArr.filter(value => {
+        return value !== key
+      }));
+    }
+    else {
+      updateSymptom(key);
+      console.log(key);
+      setSymptomArray([...symptomArr, key]);
+    }
   };
 
   let specDoc;

@@ -9,12 +9,16 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 // core components
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
+import api from "../../utils/api";
+import { Path } from "leaflet";
 
 const useStyles = makeStyles(styles);
 
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor } = props;
+  console.log("HJFGCGHN");
+  console.log(tableData);
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -39,11 +43,29 @@ export default function CustomTable(props) {
             return (
               <TableRow key={key} className={classes.tableBodyRow}>
                 {prop.map((prop, key) => {
-                  return (
-                    <TableCell className={classes.tableCell} key={key}>
-                      {prop}
-                    </TableCell>
-                  );
+                  if (key == 5) {
+                    let reqpath = "http://localhost:5000" + prop;
+                    return (
+                      <TableCell className={classes.tableCell} key={key}>
+                        <a
+                          style={{ color: "black" }}
+                          href={reqpath}
+                          target="_blank"
+                          download
+                        >
+                          Download report
+                        </a>
+                      </TableCell>
+                    );
+                  } else if (key == 6) {
+                    return;
+                  } else {
+                    return (
+                      <TableCell className={classes.tableCell} key={key}>
+                        {prop}
+                      </TableCell>
+                    );
+                  }
                 })}
               </TableRow>
             );
@@ -55,7 +77,7 @@ export default function CustomTable(props) {
 }
 
 CustomTable.defaultProps = {
-  tableHeaderColor: "gray"
+  tableHeaderColor: "gray",
 };
 
 CustomTable.propTypes = {
@@ -66,8 +88,8 @@ CustomTable.propTypes = {
     "success",
     "info",
     "rose",
-    "gray"
+    "gray",
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
 };

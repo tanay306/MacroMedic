@@ -191,6 +191,16 @@ const api = {
     console.log(data);
     return data;
   },
+  downloadDoc: async (id) => {
+    const formData = JSON.stringify({ id: id });
+    console.log("IDDDD");
+    console.log(id);
+    const data = await axios.post("http://localhost:5000/downloadDoc", {
+      id: id,
+    });
+    console.log(data);
+    return data;
+  },
   searchDoctorByName: async (searchTerm) => {
     const data = await axios.post(
       url,
@@ -403,6 +413,7 @@ const api = {
               date
               status
               description
+              report
             }
           }
         `,
@@ -457,7 +468,8 @@ const api = {
               }
               description
               date
-              status 
+              status
+              report
             }
           }
         `,
@@ -496,6 +508,7 @@ const api = {
             }
             status
             description
+            report
           }
         }
         `,
@@ -739,34 +752,35 @@ const api = {
     const data = symptomsDict;
 
     var config = {
-      method: 'post',
-      url: 'http://127.0.0.1:8000/ml/predict/',
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Access-Control-Allow-Origin': '*',
+      method: "post",
+      url: "http://127.0.0.1:8000/ml/predict/",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
         // 'Cookie': 'csrftoken=F6L97M9DobQPv9Zzg8y9Kz07XDrGiNTgrCefIVzqhXOpGC0vVbL3CNFgX1KWExOj'
       },
-      data : data
+      data: data,
     };
 
     let receivedData = {};
     receivedData = axios(config)
-    .then(function (response) {
-      receivedData = response.data;
-      // console.log(response.data)
-      return receivedData;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        receivedData = response.data;
+        // console.log(response.data)
+        return receivedData;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     // const xData = await axios.post(config);
     // console.log(xData);
-    
+
     // console.log(receivedData);
     // console.log("ML receivedData");
     return receivedData;
   },
+<<<<<<< HEAD
   fetchRating: async (comment) => {
     var data = JSON.stringify({
       "string": "Could have been better."
@@ -796,6 +810,15 @@ const api = {
   },
   addReview: async (doctorId, rating, comment, patientId) => {
     const date = new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getUTCFullYear()
+=======
+  addReview: async (doctorId, comment, rating, patientId) => {
+    const date =
+      new Date().getDate() +
+      "-" +
+      (new Date().getMonth() + 1) +
+      "-" +
+      new Date().getUTCFullYear();
+>>>>>>> 47df7df66d6f31468d9481a97f918420e1ecae1f
     const data = await axios.post(
       url,
       {
