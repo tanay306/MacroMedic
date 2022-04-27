@@ -45,18 +45,33 @@ export default function CustomTable(props) {
                 {prop.map((prop, key) => {
                   if (key == 5) {
                     let reqpath = "http://localhost:5000" + prop;
-                    return (
-                      <TableCell className={classes.tableCell} key={key}>
-                        <a
-                          style={{ color: "black" }}
-                          href={reqpath}
-                          target="_blank"
-                          download
-                        >
-                          Download report
-                        </a>
-                      </TableCell>
-                    );
+                    if (prop == "") {
+                      return (
+                        <TableCell className={classes.tableCell} key={key}>
+                          <a
+                            style={{ color: "black" }}
+                            // href={prop != "" ? reqpath : ""}
+                            // target="_blank"
+                            // download
+                          >
+                            Report Not Available
+                          </a>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell className={classes.tableCell} key={key}>
+                          <a
+                            style={{ color: "black" }}
+                            href={reqpath}
+                            target="_blank"
+                            download
+                          >
+                            View Report
+                          </a>
+                        </TableCell>
+                      );
+                    }
                   } else if (key == 6) {
                     return;
                   } else {

@@ -153,7 +153,7 @@ export default function TableList() {
                 "Date/Time",
                 "Description",
                 "Status",
-                "Download",
+                "View Report",
               ]}
               tableData={uApp}
             />
@@ -178,6 +178,7 @@ export default function TableList() {
                 "Date/Time",
                 "Description",
                 "Status",
+                "View Report",
               ]}
               tableData={pApp}
             />

@@ -780,37 +780,6 @@ const api = {
     // console.log("ML receivedData");
     return receivedData;
   },
-<<<<<<< HEAD
-  fetchRating: async (comment) => {
-    var data = JSON.stringify({
-      "string": "Could have been better."
-    });
-    
-    var config = {
-      method: 'post',
-      url: 'http://127.0.0.1:8000/nlp/ratings/',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-
-    var response = 0;
-
-    const res = await axios(config)
-    console.log(res);
-    // .then(function (response) {
-    //   console.log(response.data.rating);
-    //   response = response.data.rating;
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-    return res.data.rating;
-  },
-  addReview: async (doctorId, rating, comment, patientId) => {
-    const date = new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getUTCFullYear()
-=======
   addReview: async (doctorId, comment, rating, patientId) => {
     const date =
       new Date().getDate() +
@@ -818,7 +787,6 @@ const api = {
       (new Date().getMonth() + 1) +
       "-" +
       new Date().getUTCFullYear();
->>>>>>> 47df7df66d6f31468d9481a97f918420e1ecae1f
     const data = await axios.post(
       url,
       {
