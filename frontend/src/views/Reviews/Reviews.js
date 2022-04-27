@@ -28,16 +28,18 @@ const Reviews = () => {
     console.log(_id, _id_patient);
 
     const onSubmitHandler = async () => {
-        const data = await api.addReview(_id, review, star, _id_patient);
+        const rating = await api.fetchRating(review);
+        console.log('Frontend = ', rating);
+        const data = await api.addReview(_id, rating, review, _id_patient);
         console.log(data);
         history.push('/user/dashboard');
     };
 
     return(
         <StyledCenterDiv>
-            {_id && (<div style={{ textAlign: 'left', marginLeft: '18px' }}>
-                <p>Doctor ID: {_id}</p>
-            </div>)}
+            {/* {_id && (<div style={{ textAlign: 'left', marginLeft: '18px' }}>
+                <p>Doctor Name: {_id}</p>
+            </div>)} */}
             <div>
                 <h4>Your opinion matters to us.</h4>
             </div>
@@ -58,7 +60,7 @@ const Reviews = () => {
                         }}
                     />
                 </StyledInputContainer>
-                <StarRatingContainer>
+                {/* <StarRatingContainer>
                     <StarRatings
                         rating={star}
                         starRatedColor="#ffcd3c"
@@ -68,7 +70,7 @@ const Reviews = () => {
                         numberOfStars={5}
                         name='rating'
                         />
-                </StarRatingContainer>
+                </StarRatingContainer> */}
                 <Button color="info" onClick={onSubmitHandler}>Submit</Button>
             </div>
         </StyledCenterDiv>
