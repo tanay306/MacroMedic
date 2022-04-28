@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
@@ -8,12 +8,20 @@ import StarRatings from 'react-star-ratings';
 // import Rating from 'react-simple-star-rating';
 import api from 'utils/api';
 import { useHistory } from 'react-router-dom';
+import {GlobalContext} from '../../GlobalContext';
 
 const Reviews = () => {
     const history = useHistory();
 
     const [ review, setReview ] = useState("");
     const [ star, setStar ] = useState(0);
+
+    const { user } = useContext(GlobalContext);
+    const [userData, setUserData] = user;
+
+    if(userData.role === 'doctor'){
+        history.push('/user/dashboard'); 
+    }
 
     const setStarFunc = (rate) => {
         setStar(rate);
