@@ -782,7 +782,7 @@ const api = {
   },
   fetchRating: async (comment) => {
     var data = JSON.stringify({
-      "string": "Could have been better."
+      "string": comment
     });
 
     var config = {
@@ -797,7 +797,6 @@ const api = {
     var response = 0;
 
     const res = await axios(config)
-    console.log(res);
     // .then(function (response) {
     //   console.log(response.data.rating);
     //   response = response.data.rating;
