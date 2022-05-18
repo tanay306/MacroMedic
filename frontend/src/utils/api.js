@@ -782,21 +782,21 @@ const api = {
   },
   fetchRating: async (comment) => {
     var data = JSON.stringify({
-      "string": comment
+      string: comment,
     });
 
     var config = {
-      method: 'post',
-      url: 'http://127.0.0.1:8000/nlp/ratings/',
-      headers: { 
-        'Content-Type': 'application/json'
+      method: "post",
+      url: "http://127.0.0.1:8000/nlp/ratings/",
+      headers: {
+        "Content-Type": "application/json",
       },
-      data : data
+      data: data,
     };
 
-    var response = 0;
+    // var response = 0;
 
-    const res = await axios(config)
+    const res = await axios(config);
     // .then(function (response) {
     //   console.log(response.data.rating);
     //   response = response.data.rating;
