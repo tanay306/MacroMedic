@@ -7,14 +7,19 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
-import WavyHeader from "../Components/WavyHeader";
-import { PRIMARY } from "../Utils/colors";
+import WavyHeader from "../../Components/WavyHeader";
+import { PRIMARY } from "../../Utils/colors";
+import api from "../../Utils/api";
+import { GlobalContext } from "../../GlobalContext";
 
 const Login = () => {
   const navigation = useNavigation();
+  const { user } = useContext(GlobalContext);
+  const [userData, setUserData] = user;
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -40,6 +45,8 @@ const Login = () => {
             fontSize: 18,
           }}
           placeholder="Email"
+          value={userData.email}
+          onChangeText={(text) => setUserData({ ...userData, email: text })}
         />
         <TextInput
           style={{
@@ -50,6 +57,9 @@ const Login = () => {
             marginTop: 20,
           }}
           placeholder="Password"
+          secureTextEntry
+          value={userData.password}
+          onChangeText={(text) => setUserData({ ...userData, password: text })}
         />
 
         <Text
@@ -73,7 +83,25 @@ const Login = () => {
             borderColor: PRIMARY,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+          <TouchableOpacity
+            onPress={async () => {
+              let data = {};
+              try {
+                data = await api.authUser(userData.email, userData.password);
+                setUserData(data);
+              } catch (error) {
+                console.log(error.response.data);
+              }
+              if (userData.email && data.token) {
+                navigation.navigate("Dashboard");
+              } else {
+                return Alert.alert(
+                  "Invalid Credentials",
+                  "Please enter valid credentials"
+                );
+              }
+            }}
+          >
             <Text style={{ textAlign: "center", fontSize: 25, color: "white" }}>
               Signin
             </Text>
@@ -87,7 +115,14 @@ const Login = () => {
             fontSize: 15,
           }}
         >
-          Don't have an account? <Text style={{ color: PRIMARY }}> Signup</Text>
+          Don't have an account?{" "}
+          <Text
+            onPress={() => navigation.navigate("Signup")}
+            style={{ color: PRIMARY }}
+          >
+            {" "}
+            Signup
+          </Text>
         </Text>
       </View>
     </KeyboardAvoidingView>

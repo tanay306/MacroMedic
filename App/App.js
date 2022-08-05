@@ -5,9 +5,9 @@ import {
   DrawerActions,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { StyleSheet, Text, View } from "react-native";
-import Login from "./Screens/Login";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import Login from "./Screens/Authentication/Login";
 import Home from "./Screens/Home";
 import Profile from "./Screens/Profile";
 import Appointments from "./Screens/Appointments";
@@ -18,6 +18,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { PRIMARY } from "./Utils/colors";
 import theme from "./Components/theme";
 import DrawerContent from "./Components/DrawerContent";
+import { GlobalProvider } from "./GlobalContext";
+import Signup from "./Screens/Authentication/Signup";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -38,6 +40,21 @@ const Dashboard = () => {
             <Ionicons
               style={{ marginLeft: 15 }}
               name="ios-menu-outline"
+              size={27}
+              color={theme.COLORS.MUTED}
+            />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => {
+              AsyncStorage.removeItem("Macromedic_user");
+              navigation.navigate("Login");
+            }}
+          >
+            <MaterialIcons
+              style={{ marginRight: 15 }}
+              name="logout"
               size={27}
               color={theme.COLORS.MUTED}
             />
@@ -119,20 +136,27 @@ const Dashboard = () => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={Login}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Dashboard"
-          component={Dashboard}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GlobalProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Signup"
+            component={Signup}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Dashboard"
+            component={Dashboard}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GlobalProvider>
   );
 }
 

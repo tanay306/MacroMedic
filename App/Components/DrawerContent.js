@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, ImageBackground, StyleSheet, View } from "react-native";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -14,27 +14,29 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { PRIMARY } from "../Utils/colors";
+import { GlobalContext } from "../GlobalContext";
 
 const DrawerContent = (props) => {
   const navigation = useNavigation();
+  const { user } = useContext(GlobalContext);
   //   const [active, setActive] = useState(false);
-  //   const [data, setData] = useState("");
-
+  const [data, setData] = user;
   //   const name = data.toUpperCase();
-  //   const getData = async () => {
-  //     try {
-  //       const value = await AsyncStorage.getItem("nameKey");
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("Macromedic_user");
 
-  //       if (value != null) {
-  //         setData(value);
-  //       }
-  //     } catch (error) {
-  //       alert(error);
+  //     if (value != null) {
+  //       setData(value);
   //     }
-  //   };
-  //   useEffect(() => {
-  //     getData();
-  //   }, []);
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
+  useEffect(() => {
+    console.log(data);
+  }, []);
+  const name = data.name.toUpperCase();
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -59,7 +61,7 @@ const DrawerContent = (props) => {
                   size={40}
                 />
                 <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                  <Title style={styles.title}>RAJ</Title>
+                  <Title style={styles.title}>{name}</Title>
                 </View>
               </View>
             </View>

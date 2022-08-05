@@ -73,7 +73,16 @@ class Home extends React.Component {
       titleStyle={{ fontSize: 18 }}
       //   onLeftPress={() => this.props.navigation.openDrawer()}
       //   leftIconColor={theme.COLORS.MUTED}
-      left={
+      // left={
+      //   <Button
+      //     color="transparent"
+      //     style={styles.settings}
+      //     onPress={() => this.props.navigation.openDrawer()}
+      //   >
+      //     <Ionicons size={30} name="md-menu" color={theme.COLORS.MUTED} />
+      //   </Button>
+      // }
+      right={
         <Button
           color="transparent"
           style={styles.settings}
