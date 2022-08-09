@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, Platform, View, TextInput } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { StyleSheet, Text, Platform, View, Image } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -10,15 +10,28 @@ import theme from "../Components/theme";
 import { useNavigation } from "@react-navigation/core";
 import { Card } from "react-native-paper";
 import { PRIMARY } from "../Utils/colors";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
+import { GlobalContext } from "../GlobalContext";
+import api from "../Utils/api";
 // import api from "../util/api";
 
 const BASE_SIZE = theme.SIZES.BASE;
 
 const Doctors = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState("");
   const [specialization, setSpecialization] = useState("");
+  const { allDocs } = useContext(GlobalContext);
+  const [allDoctors, setAllDoctors] = allDocs;
+  useEffect(() => {
+    const getDoctors = async () => {
+      try {
+        setAllDoctors(await api.getDoctors());
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+    getDoctors();
+  }, []);
   // const [doctorData, setDoctorData] = useState([]);
   // useEffect(() => {
   //   const getData = async () => {
@@ -29,32 +42,9 @@ const Doctors = () => {
   // }, []);
   // console.log(doctorData.length);
 
-  const doctorData = [
-    {
-      name: "Tanay",
-      specialization: "Haggu",
-      sex: "Male",
-    },
-    {
-      name: "Tanay",
-      specialization: "Haggu",
-      sex: "Male",
-    },
-    {
-      name: "Tanay",
-      specialization: "Haggu",
-      sex: "Male",
-    },
-    {
-      name: "Tanay",
-      specialization: "Haggu",
-      sex: "Male",
-    },
-  ];
-
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginTop: 40 }}></View>
+      <View style={{ marginTop: 30 }}></View>
       <View>
         <Card
           style={{
@@ -63,7 +53,7 @@ const Doctors = () => {
             shadowOpacity: 0.26,
             shadowOffset: { width: 10, height: 10 },
             elevation: 5,
-            position: "absolute",
+
             width: 350,
           }}
         >
@@ -72,7 +62,7 @@ const Doctors = () => {
               margin: 20,
               height: 80,
               marginTop: -40,
-              backgroundColor: PRIMARY,
+              backgroundColor: "#9c27b0",
               elevation: 5,
               shadowOffset: { width: 10, height: 10 },
               shadowOpacity: 0.3,
@@ -101,13 +91,18 @@ const Doctors = () => {
               <TextInput
                 placeholder="Search by name"
                 style={{
-                  marginVertical: 40,
+                  marginVertical: 20,
                   fontSize: 20,
                   borderBottomWidth: 0.5,
                   paddingVertical: 5,
                 }}
-                value={name}
-                onChangeText={(text) => setName(text)}
+                onChangeText={async (text) => {
+                  try {
+                    setAllDoctors(await api.searchDoctorByName(text));
+                  } catch (error) {
+                    console.log(error.response.data);
+                  }
+                }}
               />
               <TextInput
                 placeholder="Search by specialization"
@@ -116,135 +111,157 @@ const Doctors = () => {
                   borderBottomWidth: 0.5,
                   paddingVertical: 5,
                 }}
-                value={specialization}
-                onChangeText={(text) => setSpecialization(text)}
+                onChangeText={async (text) => {
+                  try {
+                    setAllDoctors(await api.searchDoctorBySpecialization(text));
+                  } catch (error) {
+                    console.log(error.response.data);
+                  }
+                }}
               />
             </View>
-            <ButtonRP
-              mode="contained"
-              color={PRIMARY}
-              labelStyle={{ color: "white", fontSize: 17 }}
-              style={{
-                shadowOpacity: 0.3,
-                shadowOffset: { width: 5, height: 5 },
-                elevation: 5,
-              }}
-              // onPress={async () => {
-              //   await api.searchDoctorByName(name);
-              //   await api.searchDoctorBySpecialization(specialization);
-              // }}
-            >
-              Apply Filter
-            </ButtonRP>
           </Card.Content>
         </Card>
       </View>
-      {doctorData.length != 0 ? (
-        <FlatList
-          horizontal
-          data={doctorData}
-          renderItem={(itemData) => {
-            return (
-              <View style={{ marginTop: 420, paddingHorizontal: 200 }}>
+
+      <FlatList
+        horizontal
+        data={allDoctors}
+        renderItem={(itemData) => {
+          return (
+            <View style={{ marginTop: 20 }}>
+              <Card
+                style={{
+                  margin: 20,
+                  borderRadius: 10,
+                  shadowOpacity: 0.26,
+                  shadowOffset: { width: 10, height: 10 },
+                  elevation: 5,
+
+                  width: 350,
+                }}
+              >
                 <Card
                   style={{
                     margin: 20,
-                    borderRadius: 10,
-                    shadowOpacity: 0.26,
-                    shadowOffset: { width: 10, height: 10 },
+                    height: 80,
+                    marginTop: -35,
+                    backgroundColor: "#9c27b0",
                     elevation: 5,
-                    position: "absolute",
-                    width: 350,
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.3,
+                    borderRadius: 6,
                   }}
                 >
-                  <Card
-                    style={{
-                      margin: 20,
-                      height: 80,
-                      marginTop: -35,
-                      backgroundColor: PRIMARY,
-                      elevation: 5,
-                      shadowOffset: { width: 10, height: 10 },
-                      shadowOpacity: 0.3,
-                      borderRadius: 6,
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", marginVertical: 20 }}>
+                    <Image
+                      source={require("../assets/marc.jpeg")}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        marginLeft: 10,
+                      }}
+                    />
                     <Text style={{ padding: 7, fontSize: 20, color: "white" }}>
                       {itemData.item.name}
                     </Text>
-                  </Card>
-                  <Card.Content>
+                  </View>
+                </Card>
+                <Card.Content>
+                  <View
+                    style={{
+                      borderBottomWidth: 0.5,
+                      paddingVertical: 8,
+                      borderBottomColor: "grey",
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, marginTop: 3 }}>
+                      Specialization:{" "}
+                      {itemData.item.specialization == null
+                        ? "Not Specified"
+                        : itemData.item.specialization}
+                    </Text>
+                    <Text style={{ fontSize: 20, marginTop: 3 }}>
+                      Gender: {itemData.item.sex}
+                    </Text>
                     <View
                       style={{
-                        borderBottomWidth: 0.5,
-                        paddingVertical: 8,
-                        borderBottomColor: "grey",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Text style={{ fontSize: 20, marginTop: 3 }}>
-                        {itemData.item.specialization}
+                      <Text style={{ fontSize: 20 }}>
+                        Age: {itemData.item.age}
                       </Text>
-                      <Text style={{ fontSize: 20, marginTop: 3 }}>
-                        {itemData.item.sex}
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: "#9c27b0",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {`\u20B9`}
+                        {itemData.item.charge == null
+                          ? "Not Specified"
+                          : itemData.item.charge}
                       </Text>
-                      <Text style={{ fontSize: 20 }}>{itemData.item.age}</Text>
                     </View>
+                  </View>
+                  <View style={{ paddingVertical: 8 }}>
+                    <Text style={{ fontSize: 20 }}>
+                      About: {itemData.item.about}
+                    </Text>
+                  </View>
+                  <ButtonRP
+                    mode="contained"
+                    color="#9c27b0"
+                    labelStyle={{ color: "white", fontSize: 17 }}
+                    style={{
+                      shadowOpacity: 0.3,
+                      shadowOffset: { width: 5, height: 5 },
+                      elevation: 5,
+                      marginVertical: 10,
+                      marginHorizontal: 20,
+                    }}
+                    // onPress={() => {
+                    //   navigation.navigate("BookAppointments", {
+                    //     name: itemData.item.name,
+                    //     specialization: itemData.item.specialization,
+                    //     age: itemData.item.age,
+                    //     sex: itemData.item.sex,
+                    //     about: itemData.item.about,
+                    //     id: itemData.item._id,
+                    //   });
+                    // }}
+                  >
+                    Book an appointment
+                  </ButtonRP>
 
-                    <ButtonRP
-                      mode="contained"
-                      color={PRIMARY}
-                      labelStyle={{ color: "white", fontSize: 17 }}
-                      style={{
-                        shadowOpacity: 0.3,
-                        shadowOffset: { width: 5, height: 5 },
-                        elevation: 5,
-                        marginVertical: 10,
-                      }}
-                      // onPress={() => {
-                      //   navigation.navigate("BookAppointments", {
-                      //     name: itemData.item.name,
-                      //     specialization: itemData.item.specialization,
-                      //     age: itemData.item.age,
-                      //     sex: itemData.item.sex,
-                      //     about: itemData.item.about,
-                      //     id: itemData.item._id,
-                      //   });
-                      // }}
-                    >
-                      Book an appointment
-                    </ButtonRP>
-
-                    <ButtonRP
-                      mode="contained"
-                      color={PRIMARY}
-                      labelStyle={{ color: "white", fontSize: 17 }}
-                      style={{
-                        shadowOpacity: 0.3,
-                        shadowOffset: { width: 5, height: 5 },
-                        elevation: 5,
-                      }}
-                      // onPress={() => {
-                      //   navigation.navigate("BookAppointments", {
-                      //     name: itemData.item.name,
-                      //     specialization: itemData.item.specialization,
-                      //     age: itemData.item.age,
-                      //     sex: itemData.item.sex,
-                      //     about: itemData.item.about,
-                      //     id: itemData.item._id,
-                      //   });
-                      // }}
-                    >
-                      View Profile
-                    </ButtonRP>
-                  </Card.Content>
-                </Card>
-              </View>
-            );
-          }}
-        />
-      ) : (
-        <View></View>
-      )}
+                  <ButtonRP
+                    mode="contained"
+                    color="#9c27b0"
+                    labelStyle={{ color: "white", fontSize: 17 }}
+                    style={{
+                      shadowOpacity: 0.3,
+                      shadowOffset: { width: 5, height: 5 },
+                      elevation: 5,
+                      marginHorizontal: 20,
+                    }}
+                    onPress={() => {
+                      navigation.navigate("DoctorProfile", {
+                        id: itemData.item._id,
+                      });
+                    }}
+                  >
+                    View Profile
+                  </ButtonRP>
+                </Card.Content>
+              </Card>
+            </View>
+          );
+        }}
+      />
     </View>
   );
 };

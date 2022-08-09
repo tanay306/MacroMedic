@@ -20,6 +20,7 @@ import theme from "./Components/theme";
 import DrawerContent from "./Components/DrawerContent";
 import { GlobalProvider } from "./GlobalContext";
 import Signup from "./Screens/Authentication/Signup";
+import DoctorProfile from "./Screens/DoctorProfile";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -153,6 +154,14 @@ export default function App() {
             options={{ headerShown: false }}
             name="Dashboard"
             component={Dashboard}
+          />
+          <Stack.Screen
+            options={{
+              headerTitle: "Doctor Profile",
+              headerTintColor: "#9c27b0",
+            }}
+            name="DoctorProfile"
+            component={DoctorProfile}
           />
         </Stack.Navigator>
       </NavigationContainer>

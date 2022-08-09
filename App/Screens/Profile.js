@@ -1,47 +1,37 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { Card } from "react-native-paper";
-import { Button } from "galio-framework";
 import { PRIMARY } from "../Utils/colors";
 import theme from "../Components/theme";
+import { Button } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-
-const Update = () => {
-  const navigation = useNavigation();
-  return (
-    <View>
-      <Card
-        style={{
-          margin: 35,
-          borderRadius: 10,
-          shadowOpacity: 0.26,
-          shadowOffset: { width: 10, height: 10 },
-          elevation: 5,
-          position: "absolute",
-          marginTop: 870,
-          width: 350,
-        }}
-      >
-        <Image
-          source={require("../assets/splash.png")}
-          style={{
-            width: 130,
-            height: 130,
-            marginTop: -45,
-            marginHorizontal: "30%",
-            borderRadius: 65,
-          }}
-        />
-        <View style={{ margin: 80 }}>
-          <Text style={{ fontSize: 30, textAlign: "center" }}>Tanay Naik</Text>
-        </View>
-      </Card>
-    </View>
-  );
-};
-
+import { GlobalContext } from "../GlobalContext";
+import api from "../Utils/api";
+import Modal from "react-native-modal";
 const Profile = () => {
+  const navigation = useNavigation();
+  const { user } = useContext(GlobalContext);
+  const [userData, setUserData] = user;
+  const [users, setUsers] = React.useState({});
+  let imgSrc = "";
+  React.useEffect(() => {
+    let data = {};
+    const mf = async () => {
+      try {
+        data = await api.getUserById(userData._id);
+      } catch (err) {
+        console.log(err.response.data);
+      }
+      console.log("Data");
+      console.log(data);
+      setUsers(data);
+    };
+    mf();
+  }, [userData]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  imgSrc = `http://localhost:5000${users.image}`;
   return (
     <ScrollView>
       <Card
@@ -86,6 +76,20 @@ const Profile = () => {
               fontSize: 20,
               marginVertical: 20,
             }}
+            value={users.name ? users.name : ""}
+            onChangeText={(name) => setUsers({ ...users, name: name })}
+          />
+
+          <TextInput
+            placeholder="Sex"
+            style={{
+              borderBottomWidth: 0.3,
+              padding: 5,
+              fontSize: 20,
+              marginVertical: 20,
+            }}
+            value={users.sex ? users.sex : ""}
+            onChangeText={(sex) => setUsers({ ...users, sex: sex })}
           />
           <TextInput
             placeholder="Phone No."
@@ -95,6 +99,8 @@ const Profile = () => {
               fontSize: 20,
               marginVertical: 20,
             }}
+            value={users.phoneNo ? users.phoneNo : ""}
+            onChangeText={(phoneNo) => setUsers({ ...users, phoneNo: phoneNo })}
           />
           <TextInput
             placeholder="Email Address"
@@ -104,34 +110,35 @@ const Profile = () => {
               fontSize: 20,
               marginVertical: 20,
             }}
+            value={users.email ? users.email : ""}
+            onChangeText={(email) => setUsers({ ...users, email: email })}
           />
-          <TextInput
-            placeholder="Age"
-            style={{
-              borderBottomWidth: 0.3,
-              padding: 5,
-              fontSize: 20,
-              marginVertical: 20,
-            }}
-          />
-          <TextInput
-            placeholder="Sex"
-            style={{
-              borderBottomWidth: 0.3,
-              padding: 5,
-              fontSize: 20,
-              marginVertical: 20,
-            }}
-          />
-          <TextInput
-            placeholder="Password"
-            style={{
-              borderBottomWidth: 0.3,
-              padding: 5,
-              fontSize: 20,
-              marginVertical: 20,
-            }}
-          />
+          {userData.role == "doctor" ? (
+            <TextInput
+              placeholder="Specialization"
+              style={{
+                borderBottomWidth: 0.3,
+                padding: 5,
+                fontSize: 20,
+                marginVertical: 20,
+              }}
+              value={userData.specialization ? userData.specialization : ""}
+              onChangeText={(specialization) =>
+                setUserData({ ...userData, specialization: specialization })
+              }
+            />
+          ) : null}
+          {userData.role == "doctor" ? (
+            <TextInput
+              placeholder="Consulting Charges"
+              style={{
+                borderBottomWidth: 0.3,
+                padding: 5,
+                fontSize: 20,
+                marginVertical: 20,
+              }}
+            />
+          ) : null}
           <TextInput
             placeholder="About"
             style={{
@@ -140,10 +147,53 @@ const Profile = () => {
               fontSize: 20,
               marginVertical: 20,
             }}
+            value={users.about ? users.about : ""}
+            onChangeText={(about) => setUsers({ ...users, about: about })}
           />
-          <Button color={PRIMARY} uppercase>
-            Update Profile
-          </Button>
+          <TouchableOpacity
+            onPress={async () => {
+              try {
+                users.role == "patient"
+                  ? await api.updateProfile_Patient(userData._id, users)
+                  : await api.updateProfile_Doctor(userData._id, users);
+              } catch (error) {
+                console.log(error.response.data);
+              }
+              Alert.alert("Success", "Profile updated successfully ", [
+                {
+                  text: "Okay",
+                },
+              ]);
+              console.log("Presseddd");
+            }}
+          >
+            <View
+              style={{
+                borderWidth: 1,
+                padding: 10,
+                marginRight: 150,
+                borderRadius: 5,
+                borderColor: PRIMARY,
+                backgroundColor: PRIMARY,
+                elevation: 5,
+                shadowOpacity: 0.2,
+                shadowOffset: { width: 5, height: 5 },
+              }}
+            >
+              <Text
+                style={{ textAlign: "center", color: "white", fontSize: 17 }}
+              >
+                Update Profile
+              </Text>
+            </View>
+          </TouchableOpacity>
+          {/* <Modal  isVisible={isModalVisible}>
+            
+            <View style={{ flex: 1 }}>
+              <Text>Hello!</Text>
+              <Button title="Hide Modal" onPress={handleModal} />
+            </View>
+          </Modal> */}
         </View>
       </Card>
 
@@ -154,23 +204,27 @@ const Profile = () => {
           shadowOpacity: 0.26,
           shadowOffset: { width: 10, height: 10 },
           elevation: 5,
+          marginTop: 40,
         }}
       >
         <Image
-          source={require("../assets/splash.png")}
+          source={{ uri: imgSrc }}
           style={{
-            width: 350,
-            height: 350,
-            marginTop: -175,
+            width: 130,
+            height: 100,
+            marginTop: -45,
             position: "absolute",
+            marginHorizontal: "37%",
           }}
         />
         <View style={{ marginTop: 80, marginBottom: 30 }}>
-          <Text style={{ fontSize: 25, textAlign: "center" }}>Tanay Naik</Text>
+          <Text style={{ fontSize: 25, textAlign: "center" }}>
+            {users ? users.name : ""}
+          </Text>
         </View>
         <View>
           <Text style={{ fontSize: 20, textAlign: "center", marginBottom: 30 }}>
-            Aspiring enginner from IIT Bombay working at Uber.
+            {users ? users.about : ""}
           </Text>
         </View>
       </Card>
