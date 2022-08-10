@@ -151,6 +151,7 @@ const Profile = () => {
             onChangeText={(about) => setUsers({ ...users, about: about })}
           />
           <TouchableOpacity
+            style={{ width: 150 }}
             onPress={async () => {
               try {
                 users.role == "patient"
@@ -171,7 +172,6 @@ const Profile = () => {
               style={{
                 borderWidth: 1,
                 padding: 10,
-                marginRight: 150,
                 borderRadius: 5,
                 borderColor: PRIMARY,
                 backgroundColor: PRIMARY,
