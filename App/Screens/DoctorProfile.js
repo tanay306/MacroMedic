@@ -102,7 +102,6 @@ export default function DoctorProfile({ route }) {
             );
           }}
         />
-        {/* )} */}
       </View>
     </View>
   );

@@ -21,6 +21,7 @@ import DrawerContent from "./Components/DrawerContent";
 import { GlobalProvider } from "./GlobalContext";
 import Signup from "./Screens/Authentication/Signup";
 import DoctorProfile from "./Screens/DoctorProfile";
+import BookAppointment from "./Screens/BookAppointment";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -163,6 +164,7 @@ export default function App() {
             name="DoctorProfile"
             component={DoctorProfile}
           />
+          <Stack.Screen name="BookAppointment" component={BookAppointment} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalProvider>

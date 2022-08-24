@@ -31,7 +31,8 @@ const Profile = () => {
   }, [userData]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
-  imgSrc = `http://localhost:5000${users.image}`;
+  imgSrc = `http://localhost:2000${users.image}`;
+  console.log(imgSrc);
   return (
     <ScrollView>
       <Card

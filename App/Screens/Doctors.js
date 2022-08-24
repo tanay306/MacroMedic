@@ -19,7 +19,6 @@ const BASE_SIZE = theme.SIZES.BASE;
 
 const Doctors = () => {
   const navigation = useNavigation();
-  const [specialization, setSpecialization] = useState("");
   const { allDocs } = useContext(GlobalContext);
   const [allDoctors, setAllDoctors] = allDocs;
   useEffect(() => {
@@ -224,16 +223,11 @@ const Doctors = () => {
                       marginVertical: 10,
                       marginHorizontal: 20,
                     }}
-                    // onPress={() => {
-                    //   navigation.navigate("BookAppointments", {
-                    //     name: itemData.item.name,
-                    //     specialization: itemData.item.specialization,
-                    //     age: itemData.item.age,
-                    //     sex: itemData.item.sex,
-                    //     about: itemData.item.about,
-                    //     id: itemData.item._id,
-                    //   });
-                    // }}
+                    onPress={() => {
+                      navigation.navigate("BookAppointment", {
+                        id: itemData.item._id,
+                      });
+                    }}
                   >
                     Book an appointment
                   </ButtonRP>
