@@ -22,6 +22,7 @@ import { GlobalProvider } from "./GlobalContext";
 import Signup from "./Screens/Authentication/Signup";
 import DoctorProfile from "./Screens/DoctorProfile";
 import BookAppointment from "./Screens/BookAppointment";
+import Meeting from "./Screens/Meeting";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -131,6 +132,18 @@ const Dashboard = () => {
         }}
         name="Doctors"
         component={Doctors}
+      />
+
+      <Drawer.Screen
+        options={{
+          drawerIcon: ({ focused }) => (
+            <MaterialIcons name="person-search" size={25} color={"white"} />
+          ),
+          headerTitleStyle: { fontWeight: "normal", fontSize: 20 },
+          drawerLabelStyle: { color: "white" },
+        }}
+        name="Meeting"
+        component={Meeting}
       />
     </Drawer.Navigator>
   );
