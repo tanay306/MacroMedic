@@ -144,6 +144,7 @@ function MapsNew() {
                 inputProps={{
                   onChange: async (e) => {
                     try {
+                      console.log(e.target.value);
                       setAllDoctors(
                         await api.searchDoctorBySpecialization(e.target.value)
                       );
@@ -160,7 +161,7 @@ function MapsNew() {
                 onClick={() => {
                   console.log(pickUp);
                   const docArr = allDoctors.filter(
-                    (elem) => elem.location.latitude === 72.8777
+                    (elem) => elem.location.latitude === 35.7796
                   );
                   console.log(docArr);
                   console.log(docArr);
