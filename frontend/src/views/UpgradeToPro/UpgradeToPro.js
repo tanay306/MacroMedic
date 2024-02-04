@@ -14,7 +14,23 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 import styled from 'styled-components';
+import Box from "@material-ui/core/Box";
 import api from "utils/api";
+import Modal from "@material-ui/core/Modal";
+import Typography from "@material-ui/core/Typography";
+import { useHistory } from 'react-router-dom';
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "0.5px  #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const styles = {
   cardCategoryWhite: {
@@ -86,17 +102,79 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function UpgradeToPro() {
+  const history = useHistory();
   const classes = useStyles();
   const [file, setFile] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    history.push({
+      pathname: "/user/doctors",
+      search: `?query=Sleep Specialist`,
+    });
+  };
+
+  const adminFileUpload = 'http://127.0.0.1:8000/ecg/predict'
+  
   return (
     <StyledFlex>
       <div>
         Allow access to daily user analytics and share data?
       </div>
-      <input type="file" onChange={e => setFile(e.target.files[0])}/>
-      <Button color={"primary"} onClick={async (e) => {
-        await api.fetchSleepAnalytics(file);
-      }}>Submit</Button>
+      <form method="POST" action={adminFileUpload} enctype="multipart/form-data" >
+          <input type='file' name="file" onChange={e => setFile(e.target.files[0])}/>
+          <Button color={'primary'} type="submit">Submit</Button>
+      </form>
+      {/* <input type="file" onChange={e => setFile(e.target.files[0])}/>
+      <Button color={"primary"} onClick={async () => {
+        const res = await api.fetchSleepAnalytics(file);
+
+        if(true){
+          history.push({
+            pathname: "/user/doctors",
+            search: `?query=Sleep Specialist`,
+          });
+        }
+      }}>Submit</Button> */}
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Considering your symptoms, you should consult a Sleep Specialist.
+          </Typography>
+          <Button
+            color="warning"
+            onClick={() => {
+              handleClose();
+            }}
+            style={{
+              marginRight: "10%",
+              marginTop: "10px"
+            }}
+          >
+            View All Doctors
+          </Button>
+          <Button
+            color="warning"
+            onClick={() => {
+              cancelModal();
+            }}
+            style={{
+              marginTop: "10px"
+            }}
+          >
+            Cancel
+          </Button>
+          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Your profile has been updated successfully
+          </Typography> */}
+        </Box>
+      </Modal>
     </StyledFlex>
   );
 }

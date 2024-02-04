@@ -847,9 +847,10 @@ const api = {
       method: "post",
       url: "http://127.0.0.1:8000/ecg/predict/",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
       },
-      data: file,
+      data: {file: file},
     };
 
     // var response = 0;
