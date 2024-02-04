@@ -6,7 +6,9 @@ import api from "utils/api";
 import Button from "components/CustomButtons/Button.js";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
+import Select from "react-select";
 import Box from "@material-ui/core/Box";
+import Autocomplete from "components/Autocomplete";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -18,6 +20,9 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 };
+
+import styled from 'styled-components';
+import options from '../../variables/options';
 
 // const useStyles = makeStyles(styles);
 const Symptoms = () => {
@@ -136,6 +141,17 @@ const Symptoms = () => {
     red_sore_around_nose: 0,
   });
 
+  const [ symptomList, useSymptomList ] = useState(Object.keys(symptoms));
+
+  useEffect(() => {
+    let tmp = symptomList;
+    for (let i = 0; i < symptomList.length; i++) {
+      tmp[i] = symptomList[i].split('_').join(' ')
+    }
+    useSymptomList(tmp);
+    console.log(tmp);
+  }, [])
+
   const updateSymptom = (symptom = "") => {
     console.log(symptom);
     setSymptoms({
@@ -181,6 +197,7 @@ const Symptoms = () => {
   const sumbitHandler = async () => {
     // API LOGIC
     setOpen(true);
+    console.log(symptoms)
     const apiData = await api.symptomsToML(symptoms);
     setSpecialDoc(apiData.specialist);
     const xData = await api.searchDoctorBySpecialization(
@@ -202,19 +219,86 @@ const Symptoms = () => {
     setOpen(false);
   }
 
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleSelectChange = (event) => {
+    // let arr = selectedOptions;
+    // arr.push(event.target.value);
+    // console.log(event.target.value)
+    // setSelectedOptions(arr);
+    console.log(event[event.length-1].value, event);
+    updateSymptom(event[event.length-1].value);
+    setSelectedOptions(event);
+  };
+
+  useEffect(() => {
+    console.log(selectedOptions);
+  }, [selectedOptions]);
+
+  const remove = (key) => {
+    let arr = [];
+    for(let i=0; i<selectedOptions.length; i++){
+      if(selectedOptions[i] != key){
+        arr.push(selectedOptions[i])
+      }
+    }
+    setSelectedOptions(arr);
+  };
+
   //   const classes = useStyles();
 
   return (
     <div>
       <div>
-        <div style={{ margin: 8 }}>
-          <p>Predict doctor specialists with just some clicks!</p>
+        <div>
+        <label htmlFor="symptomMultiSelect">Select symptoms: </label>
+        <StyledSelect
+          id="symptomList"
+          value={selectedOptions}
+          onChange={handleSelectChange}
+          isMulti
+          isSearchable={true}
+          options={options}
+        />
+
+        {/* {selectedOptions.length > 0 && (
+          <div>
+            <p>Selected Symptoms:</p>
+            <StyledUl>
+              {selectedOptions.map((selected, index) => (
+                <StyledLi key={index}>{selected}</StyledLi>
+              ))}
+            </StyledUl>
+          </div>
+        )} */}
+
+        <div style={{ margin: 0 }}>
+          <p>Selected Symptoms</p>
         </div>
 
-        <div>
+        {selectedOptions.length > 0 && (
+          <StyledSelectedContainer>
+            {selectedOptions.map((selected, index) => (
+              <Button
+                key={selected}
+                color={"primary"}
+                onClick={() => remove(selected)}
+                style={{
+                  margin: 8,
+                }}
+              >
+                {selected.label}
+              </Button>
+            ))}
+          </StyledSelectedContainer>
+        )}
+      </div>
+
+        {/* <div>
           {symptoms &&
             Object.keys(symptoms).map((key) => (
               <Button
+                key={key}
                 color={symptoms[key] == 0 ? "primary" : "success"}
                 onClick={() => onClickHandler(key)}
                 style={{
@@ -224,7 +308,7 @@ const Symptoms = () => {
                 {key}
               </Button>
             ))}
-        </div>
+        </div> */}
       </div>
       <div>
         <Button
@@ -250,7 +334,7 @@ const Symptoms = () => {
         >
           <Box sx={modalStyle}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Considering your symptoms, you should cosult a <span>{specialDoc}</span>
+              Considering your symptoms, you should consult a <span>{specialDoc}</span>
             </Typography>
             <Button
               color="warning"
@@ -286,3 +370,30 @@ const Symptoms = () => {
 };
 
 export default Symptoms;
+
+const StyledSelect = styled(Select)`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+`;
+
+const StyledOption = styled.option`
+
+`;
+
+const StyledUl = styled.li`
+  list-style: none;
+  padding: 0;
+`;
+
+const StyledLi = styled.ul`
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+`;
+
+const StyledSelectedContainer = styled.div`
+  margin-top: 12px;
+`;
